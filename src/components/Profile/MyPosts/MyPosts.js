@@ -12,7 +12,15 @@ const MyPosts = () => {
         <button>Add post</button>
       </div>
       <div className={classes.posts}>
-        <Post />
+        <Post 
+          img="https://i.ytimg.com/vi/aEvItEpMly8/maxresdefault.jpg"
+          message="Hi, how are you?"
+          likeCount="5" />
+
+          <Post 
+            img="https://i.ytimg.com/vi/aEvItEpMly8/maxresdefault.jpg"
+            message="It's my first post"
+            likeCount="1" />
       </div>
       
   </div>
