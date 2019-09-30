@@ -18,18 +18,30 @@ const Message = ({ message }) => {
 }
 
 const Dialogs = () => {
+
+  const dialogsData = [
+    {id: "1", name: "Igor"},
+    {id: "2", name: "Olga",},
+    {id: "3", name: "Maksym"}
+  ];
+
+  const messagesData = [
+    {id: "1", message: "Hi"},
+    {id: "2", message: "How are you doing?"},
+    {id: "3", message: "Hello!!!"}
+  ];
+
   return (
     <div className={classes.dialogs}>
       <div className={classes.dialogsItems}>
-        <DialogItem name="Igor" id="1" />
-        <DialogItem name="Olga" id="2" />
-        <DialogItem name="Maksym" id="3" />
-       
+        {dialogsData.map((item) => {
+          return <DialogItem key={item.id} name={item.name} id={item.id} />
+        })}       
       </div>
       <div className={classes.messages}>
-        <Message message="Hi"/>
-        <Message message="How are you doing?"/>
-        <Message message="Hello!!!"/>
+        {messagesData.map((item) => {
+          return <Message key={item.id} message={item.message} id={item.id}/>
+        })}
       </div>
     </div>
   );
