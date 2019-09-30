@@ -6,12 +6,11 @@ import MyPosts from './MyPosts';
 const Profile = () => {
   return(
     <div>
-      <div>
-        <img src="https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt=""/>
-      </div>
-      <div>
-        ava+description
-      </div>
+      <div className={classes.wrapper}>
+        <div className={classes.profileInfo}>
+          <img src="https://iisy.fi/wp-content/uploads/2018/08/user-profile-male-logo.jpg" alt="logo"/>
+        </div>
+      </div>   
       <MyPosts />
     </div>
   );

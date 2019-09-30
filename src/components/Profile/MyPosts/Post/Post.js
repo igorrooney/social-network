@@ -6,9 +6,11 @@ const Post = ({ img, message, likeCount }) => {
   return (
       <div className={classes.item}>
         <img src={img} alt=""/>
-        {message}
-        <div>
-          <span>likes {likeCount}</span>
+        <div className={classes.itemDetail}>
+          {message}
+          <div className={classes.reaction}>
+            <span>likes {likeCount}</span>
+          </div>
         </div>
       </div>
   );

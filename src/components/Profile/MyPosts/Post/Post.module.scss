@@ -1,10 +1,31 @@
 .item {
   color: greenyellow;
+  padding: 20px;
+  color: #6d6e71;
+  display: flex;
+  background: #f8f8f8;
+  border-radius: 4px;
+  width: 100%;
+  border: 1px solid #f1f2f2;
+  margin-bottom: 20px;
 
   img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    vertical-align: middle;
+  }
+
+  .itemDetail {
+    margin-left: 65px;
+    position: relative;
+    width: 100%;
+
+    .reaction {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
   }
 }
 

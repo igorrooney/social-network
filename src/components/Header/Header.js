@@ -5,7 +5,13 @@ import classes from './Header.module.scss';
 const Header = () => {
   return(
     <header className={classes.header}>
-      <img src="https://image.freepik.com/free-vector/gradient-logo-template-with-abstract-shape_23-2148204210.jpg" alt="logo"/>
+      <div className={classes.container}>
+        <a  className={classes.headerBrand} href="#">
+          <img src="http://mythemestore.com/friend-finder/images/logo.png" alt="logo"/>  
+        </a>  
+      </div>
+
+    
     </header>
   );
 }

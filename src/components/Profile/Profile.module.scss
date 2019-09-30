@@ -1,0 +1,23 @@
+.wrapper {
+  background: url("https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500") no-repeat;
+  background-position: center;
+  background-size: cover;
+  min-height: 360px;
+  border-radius: 0 0 4px 4px;
+  position: relative;
+
+  .profileInfo {
+    position: absolute;
+    text-align: center;
+    padding: 0 20px;
+    top: 160px;
+    z-index: 999;
+
+    img {
+      height: 200px;
+      width: 200px;
+      border-radius: 50%;
+      border: 10px solid #fff;
+    }
+  }
+}
