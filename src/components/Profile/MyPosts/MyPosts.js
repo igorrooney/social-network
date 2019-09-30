@@ -3,10 +3,12 @@ import React from 'react';
 import classes from './MyPosts.module.scss';
 import Post from './Post';
 
+
+
 const MyPosts = () => {
   return (
     <div className={classes.wrapper}>
-      My posts
+      <h3>My posts</h3>
       <div className={classes.createPost}>
         <textarea placeholder="Write what you wish"></textarea>
         <button>Add post</button>
