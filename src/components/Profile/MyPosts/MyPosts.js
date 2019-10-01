@@ -5,18 +5,16 @@ import Post from './Post';
 
 
 
-const MyPosts = () => {
+const MyPosts = ({ postsData }) => {
 
-  const postsData = [
-    {id: "1",
-    img: "https://i.ytimg.com/vi/aEvItEpMly8/maxresdefault.jpg",
-    message: "Hi, how are you?",
-    likeCount: "5"},
-    {id: "12",
-    img: "https://i.ytimg.com/vi/aEvItEpMly8/maxresdefault.jpg",
-    message: "It's my first post",
-    likeCount: "1"}
-  ];
+  const posts = postsData.map(post => {
+    return <Post 
+              key={post.id}
+              img={post.img} 
+              message={post.message}
+              likeCount={post.likeCount}
+            />
+  });
 
   return (
     <div className={classes.wrapper}>
@@ -26,14 +24,7 @@ const MyPosts = () => {
         <button>Add post</button>
       </div>
       <div className={classes.posts}>
-        {postsData.map((post) => {
-          return <Post 
-                    key={post.id}
-                    img={post.img} 
-                    message={post.message}
-                    likeCount={post.likeCount}
-                  />
-        })}
+      {posts}
       </div>
       
   </div>
