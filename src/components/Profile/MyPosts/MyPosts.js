@@ -19,7 +19,6 @@ const MyPosts = ({ postsData, addPost }) => {
   const textareaRef = React.createRef();
 
   const createPost = () => {
-    debugger;
     const text = textareaRef.current.value;
     addPost(text);
   }

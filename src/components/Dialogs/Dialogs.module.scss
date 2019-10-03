@@ -1,7 +1,6 @@
 .dialogs {
   display: grid;
   grid-template-columns: 2fr 10fr;
-  width: 100vh;
 
   .addMessage {
     display: flex;
@@ -65,7 +64,6 @@
     .message {
       margin-bottom: 20px;
       background: rgba(39,170,225, .1);
-      margin-right: 50px;
       padding: 5px 10px;
       position: relative;
       border-radius: 10px;

@@ -1,3 +1,5 @@
+import { render } from "../render";
+
 const state = {
   profilePage: {
     posts: [
@@ -45,14 +47,14 @@ const state = {
 };
 
 export const addPost = (post) => {
-  debugger;
   const newPost = {
     id: 5,
     message: post,
     likeCount: 0
   };
 
-  state.profilePage.posts.push(newPost);
+  state.profilePage.posts.unshift(newPost);
+  render(state);
 }
 
 export default state;

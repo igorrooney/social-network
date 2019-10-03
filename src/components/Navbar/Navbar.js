@@ -41,7 +41,7 @@ const Navbar = (friends) => {
           Settings
         </NavLink>
       </div>
-      <Friends friends={friends}/>
+      <Friends friends={friends.state}/>
     </nav>
   );
 }
