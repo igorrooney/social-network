@@ -3,10 +3,16 @@ import { NavLink } from 'react-router-dom';
 
 import classes from './Dialogs.module.scss';
 
-const DialogItem = ({ name, id }) => {
+const DialogItem = ({ name, id, photo }) => {
   return (
     <div className={classes.dialog}>
-      <NavLink to={"/dialogs/" + id}>{name}</NavLink>
+      <NavLink to={"/dialogs/" + id} className={classes.user}>
+        <img src={photo} alt="photo"/>
+        <div className={classes.name}>
+        {name}
+        </div>
+        
+      </NavLink>
     </div>
   );
 }
@@ -17,31 +23,23 @@ const Message = ({ message }) => {
   );
 }
 
-const Dialogs = () => {
+const Dialogs = ({ state }) => {
 
-  const dialogsData = [
-    {id: "1", name: "Igor"},
-    {id: "2", name: "Olga",},
-    {id: "3", name: "Maksym"}
-  ];
+  const dialogItems = state.dialogs.map(item => {
+    return <DialogItem key={item.id} name={item.name} id={item.id} photo={item.photo} />
+  });
 
-  const messagesData = [
-    {id: "1", message: "Hi"},
-    {id: "2", message: "How are you doing?"},
-    {id: "3", message: "Hello!!!"}
-  ];
+  const messageItems = state.messages.map(item => {
+    return <Message key={item.id} message={item.message} id={item.id}/>
+  });
 
   return (
     <div className={classes.dialogs}>
       <div className={classes.dialogsItems}>
-        {dialogsData.map((item) => {
-          return <DialogItem key={item.id} name={item.name} id={item.id} />
-        })}       
+        {dialogItems}     
       </div>
       <div className={classes.messages}>
-        {messagesData.map((item) => {
-          return <Message key={item.id} message={item.message} id={item.id}/>
-        })}
+        {messageItems}
       </div>
     </div>
   );
