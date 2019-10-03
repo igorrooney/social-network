@@ -1,8 +1,8 @@
 .app-wrapper {
-  margin: 0 auto;
+  /* margin: 0 auto; */
   display: grid;
-  width: 1200px;
-  grid-template-areas: 
+  /* width: 1200px; */
+  grid-template-areas:
   "h h"
   "n c";
   grid-template-rows: 60px 1fr;
@@ -10,12 +10,12 @@
   /* grid-gap: 10px; */
   box-sizing: border-box;
 
-  max-width: 1050px;
+  /* max-width: 1050px;
   width: 1170px;
   padding-right: 10px;
   padding-left: 10px;
   margin-right: auto;
-  margin-left: auto;
+  margin-left: auto; */
 }
 
 .app-wrapper-content {

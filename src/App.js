@@ -13,10 +13,10 @@ import Settings from './components/Settings';
 const App = ({ state }) => {
   return (
     <BrowserRouter>
-      <div className='app-wrapper'>
+      <div className='app-wrapper container'>
         <Header />
         <Navbar  state={state.friends}/>
-        <div className="app-wrapper-content">
+        <div className="app-wrapper-content container-fluid">
         <Route path="/profile"  render={() => <Profile state={state.profilePage}/>} />  
         <Route path="/dialogs" render={() => <Dialogs state={state.messagesPage}/>
                                       }/>

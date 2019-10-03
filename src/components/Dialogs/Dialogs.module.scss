@@ -3,6 +3,14 @@
   grid-template-columns: 2fr 10fr;
   width: 100vh;
 
+  .addMessage {
+    display: flex;
+
+    button {
+      margin-left: 10px;
+    }
+  }
+
   .dialogsItems {
 
     height: auto;
@@ -42,6 +50,8 @@
         color: gold;
       }
     }
+
+
   }
 
   .messages {

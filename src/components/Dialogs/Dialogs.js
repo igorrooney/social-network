@@ -33,6 +33,14 @@ const Dialogs = ({ state }) => {
     return <Message key={item.id} message={item.message} id={item.id}/>
   });
 
+  const addMessageRef = React.createRef();
+  
+  const addMessage = () => {
+    const text = addMessageRef.current.value;
+    alert(text);
+  }
+
+
   return (
     <div className={classes.dialogs}>
       <div className={classes.dialogsItems}>
@@ -40,7 +48,16 @@ const Dialogs = ({ state }) => {
       </div>
       <div className={classes.messages}>
         {messageItems}
+        <div className={classes.addMessage}>
+          <textarea 
+            placeholder="Write your message"
+            ref={addMessageRef}></textarea>
+          <button 
+            className="btn btn-primary" 
+            onClick={ addMessage }>Add</button>
+        </div>
       </div>
+
     </div>
   );
 }

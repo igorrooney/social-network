@@ -16,12 +16,19 @@ const MyPosts = ({ postsData }) => {
             />
   });
 
+  const textareaRef = React.createRef();
+
+  const addPost = () => {
+    const text = textareaRef.current.value;
+    alert(text);
+  }
+
   return (
-    <div className={classes.wrapper}>
+    <div className={"container" + " " + classes.wrapper}>
       <h3>My posts</h3>
       <div className={classes.createPost}>
-        <textarea placeholder="Write what you wish"></textarea>
-        <button>Add post</button>
+        <textarea placeholder="Write what you wish" ref={textareaRef}></textarea>
+        <button className="btn btn-primary" onClick={ addPost }>Add post</button>
       </div>
       <div className={classes.posts}>
       {posts}
