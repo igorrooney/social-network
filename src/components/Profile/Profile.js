@@ -4,11 +4,14 @@ import classes from './Profile.module.scss';
 import MyPosts from './MyPosts';
 import ProfileInfo from './ProfileInfo';
 
-const Profile = ({ state }) => {
+const Profile = (props) => {
+  debugger;
   return(
     <div>
       <ProfileInfo />
-      <MyPosts postsData={state.posts} />
+      <MyPosts 
+        postsData={props.state.posts}
+        addPost={props.addPost} />
     </div>
   );
 }

@@ -38,6 +38,7 @@ const Dialogs = ({ state }) => {
   const addMessage = () => {
     const text = addMessageRef.current.value;
     alert(text);
+    addMessageRef.current.value = "";
   }
 
 
@@ -54,7 +55,7 @@ const Dialogs = ({ state }) => {
             ref={addMessageRef}></textarea>
           <button 
             className="btn btn-primary" 
-            onClick={ addMessage }>Add</button>
+            onClick={ addMessage }>Send message</button>
         </div>
       </div>
 
