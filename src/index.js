@@ -1,5 +1,19 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
 import './index.css';
-import state from './redux/state';
-import { render } from './render';
+import state, { addPost, updatePostText, addMessage, updateMessageText, subscribe} from './redux/state';
+import App from './App';
 
-render(state);
+
+const rerender = (state) => {
+
+  ReactDOM.render(<App 
+    state={state} 
+    addPost={addPost} 
+    updatePostText={updatePostText}
+    addMessage={addMessage}
+    updateMessageText={updateMessageText} />, document.getElementById('root'));
+}
+rerender(state);
+
+subscribe(rerender);

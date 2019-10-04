@@ -1,4 +1,6 @@
-import { render } from "../render";
+let rerender = () => {
+  console.log('State is changed');
+}
 
 const state = {
   profilePage: {
@@ -57,17 +59,17 @@ export const addPost = () => {
 
   state.profilePage.posts.unshift(newPost);
   state.profilePage.newTextPost = '';
-  render(state);
+  rerender(state);
 }
 
 export const updatePostText = (text) => {
   state.profilePage.newTextPost = text;
-  render(state);
+  rerender(state);
 }
 
 export const updateMessageText = (text) => {
   state.messagesPage.newMessageText = text;
-  render(state);
+  rerender(state);
 }
 
 export const addMessage = () => {
@@ -77,7 +79,11 @@ export const addMessage = () => {
   };
   state.messagesPage.messages.unshift(newMessage);
   state.messagesPage.newMessageText = '';
-  render(state);
+  rerender(state);
+}
+
+export const subscribe = (observer) => {
+  rerender = observer;
 }
 
 export default state;
