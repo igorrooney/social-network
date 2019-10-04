@@ -11,7 +11,8 @@ const state = {
       img: "https://i.ytimg.com/vi/aEvItEpMly8/maxresdefault.jpg",
       message: "It's my first post",
       likeCount: "1"}
-    ]
+    ],
+    newTextPost: 'Write your post'
   },
   messagesPage: {
     messages: [
@@ -23,13 +24,14 @@ const state = {
       {id: "1", name: "Igor", photo: "http://mythemestore.com/friend-finder/images/users/user-4.jpg"},
       {id: "2", name: "Olga", photo: "http://mythemestore.com/friend-finder/images/users/user-2.jpg"},
       {id: "3", name: "Maksym", photo: "http://mythemestore.com/friend-finder/images/users/user-8.jpg"}
-    ]
+    ],
+    newMessageText: 'Write your message'
   },
   friends: [
     { id: "1", 
       name: "Igor", 
       photo: "http://mythemestore.com/friend-finder/images/users/user-4.jpg", 
-      online: false
+      online: true
     },
     {
       id: "2", 
@@ -46,14 +48,35 @@ const state = {
   ]
 };
 
-export const addPost = (post) => {
+export const addPost = () => {
   const newPost = {
     id: 5,
-    message: post,
+    message: state.profilePage.newTextPost,
     likeCount: 0
   };
 
   state.profilePage.posts.unshift(newPost);
+  state.profilePage.newTextPost = '';
+  render(state);
+}
+
+export const updatePostText = (text) => {
+  state.profilePage.newTextPost = text;
+  render(state);
+}
+
+export const updateMessageText = (text) => {
+  state.messagesPage.newMessageText = text;
+  render(state);
+}
+
+export const addMessage = () => {
+  const newMessage = {
+    id: "4", 
+    message: state.messagesPage.newMessageText
+  };
+  state.messagesPage.messages.unshift(newMessage);
+  state.messagesPage.newMessageText = '';
   render(state);
 }
 

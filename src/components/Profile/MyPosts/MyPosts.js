@@ -5,7 +5,7 @@ import Post from './Post';
 
 
 
-const MyPosts = ({ postsData, addPost }) => {
+const MyPosts = ({ postsData, addPost, newTextPost, updatePostText }) => {
 
   const posts = postsData.map(post => {
     return <Post 
@@ -23,11 +23,15 @@ const MyPosts = ({ postsData, addPost }) => {
     addPost(text);
   }
 
+  const updatePostMessage = (event) => {
+    updatePostText(event.target.value);
+  }
+
   return (
     <div className={"container" + " " + classes.wrapper}>
       <h3>My posts</h3>
       <div className={classes.createPost}>
-        <textarea placeholder="Write what you wish" ref={textareaRef}></textarea>
+        <textarea onChange={ updatePostMessage } ref={textareaRef} value={newTextPost} />
         <button className="btn btn-primary" onClick={ createPost }>Add post</button>
       </div>
       <div className={classes.posts}>
