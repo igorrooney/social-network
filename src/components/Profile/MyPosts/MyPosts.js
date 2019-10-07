@@ -18,13 +18,7 @@ const MyPosts = ({ postsData, addPost, newTextPost, updatePostText }) => {
 
   const textareaRef = React.createRef();
 
-  const createPost = () => {
-    //const text = textareaRef.current.value;
-    addPost();
-  }
-
   const updatePostMessage = (event) => {
-    debugger;
     updatePostText(event.target.value);
   }
 
@@ -32,8 +26,8 @@ const MyPosts = ({ postsData, addPost, newTextPost, updatePostText }) => {
     <div className={"container" + " " + classes.wrapper}>
       <h3>My posts</h3>
       <div className={classes.createPost}>
-        <textarea onChange={(text) => updatePostMessage(text) } ref={textareaRef} value={newTextPost} />
-        <button className="btn btn-primary" onClick={ createPost }>Add post</button>
+        <textarea onChange={ updatePostMessage } ref={textareaRef} value={newTextPost} />
+        <button className="btn btn-primary" onClick={ addPost }>Add post</button>
       </div>
       <div className={classes.posts}>
       {posts}

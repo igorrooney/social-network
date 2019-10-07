@@ -145,7 +145,6 @@ let store = {
   },
 
   addPost() {
-    debugger;
     const newPost = {
       id: 5,
       message: this._state.profilePage.newTextPost,
@@ -156,9 +155,8 @@ let store = {
     this._rerender(this._state);
   },
 
-  updatePostText(text) {
-    debugger;
-    this._state.profilePage.newTextPost = text;
+  updatePostText(message) {
+    this._state.profilePage.newTextPost = message;
     this._rerender(this._state);
   },
 

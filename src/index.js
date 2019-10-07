@@ -9,8 +9,8 @@ const rerender = (state) => {
 
   ReactDOM.render(<App state={state} 
     addPost={() => store.addPost()}
-    updatePostText={() => store.updatePostText()}
-    updateMessageText={() => store.updateMessageText()}
+    updatePostText={(message) => store.updatePostText(message)}
+    updateMessageText={(message) => store.updateMessageText(message)}
     addMessage={() => store.addMessage()}
  />, document.getElementById('root'));
 }
