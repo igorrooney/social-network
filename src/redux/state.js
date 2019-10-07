@@ -1,3 +1,19 @@
+export const addPostActionCreator = () => ({type: ADD_POST});
+export const updatePostText = (text) => ({
+  type: UPDATE_POST_TEXT,
+  message: text});
+
+export const addMessageActionCreator = () => ({type: ADD_MESSAGE});
+export const updateMessageActionCreator = (text) => ({
+  type: UPDATE_MESSAGE_TEXT,
+  text
+});
+
+const ADD_POST = 'ADD-POST';
+const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
+const ADD_MESSAGE = 'ADD-MESSAGE';
+const UPDATE_MESSAGE_TEXT = 'UPDATE-MESSAGE-TEXT';
+
 let store = {
   _state: {
     profilePage: {
@@ -92,7 +108,7 @@ let store = {
   dispatch(action) {
 
     switch (action.type) {
-      case 'ADD-POST':
+      case ADD_POST:
         const newPost = {
           id: 5,
           message: this._state.profilePage.newTextPost,
@@ -103,12 +119,12 @@ let store = {
         this._callSubscriber(this._state);
         break;
 
-      case 'UPDATE-POST-TEXT':
+      case UPDATE_POST_TEXT:
           this._state.profilePage.newTextPost = action.message;
           this._callSubscriber(this._state);
           break;
 
-      case 'ADD-MESSAGE':
+      case ADD_MESSAGE:
         const newMessage = {
           id: "4", 
           message: this._state.messagesPage.newMessageText
@@ -118,7 +134,7 @@ let store = {
         this._callSubscriber(this._state);
         break;
       
-      case 'UPDATE-MESSAGE-TEXT':
+      case UPDATE_MESSAGE_TEXT:
         this._state.messagesPage.newMessageText = action.text;
         this._callSubscriber(this._state);
         break;

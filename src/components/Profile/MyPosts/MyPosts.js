@@ -2,6 +2,7 @@ import React from 'react';
 
 import classes from './MyPosts.module.scss';
 import Post from './Post';
+import { addPostActionCreator, updatePostText } from '../../../redux/state';
 
 
 
@@ -19,17 +20,11 @@ const MyPosts = ({ postsData, newTextPost, dispatch }) => {
   const textareaRef = React.createRef();
 
   const addPostMessage = () => {
-    dispatch({
-      type: 'ADD-POST'
-    });
+    dispatch(addPostActionCreator());
   }
 
   const updatePostMessage = (event) => {
-    dispatch({
-      type: 'UPDATE-POST-TEXT',
-      message: event.target.value
-  });
-    //updatePostText(event.target.value);
+    dispatch(updatePostText(event.target.value));
   }
 
   return (

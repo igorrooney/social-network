@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import classes from './Dialogs.module.scss';
+import { addMessageActionCreator, updateMessageActionCreator } from '../../redux/state';
 
 const DialogItem = ({ name, id, photo }) => {
   return (
@@ -36,17 +37,11 @@ const Dialogs = ({ state, dispatch }) => {
   const addMessageRef = React.createRef();
 
   const addMessage = () => {
-    dispatch({
-      type: 'ADD-MESSAGE'
-    });
+    dispatch(addMessageActionCreator());
   }
 
   const updateMessage = () => {
-    dispatch({
-      type: 'UPDATE-MESSAGE-TEXT',
-      text: addMessageRef.current.value
-    });
-    //updateMessageText(addMessageRef.current.value);
+    dispatch(updateMessageActionCreator(addMessageRef.current.value));
   }
   
   return (
