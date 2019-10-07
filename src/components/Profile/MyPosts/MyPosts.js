@@ -5,7 +5,7 @@ import Post from './Post';
 
 
 
-const MyPosts = ({ postsData, addPost, newTextPost, updatePostText }) => {
+const MyPosts = ({ postsData, newTextPost, dispatch }) => {
 
   const posts = postsData.map(post => {
     return <Post 
@@ -18,8 +18,18 @@ const MyPosts = ({ postsData, addPost, newTextPost, updatePostText }) => {
 
   const textareaRef = React.createRef();
 
+  const addPostMessage = () => {
+    dispatch({
+      type: 'ADD-POST'
+    });
+  }
+
   const updatePostMessage = (event) => {
-    updatePostText(event.target.value);
+    dispatch({
+      type: 'UPDATE-POST-TEXT',
+      message: event.target.value
+  });
+    //updatePostText(event.target.value);
   }
 
   return (
@@ -27,7 +37,7 @@ const MyPosts = ({ postsData, addPost, newTextPost, updatePostText }) => {
       <h3>My posts</h3>
       <div className={classes.createPost}>
         <textarea onChange={ updatePostMessage } ref={textareaRef} value={newTextPost} />
-        <button className="btn btn-primary" onClick={ addPost }>Add post</button>
+  <button className="btn btn-primary" onClick={ addPostMessage }>Add post</button>
       </div>
       <div className={classes.posts}>
       {posts}

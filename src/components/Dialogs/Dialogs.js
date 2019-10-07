@@ -23,7 +23,7 @@ const Message = ({ message }) => {
   );
 }
 
-const Dialogs = ({ state, updateMessageText, addMessage }) => {
+const Dialogs = ({ state, dispatch }) => {
 
   const dialogItems = state.dialogs.map(item => {
     return <DialogItem key={item.id} name={item.name} id={item.id} photo={item.photo} />
@@ -35,8 +35,18 @@ const Dialogs = ({ state, updateMessageText, addMessage }) => {
 
   const addMessageRef = React.createRef();
 
-  const createMessage = () => {
-    updateMessageText(addMessageRef.current.value);
+  const addMessage = () => {
+    dispatch({
+      type: 'ADD-MESSAGE'
+    });
+  }
+
+  const updateMessage = () => {
+    dispatch({
+      type: 'UPDATE-MESSAGE-TEXT',
+      text: addMessageRef.current.value
+    });
+    //updateMessageText(addMessageRef.current.value);
   }
   
   return (
@@ -48,7 +58,7 @@ const Dialogs = ({ state, updateMessageText, addMessage }) => {
         {messageItems}
         <div className={classes.addMessage}>
           <textarea 
-            onChange={ createMessage }
+            onChange={ updateMessage }
             value={state.newMessageText}
             ref={addMessageRef} />
           <button 

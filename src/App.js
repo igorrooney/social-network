@@ -10,7 +10,7 @@ import News from './components/News';
 import Music from './components/Music';
 import Settings from './components/Settings';
 
-const App = ({ state, addPost, updatePostText, updateMessageText, addMessage }) => {
+const App = ({ state, dispatch }) => {
   return (
     <BrowserRouter>
       <div className='app-wrapper container'>
@@ -19,15 +19,14 @@ const App = ({ state, addPost, updatePostText, updateMessageText, addMessage }) 
         <div className="app-wrapper-content container-fluid">
         <Route path="/profile"  render={() => <Profile 
           state={state.profilePage}
-          addPost={addPost}
-          updatePostText={updatePostText} />
+          dispatch={dispatch} />
         } />
            
         <Route path="/dialogs" render={() => 
             <Dialogs
               state={state.messagesPage}
-              updateMessageText={updateMessageText}
-              addMessage={addMessage} />}/>
+              dispatch={dispatch} />
+        } />
         <Route path="/news" component={News} />
         <Route path="/music" component={Music} />
         <Route path="/settings" component={Settings} />  
