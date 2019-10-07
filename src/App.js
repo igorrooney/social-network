@@ -10,24 +10,24 @@ import News from './components/News';
 import Music from './components/Music';
 import Settings from './components/Settings';
 
-const App = (props) => {
+const App = ({ state, addPost, updatePostText, updateMessageText, addMessage }) => {
   return (
     <BrowserRouter>
       <div className='app-wrapper container'>
         <Header />
-        <Navbar state={props.state.friends}/>
+        <Navbar state={state.friends}/>
         <div className="app-wrapper-content container-fluid">
         <Route path="/profile"  render={() => <Profile 
-          state={props.state.profilePage}
-          addPost={props.addPost}
-          updatePostText={props.updatePostText} />
+          state={state.profilePage}
+          addPost={addPost}
+          updatePostText={updatePostText} />
         } />
            
         <Route path="/dialogs" render={() => 
             <Dialogs
-              state={props.state.messagesPage}
-              updateMessageText={props.updateMessageText}
-              addMessage={props.addMessage} />}/>
+              state={state.messagesPage}
+              updateMessageText={updateMessageText}
+              addMessage={addMessage} />}/>
         <Route path="/news" component={News} />
         <Route path="/music" component={Music} />
         <Route path="/settings" component={Settings} />  
