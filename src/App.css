@@ -1,30 +1,24 @@
 .app-wrapper {
-  margin: 0 auto;
+  /* margin: 0 auto; */
   display: grid;
-  width: 1200px;
-  grid-template-areas: 
+  /* width: 1200px; */
+  grid-template-areas:
   "h h"
   "n c";
   grid-template-rows: 60px 1fr;
   grid-template-columns: 2fr 10fr;
   /* grid-gap: 10px; */
+  box-sizing: border-box;
+
+  /* max-width: 1050px;
+  width: 1170px;
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-right: auto;
+  margin-left: auto; */
 }
 
-.header {
-  grid-area: h;
-  background-color: green;
-}
-
-.header img {
-  width: 40px;
-}
-
-.nav {
-  grid-area: n;
-  background-color: burlywood;
-}
-
-.content {
-  grid-area: c;
-  background-color: cornflowerblue;
+.app-wrapper-content {
+    grid-area: c;
+    /* background-color: cornflowerblue; */
 }
