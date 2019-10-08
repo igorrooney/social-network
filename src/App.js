@@ -15,7 +15,7 @@ const App = ({state, dispatch}) => {
     <BrowserRouter>
       <div className="app-wrapper container">
         <Header/>
-        <Navbar state={state.friends}/>
+        <Navbar state={state.friendsBlock}/>
         <div className="app-wrapper-content container-fluid">
           <Route
             path="/profile"
@@ -23,7 +23,7 @@ const App = ({state, dispatch}) => {
 
           <Route
             path="/dialogs"
-            render={() => <Dialogs state={state.messagesPage} dispatch={dispatch}/>}/>
+            render={() => <Dialogs state={state.dialogsPage} dispatch={dispatch}/>}/>
           <Route path="/news" component={News}/>
           <Route path="/music" component={Music}/>
           <Route path="/settings" component={Settings}/>

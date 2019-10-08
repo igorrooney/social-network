@@ -1,14 +1,17 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 import classes from './friend.module.scss';
 
-const Friend = ({ friend }) => {
+const Friend = ({friend}) => {
 
   let status = [classes.onlineDot];
 
   if (!friend.online) {
-    status = [...status, classes.offlineDot];
+    status = [
+      ...status,
+      classes.offlineDot
+    ];
   }
 
   return (

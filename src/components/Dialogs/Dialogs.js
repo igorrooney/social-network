@@ -25,7 +25,6 @@ const Message = ({message}) => {
 }
 
 const Dialogs = ({state, dispatch}) => {
-
   const dialogItems = state
     .dialogs
     .map(item => {
