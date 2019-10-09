@@ -9,18 +9,16 @@ import DialogsContainer from './components/Dialogs/DialogsContainer';
 import News from './components/News';
 import Music from './components/Music';
 import Settings from './components/Settings';
+import NavbarContainer from './components/Navbar/NavbarContainer';
 
 const App = () => {
   return (
     <div className="app-wrapper container">
       <Header/>
-      <Navbar />
+      <NavbarContainer />
       <div className="app-wrapper-content container-fluid">
         <Route path="/profile" render={() => <Profile />}/>
-
-        <Route
-          path="/dialogs"
-          render={() => <DialogsContainer />}/>
+        <Route path="/dialogs" render={() => <DialogsContainer />}/>
         <Route path="/news" component={News}/>
         <Route path="/music" component={Music}/>
         <Route path="/settings" component={Settings}/>

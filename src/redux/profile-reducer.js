@@ -19,6 +19,7 @@ const initialState = {
 };
 
 const profileReducer = (state = initialState, action) => {
+  let newState = {...state};
   switch (action.type) {
     case ADD_POST:
       const newPost = {
@@ -26,13 +27,13 @@ const profileReducer = (state = initialState, action) => {
         message: state.newTextPost,
         likeCount: 0
       };
-      state.posts.unshift(newPost);
+      newState.posts.unshift(newPost);
       state.newTextPost = '';
-      return state;
+      return {...state, newState};
 
     case UPDATE_POST_TEXT:
-      state.newTextPost = action.message;
-      return state;
+      newState.newTextPost = action.message;
+      return {...state, ...newState};
 
     default:
       return state;

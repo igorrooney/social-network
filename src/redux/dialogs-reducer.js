@@ -33,6 +33,7 @@ const initialState = {
 };
 
 const dialogsReducer = (state = initialState, action) => {
+  let newState = {...state};
   switch (action.type) {
 
     case ADD_MESSAGE:
@@ -40,15 +41,14 @@ const dialogsReducer = (state = initialState, action) => {
         id: 4,
         message: state.newMessageText
       };
-      state
-        .messages
-        .unshift(newMessage);
+      newState.messages.unshift(newMessage);
       state.newMessageText = '';
-      return state;
+      return {...state, newState};
 
     case UPDATE_MESSAGE_TEXT:
-      state.newMessageText = action.text;
-      return state;
+      
+      newState.newMessageText = action.text;
+      return {...state, ...newState};
 
     default:
       return state;
