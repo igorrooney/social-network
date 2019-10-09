@@ -1,8 +1,7 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
 
+import {NavLink} from 'react-router-dom';
 import classes from './Dialogs.module.scss';
-import {addMessageActionCreator, updateMessageActionCreator} from '../../redux/dialogs-reducer';
 
 const DialogItem = ({name, id, photo}) => {
   return (
@@ -24,7 +23,7 @@ const Message = ({message}) => {
   );
 }
 
-const Dialogs = ({state, dispatch}) => {
+const Dialogs = ({state, addMessage, updateMessage}) => {
   const dialogItems = state
     .dialogs
     .map(item => {
@@ -37,12 +36,14 @@ const Dialogs = ({state, dispatch}) => {
       return <Message key={item.id} message={item.message} id={item.id}/>
     });
 
-  const addMessage = () => {
-    dispatch(addMessageActionCreator());
+  const onAddMessage = () => {
+    addMessage();
+    //dispatch(addMessageActionCreator());
   }
 
-  const updateMessage = (event) => {
-    dispatch(updateMessageActionCreator(event.target.value));
+  const onUpdateMessage = (event) => {
+    updateMessage(event.target.value);
+    //dispatch(updateMessageActionCreator(event.target.value));
   }
 
   return (
@@ -53,8 +54,8 @@ const Dialogs = ({state, dispatch}) => {
       <div className={classes.messages}>
         {messageItems}
         <div className={classes.addMessage}>
-          <textarea onChange={updateMessage} value={state.newMessageText}/>
-          <button className="btn btn-primary" onClick={addMessage}>Send message</button>
+          <textarea onChange={onUpdateMessage} value={state.newMessageText}/>
+          <button className="btn btn-primary" onClick={onAddMessage}>Send message</button>
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 import profileReducer from "./profile-reducer";
-import dialogsReducer from "./dialogs-reducer";
-
+import dialogsReducer from
+"./dialogs-reducer";
 let store = {
   _state: {
     profilePage: {
@@ -68,19 +68,15 @@ let store = {
       }
     ]
   },
-
   _callSubscriber() {
     console.log('State is changed');
   },
-
   getState() {
     return this._state;
   },
-
   subscribe(observer) {
     this._callSubscriber = observer;
   },
-
   addPost() {
     const newPost = {
       id: 5,
@@ -95,17 +91,14 @@ let store = {
     this._state.profilePage.newTextPost = '';
     this._callSubscriber(this._state);
   },
-
   updatePostText(message) {
     this._state.profilePage.newTextPost = message;
     this._callSubscriber(this._state);
   },
-
   updateMessageText(text) {
     this._state.messagesPage.newMessageText = text;
     this._callSubscriber(this._state);
   },
-
   addMessage() {
     const newMessage = {
       id: "4",
@@ -119,14 +112,10 @@ let store = {
     this._state.messagesPage.newMessageText = '';
     this._callSubscriber(this._state);
   },
-
   dispatch(action) {
-
     this._state.profilePage = profileReducer(this._state.profilePage, action);
     this._state.messagesPage = dialogsReducer(this._state.messagesPage, action);
-
     this._callSubscriber(this._state);
   }
 };
-
 export default store;

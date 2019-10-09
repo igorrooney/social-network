@@ -5,14 +5,12 @@ import App from './App';
 import store from './redux/redux-store';
 
 const rerender = (state) => {
-
   ReactDOM.render(
-    <App state={state} dispatch={store
-    .dispatch
-    .bind(store)}/>, document.getElementById('root'));
+    <App state={state} dispatch={store.dispatch.bind(store)} store={store}/>, document.getElementById('root'));
 }
 rerender(store.getState());
 
 store.subscribe(() => {
-  rerender(store.getState())
+  const state = store.getState();
+  rerender(store.getState(state))
 });

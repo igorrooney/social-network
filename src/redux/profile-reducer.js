@@ -26,9 +26,7 @@ const profileReducer = (state = initialState, action) => {
         message: state.newTextPost,
         likeCount: 0
       };
-      state
-        .posts
-        .unshift(newPost);
+      state.posts.unshift(newPost);
       state.newTextPost = '';
       return state;
 
@@ -42,6 +40,6 @@ const profileReducer = (state = initialState, action) => {
 }
 
 export const addPostActionCreator = () => ({type: ADD_POST});
-export const updatePostText = (text) => ({type: UPDATE_POST_TEXT, message: text});
+export const updatePostTextActionCreator = (text) => ({type: UPDATE_POST_TEXT, message: text});
 
 export default profileReducer;
