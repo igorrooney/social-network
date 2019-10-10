@@ -1,20 +1,20 @@
-import profileReducer from "./profile-reducer";
-import dialogsReducer from
-"./dialogs-reducer";
+import profileReducer from './profile-reducer';
+import dialogsReducer from './dialogs-reducer';
 let store = {
   _state: {
     profilePage: {
       posts: [
         {
-          id: "1",
-          img: "https://i.ytimg.com/vi/aEvItEpMly8/maxresdefault.jpg",
-          message: "Hi, how are you?",
-          likeCount: "5"
-        }, {
-          id: "12",
-          img: "https://i.ytimg.com/vi/aEvItEpMly8/maxresdefault.jpg",
+          id: '1',
+          img: 'https://i.ytimg.com/vi/aEvItEpMly8/maxresdefault.jpg',
+          message: 'Hi, how are you?',
+          likeCount: '5'
+        },
+        {
+          id: '12',
+          img: 'https://i.ytimg.com/vi/aEvItEpMly8/maxresdefault.jpg',
           message: "It's my first post",
-          likeCount: "1"
+          likeCount: '1'
         }
       ],
       newTextPost: 'Write your post'
@@ -22,48 +22,54 @@ let store = {
     messagesPage: {
       messages: [
         {
-          id: "1",
-          message: "Hi"
-        }, {
-          id: "2",
-          message: "How are you doing?"
-        }, {
-          id: "3",
-          message: "Hello!!!"
+          id: '1',
+          message: 'Hi'
+        },
+        {
+          id: '2',
+          message: 'How are you doing?'
+        },
+        {
+          id: '3',
+          message: 'Hello!!!'
         }
       ],
       dialogs: [
         {
-          id: "1",
-          name: "Igor",
-          photo: "http://mythemestore.com/friend-finder/images/users/user-4.jpg"
-        }, {
-          id: "2",
-          name: "Olga",
-          photo: "http://mythemestore.com/friend-finder/images/users/user-2.jpg"
-        }, {
-          id: "3",
-          name: "Maksym",
-          photo: "http://mythemestore.com/friend-finder/images/users/user-8.jpg"
+          id: '1',
+          name: 'Igor',
+          photo: 'http://mythemestore.com/friend-finder/images/users/user-4.jpg'
+        },
+        {
+          id: '2',
+          name: 'Olga',
+          photo: 'http://mythemestore.com/friend-finder/images/users/user-2.jpg'
+        },
+        {
+          id: '3',
+          name: 'Maksym',
+          photo: 'http://mythemestore.com/friend-finder/images/users/user-8.jpg'
         }
       ],
       newMessageText: 'Write your message'
     },
     friends: [
       {
-        id: "1",
-        name: "Igor",
-        photo: "http://mythemestore.com/friend-finder/images/users/user-4.jpg",
+        id: '1',
+        name: 'Igor',
+        photo: 'http://mythemestore.com/friend-finder/images/users/user-4.jpg',
         online: true
-      }, {
-        id: "2",
-        name: "Olga",
-        photo: "http://mythemestore.com/friend-finder/images/users/user-2.jpg",
+      },
+      {
+        id: '2',
+        name: 'Olga',
+        photo: 'http://mythemestore.com/friend-finder/images/users/user-2.jpg',
         online: true
-      }, {
-        id: "3",
-        name: "Maksym",
-        photo: "http://mythemestore.com/friend-finder/images/users/user-8.jpg",
+      },
+      {
+        id: '3',
+        name: 'Maksym',
+        photo: 'http://mythemestore.com/friend-finder/images/users/user-8.jpg',
         online: false
       }
     ]
@@ -83,11 +89,7 @@ let store = {
       message: this._state.profilePage.newTextPost,
       likeCount: 0
     };
-    this
-      ._state
-      .profilePage
-      .posts
-      .unshift(newPost);
+    this._state.profilePage.posts.unshift(newPost);
     this._state.profilePage.newTextPost = '';
     this._callSubscriber(this._state);
   },
@@ -101,14 +103,10 @@ let store = {
   },
   addMessage() {
     const newMessage = {
-      id: "4",
+      id: '4',
       message: this._state.messagesPage.newMessageText
     };
-    this
-      ._state
-      .messagesPage
-      .messages
-      .unshift(newMessage);
+    this._state.messagesPage.messages.unshift(newMessage);
     this._state.messagesPage.newMessageText = '';
     this._callSubscriber(this._state);
   },

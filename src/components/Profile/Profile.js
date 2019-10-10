@@ -4,13 +4,13 @@ import classes from './Profile.module.scss';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import ProfileInfo from './ProfileInfo';
 
-const Profile = (props) => {
+const Profile = props => {
   return (
     <div>
-      <ProfileInfo/>
-      <MyPostsContainer store={props.store}/>
+      <ProfileInfo />
+      <MyPostsContainer store={props.store} />
     </div>
   );
-}
+};
 
 export default Profile;

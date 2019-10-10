@@ -14,17 +14,17 @@ import NavbarContainer from './components/Navbar/NavbarContainer';
 const App = () => {
   return (
     <div className="app-wrapper container">
-      <Header/>
+      <Header />
       <NavbarContainer />
       <div className="app-wrapper-content container-fluid">
-        <Route path="/profile" render={() => <Profile />}/>
-        <Route path="/dialogs" render={() => <DialogsContainer />}/>
-        <Route path="/news" component={News}/>
-        <Route path="/music" component={Music}/>
-        <Route path="/settings" component={Settings}/>
+        <Route path="/profile" render={() => <Profile />} />
+        <Route path="/dialogs" render={() => <DialogsContainer />} />
+        <Route path="/news" component={News} />
+        <Route path="/music" component={Music} />
+        <Route path="/settings" component={Settings} />
       </div>
     </div>
   );
-}
+};
 
 export default App;
