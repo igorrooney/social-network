@@ -5,7 +5,6 @@ import {
   updateMessageActionCreator
 } from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
-import StoreContext from '../../storeContext';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => {

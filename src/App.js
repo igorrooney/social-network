@@ -10,6 +10,7 @@ import News from './components/News';
 import Music from './components/Music';
 import Settings from './components/Settings';
 import NavbarContainer from './components/Navbar/NavbarContainer';
+import UsersContainer from './components/Users/usersContainer';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
       <div className="app-wrapper-content container-fluid">
         <Route path="/profile" render={() => <Profile />} />
         <Route path="/dialogs" render={() => <DialogsContainer />} />
+        <Route path="/users" render={() => <UsersContainer />} />
         <Route path="/news" component={News} />
         <Route path="/music" component={Music} />
         <Route path="/settings" component={Settings} />
