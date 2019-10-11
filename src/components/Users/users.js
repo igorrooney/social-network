@@ -1,5 +1,7 @@
 import React from 'react';
 import classes from './users.module.scss';
+import * as axios from 'axios';
+import userPhoto from '../../assets/images/user.jpg';
 
 const User = props => {
   return (
@@ -8,13 +10,13 @@ const User = props => {
         <div className="col-md-2 col-sm-2">
           <img
             className={classes.profilePhoto}
-            src={props.user.photoAvatar}
+            src={props.user.photoAvatar || userPhoto}
             alt="avatar"
           />
         </div>
         <div className="col-md-7 col-sm-7">
-          <h5>{props.user.fullName}</h5>
-          <p>{props.user.currentJob}</p>
+          <h5>{props.user.name}</h5>
+          <p>{props.user.status}</p>
         </div>
         <div className="col-md-3 col-sm-3">
           {props.user.followed ? (
@@ -39,46 +41,10 @@ const User = props => {
 };
 
 const Users = props => {
-  debugger;
   if (props.users.length === 0) {
-    props.setUsers([
-      {
-        id: 1,
-        photoAvatar:
-          'http://mythemestore.com/friend-finder/images/users/user-15.jpg',
-        fullName: 'Sophia Page',
-        currentJob: 'Software Engineer',
-        followed: true,
-        location: {
-          city: 'Kyiv',
-          country: 'Ukraine'
-        }
-      },
-      {
-        id: 2,
-        photoAvatar:
-          'http://mythemestore.com/friend-finder/images/users/user-16.jpg',
-        fullName: 'Emma Johnson',
-        currentJob: 'Model at Fashion',
-        followed: false,
-        location: {
-          city: 'Kharkiv',
-          country: 'Ukraine'
-        }
-      },
-      {
-        id: 3,
-        photoAvatar:
-          'http://mythemestore.com/friend-finder/images/users/user-17.jpg',
-        fullName: 'Nora Wilson',
-        currentJob: 'Writer at Newspaper',
-        followed: true,
-        location: {
-          city: 'Lviv',
-          country: 'Ukraine'
-        }
-      }
-    ]);
+    axios
+      .get('https://social-network.samuraijs.com/api/1.0/users')
+      .then(response => props.setUsers(response.data.items));
   }
   return (
     <div className={classes.users}>
