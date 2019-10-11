@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classes from './users.module.scss';
 import * as axios from 'axios';
 import userPhoto from '../../assets/images/user.jpg';
@@ -11,7 +11,7 @@ const User = props => {
           <img
             className={classes.profilePhoto}
             src={props.user.photoAvatar || userPhoto}
-            alt="avatar"
+            alt="userPhoto"
           />
         </div>
         <div className="col-md-7 col-sm-7">
@@ -40,23 +40,27 @@ const User = props => {
   );
 };
 
-const Users = props => {
-  if (props.users.length === 0) {
+class Users extends Component {
+  constructor(props) {
+    super(props);
     axios
       .get('https://social-network.samuraijs.com/api/1.0/users')
-      .then(response => props.setUsers(response.data.items));
+      .then(response => this.props.setUsers(response.data.items));
   }
-  return (
-    <div className={classes.users}>
-      {props.users.map(user => (
-        <User
-          key={user.id}
-          user={user}
-          unfollow={props.unfollow}
-          follow={props.follow}
-        />
-      ))}
-    </div>
-  );
-};
+
+  render() {
+    return (
+      <div className={classes.users}>
+        {this.props.users.map(user => (
+          <User
+            key={user.id}
+            user={user}
+            unfollow={this.props.unfollow}
+            follow={this.props.follow}
+          />
+        ))}
+      </div>
+    );
+  }
+}
 export default Users;
