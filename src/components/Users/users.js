@@ -40,72 +40,57 @@ const User = props => {
   );
 };
 
-class Users extends Component {
-  componentDidMount() {
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
-      )
-      .then(response => {
-        this.props.setUsers(response.data.items);
-        this.props.setTotalCountPages(response.data.totalCount);
-      });
+const Users = props => {
+  const pages = Math.ceil(props.totalCount / props.pageSize);
+  let pagesCount = [];
+
+  for (let i = 1; i <= pages; i++) {
+    pagesCount.push(i);
   }
 
-  onSetCurrentPage = page => {
-    this.props.setCurrentPage(page);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`
-      )
-      .then(response => {
-        this.props.setUsers(response.data.items);
-        this.props.setTotalCountPages(response.data.totalCount);
-      });
-  };
-
-  render() {
-    const pages = Math.ceil(this.props.totalCount / this.props.pageSize);
-    let pagesCount = [];
-
-    for (let i = 1; i <= pages; i++) {
-      pagesCount.push(i);
-    }
-
+  let renderUsers = props.users.map(user => {
     return (
-      <div className={classes.users}>
-        <nav aria-label="Page navigation">
-          <ul className="pagination">
-            {pagesCount.map(page => {
-              return (
-                <li
-                  key={page}
-                  className="page-item"
-                  onClick={() => this.onSetCurrentPage(page)}
-                >
-                  <a
-                    className={`page-link ${page === this.props.currentPage &&
-                      classes.paginationActive}`}
-                    href="#"
-                  >
-                    {page}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-        {this.props.users.map(user => (
-          <User
-            key={user.id}
-            user={user}
-            unfollow={this.props.unfollow}
-            follow={this.props.follow}
-          />
-        ))}{' '}
+      <div>
+        <User
+          key={user.id}
+          user={user}
+          unfollow={props.unfollow}
+          follow={props.follow}
+        />
       </div>
     );
-  }
-}
+  });
+
+  const pagination = (
+    <nav aria-label="Page navigation">
+      <ul className="pagination">
+        {pagesCount.map(page => {
+          return (
+            <li
+              key={page}
+              className="page-item"
+              onClick={() => props.onSetCurrentPage(page)}
+            >
+              <a
+                className={`page-link ${page === props.currentPage &&
+                  classes.paginationActive}`}
+                href="#"
+              >
+                {page}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  );
+
+  return (
+    <div>
+      {pagination}
+      {renderUsers}
+    </div>
+  );
+};
 
 export default Users;
