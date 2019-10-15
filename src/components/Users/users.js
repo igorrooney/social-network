@@ -50,14 +50,12 @@ const Users = props => {
 
   let renderUsers = props.users.map(user => {
     return (
-      <div>
-        <User
-          key={user.id}
-          user={user}
-          unfollow={props.unfollow}
-          follow={props.follow}
-        />
-      </div>
+      <User
+        key={user.id}
+        user={user}
+        unfollow={props.unfollow}
+        follow={props.follow}
+      />
     );
   });
 

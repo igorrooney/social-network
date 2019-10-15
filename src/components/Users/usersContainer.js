@@ -6,17 +6,21 @@ import {
   unFollowActionCreator,
   setUsersActionCreator,
   setTotalCountPagesActionCreator,
-  setCurrentPageActionCreator
+  setCurrentPageActionCreator,
+  setIsLoadingActionCreator
 } from '../../redux/users-reducer';
 import * as axios from 'axios';
+import Spinner from '../Spinner';
 
 class UsersContainer extends Component {
   componentDidMount() {
+    this.props.setIsLoading(true);
     axios
       .get(
         `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
       )
       .then(response => {
+        this.props.setIsLoading(false);
         this.props.setUsers(response.data.items);
         this.props.setTotalCountPages(response.data.totalCount);
       });
@@ -24,18 +28,20 @@ class UsersContainer extends Component {
 
   onSetCurrentPage = page => {
     this.props.setCurrentPage(page);
+    this.props.setIsLoading(true);
     axios
       .get(
         `https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`
       )
       .then(response => {
+        this.props.setIsLoading(false);
         this.props.setUsers(response.data.items);
         this.props.setTotalCountPages(response.data.totalCount);
       });
   };
 
   render() {
-    return (
+    const users = (
       <Users
         totalCount={this.props.totalCount}
         pageSize={this.props.pageSize}
@@ -46,6 +52,8 @@ class UsersContainer extends Component {
         onSetCurrentPage={this.onSetCurrentPage}
       />
     );
+
+    return this.props.isLoading ? <Spinner /> : users;
   }
 }
 
@@ -54,7 +62,8 @@ const mapStateToProps = state => {
     users: state.usersPage.users,
     currentPage: state.usersPage.currentPage,
     totalCount: state.usersPage.totalCount,
-    pageSize: state.usersPage.pageSize
+    pageSize: state.usersPage.pageSize,
+    isLoading: state.usersPage.isLoading
   };
 };
 
@@ -65,7 +74,8 @@ const mapDispatchToProps = dispatch => {
     setUsers: users => dispatch(setUsersActionCreator(users)),
     setTotalCountPages: pages =>
       dispatch(setTotalCountPagesActionCreator(pages)),
-    setCurrentPage: page => dispatch(setCurrentPageActionCreator(page))
+    setCurrentPage: page => dispatch(setCurrentPageActionCreator(page)),
+    setIsLoading: isLoading => dispatch(setIsLoadingActionCreator(isLoading))
   };
 };
 
