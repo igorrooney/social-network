@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Users from './users';
 import {
-  followActionCreator,
-  unFollowActionCreator,
-  setUsersActionCreator,
-  setTotalCountPagesActionCreator,
-  setCurrentPageActionCreator,
-  setIsLoadingActionCreator
+  follow,
+  unfollow,
+  setUsers,
+  setTotalCountPages,
+  setCurrentPage,
+  setIsLoading
 } from '../../redux/users-reducer';
 import * as axios from 'axios';
 import Spinner from '../Spinner';
@@ -67,19 +67,22 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    follow: userId => dispatch(followActionCreator(userId)),
-    unfollow: userId => dispatch(unFollowActionCreator(userId)),
-    setUsers: users => dispatch(setUsersActionCreator(users)),
-    setTotalCountPages: pages =>
-      dispatch(setTotalCountPagesActionCreator(pages)),
-    setCurrentPage: page => dispatch(setCurrentPageActionCreator(page)),
-    setIsLoading: isLoading => dispatch(setIsLoadingActionCreator(isLoading))
-  };
-};
+// const mapDispatchToProps = dispatch => {   return {     follow: userId =>
+// dispatch(followActionCreator(userId)),     unfollow: userId =>
+// dispatch(unFollowActionCreator(userId)),     setUsers: users =>
+// dispatch(setUsersActionCreator(users)),     setTotalCountPages: pages =>
+//  dispatch(setTotalCountPagesActionCreator(pages)),     setCurrentPage: page
+// => dispatch(setCurrentPageActionCreator(page)),     setIsLoading: isLoading
+// => dispatch(setIsLoadingActionCreator(isLoading))   }; };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    follow,
+    unfollow,
+    setUsers,
+    setTotalCountPages,
+    setCurrentPage,
+    setIsLoading
+  }
 )(UsersContainer);

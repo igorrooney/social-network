@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React from 'react';
 import classes from './users.module.scss';
-import * as axios from 'axios';
 import userPhoto from '../../assets/images/user.jpg';
 
 const User = props => {
