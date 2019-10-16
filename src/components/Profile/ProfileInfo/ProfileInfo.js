@@ -2,6 +2,7 @@ import React from 'react';
 
 import classes from './ProfileInfo.module.scss';
 import Spinner from '../../Spinner';
+import userPhoto from '../../../assets/images/user.jpg';
 
 const ProfileInfo = props => {
   if (!props.profile) {
@@ -15,10 +16,7 @@ const ProfileInfo = props => {
           <div className="col-md-3">
             <div className={classes.profileInfo}>
               <img
-                src={
-                  props.profile.photos.large ||
-                  'https://iisy.fi/wp-content/uploads/2018/08/user-profile-male-logo.jpg'
-                }
+                src={props.profile.photos.large || userPhoto}
                 alt=""
                 className={'img-responsive ' + classes.profilePhoto}
               />
@@ -30,7 +28,7 @@ const ProfileInfo = props => {
           <div className="col-md-9">
             <ul className={'list-inline ' + classes.profileMenu}>
               <li>
-                <a href="timeline.html" class="active">
+                <a href="timeline.html" className="active">
                   Timeline
                 </a>
               </li>
