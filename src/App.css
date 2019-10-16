@@ -23,6 +23,28 @@
   /* background-color: cornflowerblue; */
 }
 
-h5 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #27aae1;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+.btn-primary {
+  background: #27aae1;
+  padding: 7px 25px;
+  border: none;
+  font-size: 14px;
+  border-radius: 4px;
+  color: #fff;
+  position: relative;
+  font-weight: 600;
+  outline: none;
+  border-radius: 30px;
 }

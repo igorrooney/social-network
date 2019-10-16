@@ -1,4 +1,4 @@
-.wrapper {
+.timelineCover {
   background: url("https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500") no-repeat;
   background-position: center;
   background-size: cover;
@@ -10,14 +10,71 @@
     position: absolute;
     text-align: center;
     padding: 0 20px;
-    top: 160px;
+    top: -100px;
     z-index: 999;
 
-    img {
+    .profilePhoto {
       height: 200px;
       width: 200px;
       border-radius: 50%;
       border: 10px solid #fff;
     }
   }
+
+  .timelineNavBar {
+    background: rgba(0, 0, 0, .7);
+    width: 100%;
+    position: absolute;
+    bottom: 25px;
+  }
+}
+
+.profileMenu {
+  margin: 0;
+  display: table;
+
+  a {
+    color: #fff;
+    padding: 15px;
+    text-decoration: none;
+  }
+
+  a.active,
+  a:hover {
+    color: #27aae1;
+  }
+
+}
+
+.followMe {
+  margin: 0;
+  position: absolute;
+  right: 15px;
+  top: 2px;
+
+  li {
+    padding: 6px 15px;
+    color: #fff;
+  }
+}
+
+
+.btnPrimary {
+  background: #27aae1;
+  padding: 7px 25px;
+  border: none;
+  font-size: 14px;
+  border-radius: 4px;
+  color: #fff;
+  position: relative;
+  font-weight: 600;
+  outline: none;
+  border-radius: 30px;
+}
+
+li {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 15px 0;
+
 }

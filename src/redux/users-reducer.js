@@ -4,13 +4,15 @@ const SET_USERS = 'SET_USERS';
 const SET_TOTAL_COUNT_PAGES = 'SET_TOTAL_COUNT_PAGES';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_IS_LOADING = 'SET_IS_LOADING';
+const SET_PROFILE = 'SET_PROFILE';
 
 const initialState = {
   users: [],
   totalCount: 0,
   pageSize: 10,
   currentPage: 1,
-  isLoading: false
+  isLoading: false,
+  profile: null
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -67,6 +69,12 @@ const usersReducer = (state = initialState, action) => {
         isLoading: action.isLoading
       };
 
+    case SET_PROFILE:
+      return {
+        ...state,
+        profile: action.profile
+      };
+
     default:
       return state;
   }
@@ -81,5 +89,6 @@ export const setTotalCountPages = pages => ({
 });
 export const setCurrentPage = page => ({ type: SET_CURRENT_PAGE, page });
 export const setIsLoading = isLoading => ({ type: SET_IS_LOADING, isLoading });
+export const setProfile = profile => ({ type: SET_PROFILE, profile });
 
 export default usersReducer;

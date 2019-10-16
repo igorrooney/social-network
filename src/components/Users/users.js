@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import classes from './users.module.scss';
 import userPhoto from '../../assets/images/user.jpg';
 
@@ -8,11 +9,13 @@ const User = props => {
     <div className={classes.user}>
       <div className="row">
         <div className="col-md-2 col-sm-2">
-          <img
-            className={classes.profilePhoto}
-            src={props.user.photos.small || userPhoto}
-            alt="userPhoto"
-          />
+          <NavLink to={`/profile/${props.user.id}`}>
+            <img
+              className={classes.profilePhoto}
+              src={props.user.photos.small || userPhoto}
+              alt="userPhoto"
+            />
+          </NavLink>
         </div>
         <div className="col-md-7 col-sm-7">
           <h5>{props.user.name}</h5>
@@ -70,9 +73,9 @@ const Users = props => {
               onClick={() => props.onSetCurrentPage(page)}
             >
               <a
+                href="#"
                 className={`page-link ${page === props.currentPage &&
                   classes.paginationActive}`}
-                href="#"
               >
                 {page}
               </a>
@@ -84,9 +87,13 @@ const Users = props => {
   );
 
   return (
-    <div>
+    <div className="container">
       {pagination}
-      {renderUsers}
+      <div className="row">
+        <div className="col-md-3"></div>
+        <div className="col-md-6">{renderUsers}</div>
+        <div className="col-md-3"></div>
+      </div>
     </div>
   );
 };
