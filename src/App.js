@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import './App.css';
-import Header from './components/Header';
+import HeaderContainer from './components/Header/HeaderContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import News from './components/News';
@@ -14,7 +14,7 @@ import UsersContainer from './components/Users/usersContainer';
 const App = () => {
   return (
     <div className="app-wrapper container">
-      <Header />
+      <HeaderContainer />
       <NavbarContainer />
       <div className="app-wrapper-content container-fluid">
         <Route path="/profile/:userId?" render={() => <ProfileContainer />} />

@@ -17,7 +17,8 @@ class UsersContainer extends Component {
     this.props.setIsLoading(true);
     axios
       .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
+        `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
+        { withCredentials: true }
       )
       .then(response => {
         this.props.setIsLoading(false);
@@ -31,7 +32,8 @@ class UsersContainer extends Component {
     this.props.setIsLoading(true);
     axios
       .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`
+        `https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`,
+        { withCredentials: true }
       )
       .then(response => {
         this.props.setIsLoading(false);
@@ -71,9 +73,9 @@ const mapStateToProps = state => {
 // dispatch(followActionCreator(userId)),     unfollow: userId =>
 // dispatch(unFollowActionCreator(userId)),     setUsers: users =>
 // dispatch(setUsersActionCreator(users)),     setTotalCountPages: pages =>
-//  dispatch(setTotalCountPagesActionCreator(pages)),     setCurrentPage: page
-// => dispatch(setCurrentPageActionCreator(page)),     setIsLoading: isLoading
-// => dispatch(setIsLoadingActionCreator(isLoading))   }; };
+// dispatch(setTotalCountPagesActionCreator(pages)),     setCurrentPage: page =>
+// dispatch(setCurrentPageActionCreator(page)),     setIsLoading: isLoading =>
+// dispatch(setIsLoadingActionCreator(isLoading))   }; };
 
 export default connect(
   mapStateToProps,

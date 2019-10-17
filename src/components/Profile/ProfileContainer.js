@@ -23,7 +23,7 @@ class ProfileContainer extends Component {
   }
 }
 const mapStateToProps = state => {
-  return { profile: state.usersPage.profile };
+  return { profile: state.usersPage.profile, authUserId: state.auth.userId };
 };
 
 export default connect(
