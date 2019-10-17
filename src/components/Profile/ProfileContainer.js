@@ -5,17 +5,13 @@ import { setProfile } from '../../redux/users-reducer';
 import * as axios from 'axios';
 import Profile from './Profile';
 import { withRouter } from 'react-router-dom';
+import { usersAPI } from '../../api/social-network-API';
 
 class ProfileContainer extends Component {
   componentDidMount() {
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/profile/${this.props.match
-          .params.userId || 2}`
-      )
-      .then(response => {
-        this.props.setProfile(response.data);
-      });
+    usersAPI.getProfile(this.props.match.params.userId).then(data => {
+      this.props.setProfile(data);
+    });
   }
 
   render() {

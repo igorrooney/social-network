@@ -9,37 +9,31 @@ import {
   setCurrentPage,
   setIsLoading
 } from '../../redux/users-reducer';
-import * as axios from 'axios';
+
 import Spinner from '../Spinner';
+import { usersAPI } from '../../api/social-network-API';
 
 class UsersContainer extends Component {
   componentDidMount() {
     this.props.setIsLoading(true);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
-        { withCredentials: true }
-      )
-      .then(response => {
+    usersAPI
+      .getUsers(this.props.currentPage, this.props.pageSize)
+      .then(data => {
         this.props.setIsLoading(false);
-        this.props.setUsers(response.data.items);
-        this.props.setTotalCountPages(response.data.totalCount);
+        this.props.setUsers(data.items);
+        this.props.setTotalCountPages(data.totalCount);
       });
   }
 
   onSetCurrentPage = page => {
     this.props.setCurrentPage(page);
     this.props.setIsLoading(true);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`,
-        { withCredentials: true }
-      )
-      .then(response => {
-        this.props.setIsLoading(false);
-        this.props.setUsers(response.data.items);
-        this.props.setTotalCountPages(response.data.totalCount);
-      });
+
+    usersAPI.getUsers(page, this.props.pageSize).then(data => {
+      this.props.setIsLoading(false);
+      this.props.setUsers(data.items);
+      this.props.setTotalCountPages(data.totalCount);
+    });
   };
 
   render() {
