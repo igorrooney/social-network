@@ -1,3 +1,5 @@
+import { usersAPI } from '../api/social-network-API';
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -5,6 +7,7 @@ const SET_TOTAL_COUNT_PAGES = 'SET_TOTAL_COUNT_PAGES';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_IS_LOADING = 'SET_IS_LOADING';
 const SET_PROFILE = 'SET_PROFILE';
+const IS_FETCHING = 'IS_FETCHING';
 
 const initialState = {
   users: [],
@@ -12,7 +15,8 @@ const initialState = {
   pageSize: 10,
   currentPage: 1,
   isLoading: false,
-  profile: null
+  profile: null,
+  isFetching: []
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -75,6 +79,14 @@ const usersReducer = (state = initialState, action) => {
         profile: action.profile
       };
 
+    case IS_FETCHING:
+      return {
+        ...state,
+        isFetching: action.isLoading
+          ? [...state.isFetching, action.userId]
+          : [state.isFetching.filter(id => id !== action.userId)]
+      };
+
     default:
       return state;
   }
@@ -90,5 +102,22 @@ export const setTotalCountPages = pages => ({
 export const setCurrentPage = page => ({ type: SET_CURRENT_PAGE, page });
 export const setIsLoading = isLoading => ({ type: SET_IS_LOADING, isLoading });
 export const setProfile = profile => ({ type: SET_PROFILE, profile });
+export const setIsFetching = (isFetching, userId) => ({
+  type: IS_FETCHING,
+  isFetching,
+  userId
+});
+
+export const getUsers = (currentPage, pageSize) => {
+  return dispatch => {
+    dispatch(setIsLoading(true));
+    usersAPI.getUsers(currentPage, pageSize).then(data => {
+      dispatch(setIsLoading(false));
+      dispatch(setUsers(data.items));
+      dispatch(setTotalCountPages(data.totalCount));
+      dispatch(setCurrentPage(currentPage));
+    });
+  };
+};
 
 export default usersReducer;

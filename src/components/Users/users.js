@@ -3,7 +3,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import classes from './users.module.scss';
 import userPhoto from '../../assets/images/user.jpg';
-import * as axios from 'axios';
+import { usersAPI } from '../../api/social-network-API';
 
 const User = props => {
   return (
@@ -25,47 +25,32 @@ const User = props => {
         <div className="col-md-3 col-sm-3">
           {props.user.followed ? (
             <button
+              disabled={props.isFetching.some(id => id === props.user.id)}
               className="btn btn-primary pull-right"
               onClick={() => {
-                axios
-                  .delete(
-                    `https://social-network.samuraijs.com/api/1.0/follow/${props.user.id}`,
-                    {
-                      withCredentials: true,
-                      headers: {
-                        'API-KEY': 'a68c4b68-6d08-42c8-8761-c3e9204831f4'
-                      }
-                    }
-                  )
-                  .then(response => {
-                    if (response.data.resultCode === 0) {
-                      props.unfollow(props.user.id);
-                    }
-                  });
+                props.setIsFetching(true, props.user.id);
+                usersAPI.unfollowUser(props.user.id).then(data => {
+                  if (data.resultCode === 0) {
+                    props.unfollow(props.user.id);
+                  }
+                });
+                props.setIsFetching(false, props.user.id);
               }}
             >
               Unfollow
             </button>
           ) : (
             <button
+              disabled={props.isFetching.some(id => id === props.user.id)}
               className="btn btn-primary pull-right"
               onClick={() => {
-                axios
-                  .post(
-                    `https://social-network.samuraijs.com/api/1.0/follow/${props.user.id}`,
-                    {},
-                    {
-                      withCredentials: true,
-                      headers: {
-                        'API-KEY': 'a68c4b68-6d08-42c8-8761-c3e9204831f4'
-                      }
-                    }
-                  )
-                  .then(response => {
-                    if (response.data.resultCode === 0) {
-                      props.follow(props.user.id);
-                    }
-                  });
+                props.setIsFetching(true, props.user.id);
+                usersAPI.followUser(props.user.id).then(data => {
+                  if (data.resultCode === 0) {
+                    props.follow(props.user.id);
+                  }
+                });
+                props.setIsFetching(false, props.user.id);
               }}
             >
               Follow
@@ -79,22 +64,23 @@ const User = props => {
 
 const Users = props => {
   const pages = Math.ceil(props.totalCount / props.pageSize);
+
   let pagesCount = [];
 
   for (let i = 1; i <= pages; i++) {
     pagesCount.push(i);
   }
 
-  let renderUsers = props.users.map(user => {
-    return (
-      <User
-        key={user.id}
-        user={user}
-        unfollow={props.unfollow}
-        follow={props.follow}
-      />
-    );
-  });
+  const renderUsers = props.users.map(u => (
+    <User
+      key={u.id}
+      user={u}
+      unfollow={props.unfollow}
+      follow={props.follow}
+      isFetching={props.isFetching}
+      setIsFetching={props.setIsFetching}
+    />
+  ));
 
   const pagination = (
     <nav aria-label="Page navigation">

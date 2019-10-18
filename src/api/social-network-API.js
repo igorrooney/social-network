@@ -21,5 +21,13 @@ export const usersAPI = {
 
   getProfile(id = 2) {
     return instance.get(`profile/${id}`).then(res => res.data);
+  },
+
+  unfollowUser(id) {
+    return instance.delete(`follow/${id}`).then(res => res.data);
+  },
+
+  followUser(id) {
+    return instance.post(`follow/${id}`).then(res => res.data);
   }
 };

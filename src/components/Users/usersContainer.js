@@ -7,7 +7,9 @@ import {
   setUsers,
   setTotalCountPages,
   setCurrentPage,
-  setIsLoading
+  setIsLoading,
+  setIsFetching,
+  getUsers
 } from '../../redux/users-reducer';
 
 import Spinner from '../Spinner';
@@ -15,25 +17,11 @@ import { usersAPI } from '../../api/social-network-API';
 
 class UsersContainer extends Component {
   componentDidMount() {
-    this.props.setIsLoading(true);
-    usersAPI
-      .getUsers(this.props.currentPage, this.props.pageSize)
-      .then(data => {
-        this.props.setIsLoading(false);
-        this.props.setUsers(data.items);
-        this.props.setTotalCountPages(data.totalCount);
-      });
+    this.props.getUsers(this.props.currentPage, this.props.pageSize);
   }
 
   onSetCurrentPage = page => {
-    this.props.setCurrentPage(page);
-    this.props.setIsLoading(true);
-
-    usersAPI.getUsers(page, this.props.pageSize).then(data => {
-      this.props.setIsLoading(false);
-      this.props.setUsers(data.items);
-      this.props.setTotalCountPages(data.totalCount);
-    });
+    this.props.getUsers(page, this.props.pageSize);
   };
 
   render() {
@@ -46,6 +34,8 @@ class UsersContainer extends Component {
         follow={this.props.follow}
         currentPage={this.props.currentPage}
         onSetCurrentPage={this.onSetCurrentPage}
+        isFetching={this.props.isFetching}
+        setIsFetching={this.props.setIsFetching}
       />
     );
 
@@ -59,7 +49,8 @@ const mapStateToProps = state => {
     currentPage: state.usersPage.currentPage,
     totalCount: state.usersPage.totalCount,
     pageSize: state.usersPage.pageSize,
-    isLoading: state.usersPage.isLoading
+    isLoading: state.usersPage.isLoading,
+    isFetching: state.usersPage.isFetching
   };
 };
 
@@ -79,6 +70,8 @@ export default connect(
     setUsers,
     setTotalCountPages,
     setCurrentPage,
-    setIsLoading
+    setIsLoading,
+    setIsFetching,
+    getUsers
   }
 )(UsersContainer);
