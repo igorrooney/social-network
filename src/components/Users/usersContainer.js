@@ -15,6 +15,8 @@ import {
 } from '../../redux/users-reducer';
 
 import Spinner from '../Spinner';
+import { compose } from 'redux';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 class UsersContainer extends Component {
   componentDidMount() {
@@ -63,20 +65,26 @@ const mapStateToProps = state => {
 // dispatch(setUsersActionCreator(users)),     setTotalCountPages: pages =>
 // dispatch(setTotalCountPagesActionCreator(pages)),     setCurrentPage: page =>
 // dispatch(setCurrentPageActionCreator(page)),     setIsLoading: isLoading =>
-// dispatch(setIsLoadingActionCreator(isLoading))   }; };
+// dispatch(setIsLoadingActionCreator(isLoading))   }; }; export default
+// connect(mapStateToProps, {   follow,   unfollow,   setUsers,
+// setTotalCountPages,   setCurrentPage,   setIsLoading,   setIsFetching,
+// getUsers,   followUser,   unfollowUser })(UsersContainer);
 
-export default connect(
-  mapStateToProps,
-  {
-    follow,
-    unfollow,
-    setUsers,
-    setTotalCountPages,
-    setCurrentPage,
-    setIsLoading,
-    setIsFetching,
-    getUsers,
-    followUser,
-    unfollowUser
-  }
+export default compose(
+  connect(
+    mapStateToProps,
+    {
+      follow,
+      unfollow,
+      setUsers,
+      setTotalCountPages,
+      setCurrentPage,
+      setIsLoading,
+      setIsFetching,
+      getUsers,
+      followUser,
+      unfollowUser
+    }
+  ),
+  withAuthRedirect
 )(UsersContainer);

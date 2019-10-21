@@ -18,7 +18,7 @@ const Message = ({ message }) => {
   return <div className={classes.message}>{message}</div>;
 };
 
-const Dialogs = ({ state, addMessage, updateMessage }) => {
+const Dialogs = ({ state, addMessage, updateMessage, isAuth }) => {
   const dialogItems = state.dialogs.map(item => {
     return (
       <DialogItem

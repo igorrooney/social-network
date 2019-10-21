@@ -6,7 +6,7 @@ const SET_USERS = 'SET_USERS';
 const SET_TOTAL_COUNT_PAGES = 'SET_TOTAL_COUNT_PAGES';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_IS_LOADING = 'SET_IS_LOADING';
-const SET_PROFILE = 'SET_PROFILE';
+
 const IS_FETCHING = 'IS_FETCHING';
 
 const initialState = {
@@ -15,7 +15,6 @@ const initialState = {
   pageSize: 10,
   currentPage: 1,
   isLoading: false,
-  profile: null,
   isFetching: []
 };
 
@@ -73,12 +72,6 @@ const usersReducer = (state = initialState, action) => {
         isLoading: action.isLoading
       };
 
-    case SET_PROFILE:
-      return {
-        ...state,
-        profile: action.profile
-      };
-
     case IS_FETCHING:
       return {
         ...state,
@@ -101,7 +94,7 @@ export const setTotalCountPages = pages => ({
 });
 export const setCurrentPage = page => ({ type: SET_CURRENT_PAGE, page });
 export const setIsLoading = isLoading => ({ type: SET_IS_LOADING, isLoading });
-export const setProfile = profile => ({ type: SET_PROFILE, profile });
+
 export const setIsFetching = (isFetching, userId) => ({
   type: IS_FETCHING,
   isFetching,
@@ -141,14 +134,6 @@ export const unfollowUser = id => {
       }
     });
     dispatch(setIsFetching(false, id));
-  };
-};
-
-export const getProfile = id => {
-  return dispatch => {
-    usersAPI.getProfile(id).then(data => {
-      dispatch(setProfile(data));
-    });
   };
 };
 

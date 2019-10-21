@@ -20,7 +20,7 @@ export const usersAPI = {
   },
 
   getProfile(id = 2) {
-    return instance.get(`profile/${id}`).then(res => res.data);
+    return instance.get(`profile/${id}`);
   },
 
   unfollowUser(id) {

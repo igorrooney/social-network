@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { getProfile } from '../../redux/users-reducer';
+import { compose } from 'redux';
+import { getProfile } from '../../redux/profile-reducer';
 import Profile from './Profile';
 import { withRouter } from 'react-router-dom';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 class ProfileContainer extends Component {
   componentDidMount() {
@@ -15,10 +17,18 @@ class ProfileContainer extends Component {
   }
 }
 const mapStateToProps = state => {
-  return { profile: state.usersPage.profile, authUserId: state.auth.userId };
+  return {
+    profile: state.profilePage.profile,
+    authUserId: state.auth.userId,
+    isAuth: state.auth.isAuth
+  };
 };
 
-export default connect(
-  mapStateToProps,
-  { getProfile }
-)(withRouter(ProfileContainer));
+export default compose(
+  connect(
+    mapStateToProps,
+    { getProfile }
+  ),
+  withAuthRedirect,
+  withRouter
+)(ProfileContainer);
