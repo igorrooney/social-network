@@ -9,11 +9,12 @@ import {
   setCurrentPage,
   setIsLoading,
   setIsFetching,
-  getUsers
+  getUsers,
+  followUser,
+  unfollowUser
 } from '../../redux/users-reducer';
 
 import Spinner from '../Spinner';
-import { usersAPI } from '../../api/social-network-API';
 
 class UsersContainer extends Component {
   componentDidMount() {
@@ -36,6 +37,8 @@ class UsersContainer extends Component {
         onSetCurrentPage={this.onSetCurrentPage}
         isFetching={this.props.isFetching}
         setIsFetching={this.props.setIsFetching}
+        followUser={this.props.followUser}
+        unfollowUser={this.props.unfollowUser}
       />
     );
 
@@ -72,6 +75,8 @@ export default connect(
     setCurrentPage,
     setIsLoading,
     setIsFetching,
-    getUsers
+    getUsers,
+    followUser,
+    unfollowUser
   }
 )(UsersContainer);

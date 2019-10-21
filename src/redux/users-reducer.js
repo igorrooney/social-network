@@ -120,4 +120,36 @@ export const getUsers = (currentPage, pageSize) => {
   };
 };
 
+export const followUser = id => {
+  return dispatch => {
+    dispatch(setIsFetching(true, id));
+    usersAPI.followUser(id).then(data => {
+      if (data.resultCode === 0) {
+        dispatch(follow(id));
+      }
+    });
+    dispatch(setIsFetching(false, id));
+  };
+};
+
+export const unfollowUser = id => {
+  return dispatch => {
+    dispatch(setIsFetching(true, id));
+    usersAPI.unfollowUser(id).then(data => {
+      if (data.resultCode === 0) {
+        dispatch(unfollow(id));
+      }
+    });
+    dispatch(setIsFetching(false, id));
+  };
+};
+
+export const getProfile = id => {
+  return dispatch => {
+    usersAPI.getProfile(id).then(data => {
+      dispatch(setProfile(data));
+    });
+  };
+};
+
 export default usersReducer;

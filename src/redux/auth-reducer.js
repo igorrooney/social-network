@@ -1,3 +1,5 @@
+import { usersAPI } from '../api/social-network-API';
+
 const SET_AUTH_DATA = 'SET_AUTH_DATA-POST';
 
 const initialState = {
@@ -29,5 +31,16 @@ export const setAuthMeData = (userId, email, login) => ({
     login
   }
 });
+
+export const authMe = () => {
+  return dispatch => {
+    usersAPI.authMe().then(data => {
+      if (data.resultCode === 0) {
+        const { id, email, login } = data.data;
+        dispatch(setAuthMeData(id, email, login));
+      }
+    });
+  };
+};
 
 export default authReducer;

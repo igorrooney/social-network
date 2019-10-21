@@ -3,7 +3,6 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import classes from './users.module.scss';
 import userPhoto from '../../assets/images/user.jpg';
-import { usersAPI } from '../../api/social-network-API';
 
 const User = props => {
   return (
@@ -28,13 +27,7 @@ const User = props => {
               disabled={props.isFetching.some(id => id === props.user.id)}
               className="btn btn-primary pull-right"
               onClick={() => {
-                props.setIsFetching(true, props.user.id);
-                usersAPI.unfollowUser(props.user.id).then(data => {
-                  if (data.resultCode === 0) {
-                    props.unfollow(props.user.id);
-                  }
-                });
-                props.setIsFetching(false, props.user.id);
+                props.unfollowUser(props.user.id);
               }}
             >
               Unfollow
@@ -44,13 +37,7 @@ const User = props => {
               disabled={props.isFetching.some(id => id === props.user.id)}
               className="btn btn-primary pull-right"
               onClick={() => {
-                props.setIsFetching(true, props.user.id);
-                usersAPI.followUser(props.user.id).then(data => {
-                  if (data.resultCode === 0) {
-                    props.follow(props.user.id);
-                  }
-                });
-                props.setIsFetching(false, props.user.id);
+                props.followUser(props.user.id);
               }}
             >
               Follow
@@ -72,14 +59,7 @@ const Users = props => {
   }
 
   const renderUsers = props.users.map(u => (
-    <User
-      key={u.id}
-      user={u}
-      unfollow={props.unfollow}
-      follow={props.follow}
-      isFetching={props.isFetching}
-      setIsFetching={props.setIsFetching}
-    />
+    <User key={u.id} user={u} {...props} />
   ));
 
   const pagination = (
