@@ -3,12 +3,12 @@ import React from 'react';
 import classes from './ProfileInfo.module.scss';
 import Spinner from '../../Spinner';
 import userPhoto from '../../../assets/images/user.jpg';
+import ProfileStatus from './ProfileStatus';
 
 const ProfileInfo = props => {
   if (!props.profile) {
     return <Spinner />;
   }
-
   return (
     <div className={classes.timelineCover}>
       <div className={classes.timelineNavBar + ' hidden-sm hidden-xs'}>
@@ -22,7 +22,11 @@ const ProfileInfo = props => {
               />
 
               <h3>{props.profile.fullName}</h3>
-              <p className="text-muted">{props.profile.aboutMe}</p>
+              <ProfileStatus
+                status={props.status}
+                setNewStatus={props.setNewStatus}
+                userId={props.profile.userId}
+              />
             </div>
           </div>
           <div className="col-md-9">

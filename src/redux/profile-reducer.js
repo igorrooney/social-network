@@ -3,6 +3,7 @@ import { usersAPI } from '../api/social-network-API';
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 const SET_PROFILE = 'SET_PROFILE';
+const SET_STATUS = 'SET_STATUS';
 
 const initialState = {
   posts: [
@@ -20,7 +21,8 @@ const initialState = {
     }
   ],
   newTextPost: 'Write your post',
-  profile: null
+  profile: null,
+  status: null
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -49,6 +51,12 @@ const profileReducer = (state = initialState, action) => {
         profile: action.profile
       };
 
+    case SET_STATUS:
+      return {
+        ...state,
+        status: action.status
+      };
+
     default:
       return state;
   }
@@ -62,10 +70,30 @@ export const updatePostTextActionCreator = text => ({
 
 const setProfile = profile => ({ type: SET_PROFILE, profile });
 
+const setStatus = status => ({ type: SET_STATUS, status });
+
 export const getProfile = id => {
   return dispatch => {
     usersAPI.getProfile(id).then(data => {
       dispatch(setProfile(data.data));
+    });
+  };
+};
+
+export const getStatus = (id = 2) => {
+  return dispatch => {
+    usersAPI.getStatus(id).then(data => {
+      dispatch(setStatus(data));
+    });
+  };
+};
+
+export const setNewStatus = (text, id) => {
+  return dispatch => {
+    usersAPI.updateStatus(text, id).then(res => {
+      if (res.data.resultCode === 0) {
+        dispatch(setStatus(text));
+      }
     });
   };
 };

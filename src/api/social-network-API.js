@@ -29,5 +29,13 @@ export const usersAPI = {
 
   followUser(id) {
     return instance.post(`follow/${id}`).then(res => res.data);
+  },
+
+  getStatus(id) {
+    return instance.get(`profile/status/${id}`).then(res => res.data);
+  },
+
+  updateStatus(text, id) {
+    return instance.put(`profile/status/${id}`, text);
   }
 };
