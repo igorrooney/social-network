@@ -19,7 +19,7 @@ export const usersAPI = {
     return instance.get('auth/me').then(res => res.data);
   },
 
-  getProfile(id = 2) {
+  getProfile(id) {
     return instance.get(`profile/${id}`);
   },
 
@@ -35,7 +35,9 @@ export const usersAPI = {
     return instance.get(`profile/status/${id}`).then(res => res.data);
   },
 
-  updateStatus(text, id) {
-    return instance.put(`profile/status/${id}`, text);
+  updateStatus(text) {
+    return instance
+      .put(`profile/status`, { status: text })
+      .then(res => res.data);
   }
 };

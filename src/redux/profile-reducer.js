@@ -80,7 +80,7 @@ export const getProfile = id => {
   };
 };
 
-export const getStatus = (id = 2) => {
+export const getStatus = id => {
   return dispatch => {
     usersAPI.getStatus(id).then(data => {
       dispatch(setStatus(data));
@@ -88,10 +88,10 @@ export const getStatus = (id = 2) => {
   };
 };
 
-export const setNewStatus = (text, id) => {
+export const setNewStatus = text => {
   return dispatch => {
-    usersAPI.updateStatus(text, id).then(res => {
-      if (res.data.resultCode === 0) {
+    usersAPI.updateStatus(text).then(data => {
+      if (data.resultCode === 0) {
         dispatch(setStatus(text));
       }
     });
