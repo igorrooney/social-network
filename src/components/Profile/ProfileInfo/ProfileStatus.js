@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { runInThisContext } from 'vm';
 
 class ProfileStatus extends Component {
   state = {
@@ -18,6 +19,12 @@ class ProfileStatus extends Component {
   onStatusChange = e => {
     this.setState({ status: e.target.value });
   };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.status !== this.props.status) {
+      this.setState({ status: this.props.status });
+    }
+  }
 
   render() {
     return (
