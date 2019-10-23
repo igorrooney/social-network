@@ -2,6 +2,7 @@ import React from 'react';
 
 import { NavLink } from 'react-router-dom';
 import classes from './Dialogs.module.scss';
+import CreateMessageForm from './CreateMessageForm';
 
 const DialogItem = ({ name, id, photo }) => {
   return (
@@ -34,14 +35,8 @@ const Dialogs = ({ state, addMessage, updateMessage, isAuth }) => {
     return <Message key={item.id} message={item.message} id={item.id} />;
   });
 
-  const onAddMessage = () => {
-    addMessage();
-    //dispatch(addMessageActionCreator());
-  };
-
-  const onUpdateMessage = event => {
-    updateMessage(event.target.value);
-    //dispatch(updateMessageActionCreator(event.target.value));
+  const onSubmit = formData => {
+    addMessage(formData.message);
   };
 
   return (
@@ -49,12 +44,7 @@ const Dialogs = ({ state, addMessage, updateMessage, isAuth }) => {
       <div className={classes.dialogsItems}>{dialogItems}</div>
       <div className={classes.messages}>
         {messageItems}
-        <div className={classes.addMessage}>
-          <textarea onChange={onUpdateMessage} value={state.newMessageText} />
-          <button className="btn btn-primary" onClick={onAddMessage}>
-            Send message
-          </button>
-        </div>
+        <CreateMessageForm onSubmit={onSubmit} />
       </div>
     </div>
   );

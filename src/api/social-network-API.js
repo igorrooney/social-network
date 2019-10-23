@@ -41,3 +41,14 @@ export const usersAPI = {
       .then(res => res.data);
   }
 };
+export const authAPI = {
+  auth(email, password, rememberMe, captcha = false) {
+    return instance
+      .post(`auth/login`, { email, password, rememberMe, captcha })
+      .then(res => res.data);
+  },
+
+  logOut() {
+    return instance.delete(`auth/login`).then(res => res.data);
+  }
+};

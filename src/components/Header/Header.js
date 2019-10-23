@@ -13,7 +13,23 @@ const Header = props => {
             alt="logo"
           />
         </NavLink>
-        {props.isAuth ? props.login : <NavLink to="/login">Login</NavLink>}
+        {props.isAuth ? (
+          <span>
+            {props.login}
+            <span
+              onClick={props.logOut}
+              style={{
+                marginLeft: '10px',
+                color: 'white',
+                cursor: 'pointer'
+              }}
+            >
+              LogOut
+            </span>
+          </span>
+        ) : (
+          <NavLink to="/login ">Login</NavLink>
+        )}
       </div>
     </header>
   );

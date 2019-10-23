@@ -1,4 +1,4 @@
-import { usersAPI } from '../api/social-network-API';
+import { usersAPI, authAPI } from '../api/social-network-API';
 
 const SET_AUTH_DATA = 'SET_AUTH_DATA-POST';
 
@@ -40,6 +40,18 @@ export const authMe = () => {
         dispatch(setAuthMeData(id, email, login));
       }
     });
+  };
+};
+
+export const auth = (email, password, rememberMe) => {
+  return dispatch => {
+    authAPI.auth(email, password, rememberMe);
+  };
+};
+
+export const logOut = () => {
+  return dispatch => {
+    authAPI.logOut();
   };
 };
 

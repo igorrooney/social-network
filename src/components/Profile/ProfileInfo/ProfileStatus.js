@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { runInThisContext } from 'vm';
 
 class ProfileStatus extends Component {
   state = {

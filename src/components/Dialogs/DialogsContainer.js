@@ -13,7 +13,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addMessage: () => dispatch(addMessageActionCreator()),
+    addMessage: message => dispatch(addMessageActionCreator(message)),
     updateMessage: text => dispatch(updateMessageActionCreator(text))
   };
 };
@@ -22,6 +22,5 @@ export default compose(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  ),
-  withAuthRedirect
+  )
 )(Dialogs);
