@@ -1,7 +1,13 @@
 import React from 'react';
 import classes from './MyPosts.module.scss';
 import userPhoto from '../../../assets/images/user.jpg';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, reset } from 'redux-form';
+import { required, maxLength } from '../../../utils/validators/validators';
+import { Textarea } from '../../../Common/FormsControl';
+
+const maxLength15 = maxLength(15);
+
+const afterSubmit = (result, dispatch) => dispatch(reset('createPostForm'));
 
 let CreatePostForm = props => {
   const { handleSubmit } = props;
@@ -19,7 +25,9 @@ let CreatePostForm = props => {
               <Field
                 className={classes.formControl + ' form-control'}
                 name="post"
-                component="textarea"
+                component={Textarea}
+                placeholder="Write your post"
+                validate={[required, maxLength15]}
               />
             </div>
           </div>
@@ -34,5 +42,8 @@ let CreatePostForm = props => {
   );
 };
 
-CreatePostForm = reduxForm({ form: 'post' })(CreatePostForm);
+CreatePostForm = reduxForm({
+  form: 'createPostForm',
+  onSubmitSuccess: afterSubmit
+})(CreatePostForm);
 export default CreatePostForm;

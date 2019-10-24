@@ -1,15 +1,15 @@
 import { compose } from 'redux';
 import Login from './login';
 import { connect } from 'react-redux';
-import { auth } from '../../redux/auth-reducer';
+import { login } from '../../redux/auth-reducer';
 
 const mapStateToProps = state => {
-  return {};
+  return { isAuth: state.auth.isAuth };
 };
 
 export default compose(
   connect(
     mapStateToProps,
-    { auth }
+    { login }
   )
 )(Login);

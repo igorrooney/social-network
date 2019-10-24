@@ -1,5 +1,4 @@
 const ADD_MESSAGE = 'ADD-MESSAGE';
-const UPDATE_MESSAGE_TEXT = 'UPDATE-MESSAGE-TEXT';
 
 const initialState = {
   messages: [
@@ -32,8 +31,7 @@ const initialState = {
       name: 'Maksym',
       photo: 'http://mythemestore.com/friend-finder/images/users/user-8.jpg'
     }
-  ],
-  newMessageText: 'Write your message'
+  ]
 };
 
 const dialogsReducer = (state = initialState, action) => {
@@ -45,14 +43,7 @@ const dialogsReducer = (state = initialState, action) => {
       };
       return {
         ...state,
-        messages: [...state.messages, newMessage],
-        newMessageText: ''
-      };
-
-    case UPDATE_MESSAGE_TEXT:
-      return {
-        ...state,
-        newMessageText: action.text
+        messages: [...state.messages, newMessage]
       };
 
     default:
@@ -63,10 +54,6 @@ const dialogsReducer = (state = initialState, action) => {
 export const addMessageActionCreator = message => ({
   type: ADD_MESSAGE,
   message
-});
-export const updateMessageActionCreator = text => ({
-  type: UPDATE_MESSAGE_TEXT,
-  text
 });
 
 export default dialogsReducer;

@@ -42,7 +42,7 @@ export const usersAPI = {
   }
 };
 export const authAPI = {
-  auth(email, password, rememberMe, captcha = false) {
+  login(email, password, rememberMe, captcha = false) {
     return instance
       .post(`auth/login`, { email, password, rememberMe, captcha })
       .then(res => res.data);

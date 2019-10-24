@@ -1,7 +1,6 @@
 import { usersAPI } from '../api/social-network-API';
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 const SET_PROFILE = 'SET_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 
@@ -20,7 +19,6 @@ const initialState = {
       likeCount: '1'
     }
   ],
-  newTextPost: 'Write your post',
   profile: null,
   status: null
 };
@@ -37,12 +35,6 @@ const profileReducer = (state = initialState, action) => {
         ...state,
         posts: [newPost, ...state.posts],
         newTextPost: ''
-      };
-
-    case UPDATE_POST_TEXT:
-      return {
-        ...state,
-        newTextPost: action.message
       };
 
     case SET_PROFILE:
@@ -63,10 +55,6 @@ const profileReducer = (state = initialState, action) => {
 };
 
 export const addPostActionCreator = post => ({ type: ADD_POST, post });
-export const updatePostTextActionCreator = text => ({
-  type: UPDATE_POST_TEXT,
-  message: text
-});
 
 const setProfile = profile => ({ type: SET_PROFILE, profile });
 
