@@ -14,7 +14,6 @@ import UsersContainer from './components/Users/usersContainer';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { initializing } from './redux/app-reducer';
-import { authMe } from './redux/auth-reducer';
 import Spinner from './components/Spinner';
 
 class App extends Component {

@@ -9,10 +9,19 @@ import {
   setCurrentPage,
   setIsLoading,
   setIsFetching,
-  getUsers,
+  requestUsers,
   followUser,
   unfollowUser
 } from '../../redux/users-reducer';
+
+import {
+  getUsers,
+  getCurrentPage,
+  getTotalCount,
+  getPageSize,
+  getIsLoading,
+  getIsFetching
+} from '../../redux/selectors';
 
 import Spinner from '../Spinner';
 import { compose } from 'redux';
@@ -50,12 +59,12 @@ class UsersContainer extends Component {
 
 const mapStateToProps = state => {
   return {
-    users: state.usersPage.users,
-    currentPage: state.usersPage.currentPage,
-    totalCount: state.usersPage.totalCount,
-    pageSize: state.usersPage.pageSize,
-    isLoading: state.usersPage.isLoading,
-    isFetching: state.usersPage.isFetching
+    users: getUsers(state),
+    currentPage: getCurrentPage(state),
+    totalCount: getTotalCount(state),
+    pageSize: getPageSize(state),
+    isLoading: getIsLoading(state),
+    isFetching: getIsFetching(state)
   };
 };
 
@@ -81,7 +90,7 @@ export default compose(
       setCurrentPage,
       setIsLoading,
       setIsFetching,
-      getUsers,
+      getUsers: requestUsers,
       followUser,
       unfollowUser
     }
