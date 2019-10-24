@@ -35,7 +35,7 @@ const setAuthMeData = (userId, email, login, isAuth) => ({
 
 export const authMe = () => {
   return dispatch => {
-    usersAPI.authMe().then(data => {
+    return usersAPI.authMe().then(data => {
       if (data.resultCode === 0) {
         const { id, email, login } = data.data;
         dispatch(setAuthMeData(id, email, login, true));
