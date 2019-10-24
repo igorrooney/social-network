@@ -1,4 +1,5 @@
 import { usersAPI, authAPI } from '../api/social-network-API';
+import { stopSubmit } from 'redux-form';
 
 const SET_AUTH_DATA = 'SET_AUTH_DATA-POST';
 
@@ -48,6 +49,10 @@ export const login = (email, password, rememberMe) => {
     authAPI.login(email, password, rememberMe).then(data => {
       if (data.resultCode === 0) {
         dispatch(authMe());
+      } else {
+        const message =
+          data.messages.length > 0 ? data.messages[0] : 'Unknown error';
+        dispatch(stopSubmit('loginForm', { _error: message }));
       }
     });
   };

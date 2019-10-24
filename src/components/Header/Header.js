@@ -28,7 +28,7 @@ const Header = props => {
             </span>
           </span>
         ) : (
-          <NavLink to="/login ">Login</NavLink>
+          <NavLink to="/login">Login</NavLink>
         )}
       </div>
     </header>

@@ -38,6 +38,11 @@ const Navbar = props => {
           Settings
         </NavLink>
       </div>
+      <div className={classes.item}>
+        <NavLink to="/login" activeClassName={classes.active}>
+          Login
+        </NavLink>
+      </div>
       <Friends friends={props.friendsBlock} />
     </nav>
   );

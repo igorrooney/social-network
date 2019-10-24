@@ -7,7 +7,7 @@ class HeaderContainer extends Component {
   componentDidMount() {
     this.props.authMe();
   }
-
+  debugger;
   render() {
     return <Header {...this.props} />;
   }

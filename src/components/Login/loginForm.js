@@ -2,6 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Input } from '../../Common/FormsControl';
 import { required, email } from '../../utils/validators/validators';
+import classes from './login.module.scss';
 
 let LoginForm = props => {
   const { handleSubmit } = props;
@@ -29,6 +30,7 @@ let LoginForm = props => {
         <label htmlFor="rememberMe">Remember me</label>
         <Field name="rememberMe" component={Input} type="checkbox" />
       </div>
+      <div className={classes.error}>{props.error}</div>
       <div>
         <button>Login</button>
       </div>
