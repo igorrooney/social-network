@@ -3,7 +3,7 @@ import React from 'react';
 import classes from './MyPosts.module.scss';
 import Post from './Post';
 import Spinner from '../../Spinner';
-
+import avatar from '../../../assets/images/user.jpg';
 import CreatePostForm from './CreatePostForm';
 
 const MyPosts = props => {
@@ -23,7 +23,8 @@ const MyPosts = props => {
   }
 
   const onSubmit = formData => {
-    props.addPost(formData.post);
+    const img = props.profile.photos.small || avatar;
+    props.addPost(formData.post, img);
   };
 
   return (

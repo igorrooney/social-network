@@ -28,6 +28,7 @@ const profileReducer = (state = initialState, action) => {
     case ADD_POST:
       const newPost = {
         id: 5,
+        img: action.img,
         message: action.post,
         likeCount: 0
       };
@@ -54,7 +55,7 @@ const profileReducer = (state = initialState, action) => {
   }
 };
 
-export const addPostActionCreator = post => ({ type: ADD_POST, post });
+export const addPostActionCreator = (post, img) => ({ type: ADD_POST, post, img });
 
 const setProfile = profile => ({ type: SET_PROFILE, profile });
 

@@ -12,7 +12,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addPost: post => dispatch(addPostActionCreator(post))
+    addPost: (post, img) => dispatch(addPostActionCreator(post, img))
   };
 };
 
