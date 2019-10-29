@@ -3,6 +3,7 @@ import { usersAPI } from '../api/social-network-API';
 const ADD_POST = 'ADD-POST';
 const SET_PROFILE = 'SET_PROFILE';
 const SET_STATUS = 'SET_STATUS';
+const DELETE_POST = 'DELETE_POST';
 
 const initialState = {
   posts: [
@@ -50,14 +51,26 @@ const profileReducer = (state = initialState, action) => {
         status: action.status
       };
 
+    case DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter(p => p.id !== action.postId)
+      };
+
     default:
       return state;
   }
 };
 
-export const addPostActionCreator = (post, img) => ({ type: ADD_POST, post, img });
+export const addPostActionCreator = (post, img) => ({
+  type: ADD_POST,
+  post,
+  img
+});
 
-const setProfile = profile => ({ type: SET_PROFILE, profile });
+export const deletePost = postId => ({ type: DELETE_POST, postId });
+
+export const setProfile = profile => ({ type: SET_PROFILE, profile });
 
 const setStatus = status => ({ type: SET_STATUS, status });
 

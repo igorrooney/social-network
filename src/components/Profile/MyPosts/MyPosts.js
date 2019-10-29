@@ -7,7 +7,6 @@ import avatar from '../../../assets/images/user.jpg';
 import CreatePostForm from './CreatePostForm';
 
 const MyPosts = React.memo(props => {
-  console.log(props);
   const posts = props.postsData.map(post => {
     return (
       <Post
