@@ -1,8 +1,4 @@
-import {
-  addPostActionCreator,
-  setProfile,
-  deletePost
-} from './profile-reducer';
+import { addPost, setProfile, deletePost } from './profile-reducer';
 import profileReducer from './profile-reducer';
 
 const state = {
@@ -24,25 +20,25 @@ const state = {
 };
 
 it('after adding post length of the posts should be increment', () => {
-  const action = addPostActionCreator('test message', 'img');
+  const action = addPost('test message', 'img');
   const newState = profileReducer(state, action);
   expect(newState.posts.length).toBe(3);
 });
 
 it('after adding post message should be correct', () => {
-  const action = addPostActionCreator('test message', 'img');
+  const action = addPost('test message', 'img');
   const newState = profileReducer(state, action);
   expect(newState.posts[0].message).toBe('test message');
 });
 
 it('after adding post image should be correct', () => {
-  const action = addPostActionCreator('test message', 'img');
+  const action = addPost('test message', 'img');
   const newState = profileReducer(state, action);
   expect(newState.posts[0].img).toBe('img');
 });
 
 it('after adding post likesCount should be correct', () => {
-  const action = addPostActionCreator('test message', 'img');
+  const action = addPost('test message', 'img');
   const newState = profileReducer(state, action);
   expect(newState.posts[0].likeCount).toBe(0);
 });

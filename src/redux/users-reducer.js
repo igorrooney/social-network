@@ -1,21 +1,20 @@
 import { usersAPI } from '../api/social-network-API';
 
-const FOLLOW = 'FOLLOW';
-const UNFOLLOW = 'UNFOLLOW';
-const SET_USERS = 'SET_USERS';
-const SET_TOTAL_COUNT_PAGES = 'SET_TOTAL_COUNT_PAGES';
-const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
-const SET_IS_LOADING = 'SET_IS_LOADING';
-
-const IS_FETCHING = 'IS_FETCHING';
+const FOLLOW = '/users/FOLLOW';
+const UNFOLLOW = '/users/UNFOLLOW';
+const SET_USERS = '/users/SET_USERS';
+const SET_TOTAL_COUNT_PAGES = '/users/SET_TOTAL_COUNT_PAGES';
+const SET_CURRENT_PAGE = '/users/SET_CURRENT_PAGE';
+const SET_IS_LOADING = '/users/SET_IS_LOADING';
+const TOGGLE_IS_FOLLOWING_PROGRESS = '/users/TOGGLE_IS_FOLLOWING_PROGRESS';
 
 const initialState = {
   users: [],
   totalCount: 0,
   pageSize: 10,
   currentPage: 1,
-  isLoading: false,
-  isFetching: []
+  isFetching: true,
+  followingInProgress: []
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -72,12 +71,12 @@ const usersReducer = (state = initialState, action) => {
         isLoading: action.isLoading
       };
 
-    case IS_FETCHING:
+    case TOGGLE_IS_FOLLOWING_PROGRESS:
       return {
         ...state,
-        isFetching: action.isLoading
-          ? [...state.isFetching, action.userId]
-          : [state.isFetching.filter(id => id !== action.userId)]
+        followingInProgress: action.isFetching
+          ? [...state.followingInProgress, action.userId]
+          : state.followingInProgress.filter(id => id !== action.userId)
       };
 
     default:
@@ -93,47 +92,47 @@ export const setTotalCountPages = pages => ({
   pages
 });
 export const setCurrentPage = page => ({ type: SET_CURRENT_PAGE, page });
-export const setIsLoading = isLoading => ({ type: SET_IS_LOADING, isLoading });
+export const setIsLoading = isFetching => ({
+  type: SET_IS_LOADING,
+  isFetching
+});
 
-export const setIsFetching = (isFetching, userId) => ({
-  type: IS_FETCHING,
+export const toggleFollowingProgress = (isFetching, userId) => ({
+  type: TOGGLE_IS_FOLLOWING_PROGRESS,
   isFetching,
   userId
 });
 
 export const requestUsers = (currentPage, pageSize) => {
-  return dispatch => {
+  return async dispatch => {
     dispatch(setIsLoading(true));
-    usersAPI.getUsers(currentPage, pageSize).then(data => {
-      dispatch(setIsLoading(false));
-      dispatch(setUsers(data.items));
-      dispatch(setTotalCountPages(data.totalCount));
-      dispatch(setCurrentPage(currentPage));
-    });
+    const data = await usersAPI.getUsers(currentPage, pageSize);
+    dispatch(setIsLoading(false));
+    dispatch(setUsers(data.items));
+    dispatch(setTotalCountPages(data.totalCount));
+    dispatch(setCurrentPage(currentPage));
   };
 };
 
 export const followUser = id => {
-  return dispatch => {
-    dispatch(setIsFetching(true, id));
-    usersAPI.followUser(id).then(data => {
-      if (data.resultCode === 0) {
-        dispatch(follow(id));
-      }
-    });
-    dispatch(setIsFetching(false, id));
+  return async dispatch => {
+    dispatch(toggleFollowingProgress(true, id));
+    const data = await usersAPI.followUser(id);
+    if (data.resultCode === 0) {
+      dispatch(follow(id));
+    }
+    dispatch(toggleFollowingProgress(false, id));
   };
 };
 
 export const unfollowUser = id => {
-  return dispatch => {
-    dispatch(setIsFetching(true, id));
-    usersAPI.unfollowUser(id).then(data => {
-      if (data.resultCode === 0) {
-        dispatch(unfollow(id));
-      }
-    });
-    dispatch(setIsFetching(false, id));
+  return async dispatch => {
+    dispatch(toggleFollowingProgress(true, id));
+    const data = await usersAPI.unfollowUser(id);
+    if (data.resultCode === 0) {
+      dispatch(unfollow(id));
+    }
+    dispatch(toggleFollowingProgress(false, id));
   };
 };
 

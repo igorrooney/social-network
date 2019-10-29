@@ -1,9 +1,9 @@
 import { usersAPI } from '../api/social-network-API';
 
-const ADD_POST = 'ADD-POST';
-const SET_PROFILE = 'SET_PROFILE';
-const SET_STATUS = 'SET_STATUS';
-const DELETE_POST = 'DELETE_POST';
+const ADD_POST = '/profile/ADD-POST';
+const SET_PROFILE = '/profile/SET_PROFILE';
+const SET_STATUS = '/profile/SET_STATUS';
+const DELETE_POST = '/profile/DELETE_POST';
 
 const initialState = {
   posts: [
@@ -62,11 +62,7 @@ const profileReducer = (state = initialState, action) => {
   }
 };
 
-export const addPostActionCreator = (post, img) => ({
-  type: ADD_POST,
-  post,
-  img
-});
+export const addPost = (post, img) => ({ type: ADD_POST, post, img });
 
 export const deletePost = postId => ({ type: DELETE_POST, postId });
 
@@ -75,28 +71,25 @@ export const setProfile = profile => ({ type: SET_PROFILE, profile });
 const setStatus = status => ({ type: SET_STATUS, status });
 
 export const getProfile = id => {
-  return dispatch => {
-    usersAPI.getProfile(id).then(data => {
-      dispatch(setProfile(data.data));
-    });
+  return async dispatch => {
+    const data = await usersAPI.getProfile(id);
+    dispatch(setProfile(data.data));
   };
 };
 
 export const getStatus = id => {
-  return dispatch => {
-    usersAPI.getStatus(id).then(data => {
-      dispatch(setStatus(data));
-    });
+  return async dispatch => {
+    const data = await usersAPI.getStatus(id);
+    dispatch(setStatus(data));
   };
 };
 
 export const setNewStatus = text => {
-  return dispatch => {
-    usersAPI.updateStatus(text).then(data => {
-      if (data.resultCode === 0) {
-        dispatch(setStatus(text));
-      }
-    });
+  return async dispatch => {
+    const data = await usersAPI.updateStatus(text);
+    if (data.resultCode === 0) {
+      dispatch(setStatus(text));
+    }
   };
 };
 

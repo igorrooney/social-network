@@ -1,4 +1,4 @@
-import { addMessageActionCreator } from './dialogs-reducer';
+import { addMessage } from './dialogs-reducer';
 import dialogsReducer from './dialogs-reducer';
 
 const state = {
@@ -36,13 +36,13 @@ const state = {
 };
 
 it('after adding post length of the messages should be increment', () => {
-  const action = addMessageActionCreator('test message');
+  const action = addMessage('test message');
   const newState = dialogsReducer(state, action);
   expect(newState.messages.length).toBe(4);
 });
 
 it('after adding message text should be correct', () => {
-  const action = addMessageActionCreator('test message');
+  const action = addMessage('test message');
   const newState = dialogsReducer(state, action);
   expect(newState.messages[3].message).toBe('test message');
 });

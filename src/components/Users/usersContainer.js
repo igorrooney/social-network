@@ -20,7 +20,8 @@ import {
   getTotalCount,
   getPageSize,
   getIsLoading,
-  getIsFetching
+  getIsFetching,
+  getFollowingInProgress
 } from '../../redux/selectors';
 
 import Spinner from '../Spinner';
@@ -50,6 +51,7 @@ class UsersContainer extends Component {
         setIsFetching={this.props.setIsFetching}
         followUser={this.props.followUser}
         unfollowUser={this.props.unfollowUser}
+        followingInProgress={this.props.followingInProgress}
       />
     );
 
@@ -64,7 +66,8 @@ const mapStateToProps = state => {
     totalCount: getTotalCount(state),
     pageSize: getPageSize(state),
     isLoading: getIsLoading(state),
-    isFetching: getIsFetching(state)
+    isFetching: getIsFetching(state),
+    followingInProgress: getFollowingInProgress(state)
   };
 };
 
@@ -89,7 +92,6 @@ export default compose(
       setTotalCountPages,
       setCurrentPage,
       setIsLoading,
-      setIsFetching,
       getUsers: requestUsers,
       followUser,
       unfollowUser
