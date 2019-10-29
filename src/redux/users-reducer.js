@@ -68,7 +68,7 @@ const usersReducer = (state = initialState, action) => {
     case SET_IS_LOADING:
       return {
         ...state,
-        isLoading: action.isLoading
+        isFetching: action.isFetching
       };
 
     case TOGGLE_IS_FOLLOWING_PROGRESS:

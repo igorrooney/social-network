@@ -8,7 +8,6 @@ import {
   setTotalCountPages,
   setCurrentPage,
   setIsLoading,
-  setIsFetching,
   requestUsers,
   followUser,
   unfollowUser

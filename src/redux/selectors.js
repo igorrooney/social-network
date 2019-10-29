@@ -15,7 +15,7 @@ export const getPageSize = state => {
 };
 
 export const getIsLoading = state => {
-  return state.usersPage.isLoading;
+  return state.usersPage.isFetching;
 };
 
 export const getIsFetching = state => {
