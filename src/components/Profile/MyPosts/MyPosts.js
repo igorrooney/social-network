@@ -6,7 +6,8 @@ import Spinner from '../../Spinner';
 import avatar from '../../../assets/images/user.jpg';
 import CreatePostForm from './CreatePostForm';
 
-const MyPosts = props => {
+const MyPosts = React.memo(props => {
+  console.log(props);
   const posts = props.postsData.map(post => {
     return (
       <Post
@@ -38,6 +39,6 @@ const MyPosts = props => {
       <div className="col-md-2 static"></div>
     </div>
   );
-};
+});
 
 export default MyPosts;
