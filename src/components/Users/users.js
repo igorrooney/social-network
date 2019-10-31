@@ -9,6 +9,9 @@ const Users = ({
   onSetCurrentPage,
   currentPage,
   users,
+  portion,
+  setCurrentPage,
+  setPortion,
   ...props
 }) => {
   return (
@@ -18,15 +21,18 @@ const Users = ({
         pageSize={pageSize}
         onSetCurrentPage={onSetCurrentPage}
         currentPage={currentPage}
+        portion={portion}
+        setCurrentPage={setCurrentPage}
+        setPortion={setPortion}
       />
       <div className="row">
-        <div className="col-md-3"></div>
-        <div className="col-md-6">
+        <div className="col-md-2"></div>
+        <div className="col-md-8">
           {users.map(u => (
             <User key={u.id} user={u} {...props} />
           ))}
         </div>
-        <div className="col-md-3"></div>
+        <div className="col-md-2"></div>
       </div>
     </div>
   );

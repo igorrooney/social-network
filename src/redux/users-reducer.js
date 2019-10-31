@@ -7,9 +7,11 @@ const SET_TOTAL_COUNT_PAGES = '/users/SET_TOTAL_COUNT_PAGES';
 const SET_CURRENT_PAGE = '/users/SET_CURRENT_PAGE';
 const SET_IS_LOADING = '/users/SET_IS_LOADING';
 const TOGGLE_IS_FOLLOWING_PROGRESS = '/users/TOGGLE_IS_FOLLOWING_PROGRESS';
+const SET_PORTION = '/users/SET_PORTION';
 
 const initialState = {
   users: [],
+  portion: 1,
   totalCount: 0,
   pageSize: 10,
   currentPage: 1,
@@ -65,6 +67,12 @@ const usersReducer = (state = initialState, action) => {
         currentPage: action.page
       };
 
+    case SET_PORTION:
+      return {
+        ...state,
+        portion: action.portion
+      };
+
     case SET_IS_LOADING:
       return {
         ...state,
@@ -92,6 +100,8 @@ export const setTotalCountPages = pages => ({
   pages
 });
 export const setCurrentPage = page => ({ type: SET_CURRENT_PAGE, page });
+
+export const setPortion = portion => ({ type: SET_PORTION, portion });
 export const setIsLoading = isFetching => ({
   type: SET_IS_LOADING,
   isFetching
@@ -111,6 +121,7 @@ export const requestUsers = (currentPage, pageSize) => {
     dispatch(setUsers(data.items));
     dispatch(setTotalCountPages(data.totalCount));
     dispatch(setCurrentPage(currentPage));
+    //dispatch(setPortion(portion));
   };
 };
 

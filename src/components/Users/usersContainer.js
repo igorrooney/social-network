@@ -10,7 +10,8 @@ import {
   setIsLoading,
   requestUsers,
   followUser,
-  unfollowUser
+  unfollowUser,
+  setPortion
 } from '../../redux/users-reducer';
 
 import {
@@ -20,7 +21,8 @@ import {
   getPageSize,
   getIsLoading,
   getIsFetching,
-  getFollowingInProgress
+  getFollowingInProgress,
+  getPortion
 } from '../../redux/selectors';
 
 import Spinner from '../Spinner';
@@ -51,6 +53,9 @@ class UsersContainer extends Component {
         followUser={this.props.followUser}
         unfollowUser={this.props.unfollowUser}
         followingInProgress={this.props.followingInProgress}
+        portion={this.props.portion}
+        setCurrentPage={this.props.setCurrentPage}
+        setPortion={this.props.setPortion}
       />
     );
 
@@ -66,7 +71,8 @@ const mapStateToProps = state => {
     pageSize: getPageSize(state),
     isLoading: getIsLoading(state),
     isFetching: getIsFetching(state),
-    followingInProgress: getFollowingInProgress(state)
+    followingInProgress: getFollowingInProgress(state),
+    portion: getPortion(state)
   };
 };
 
@@ -93,7 +99,8 @@ export default compose(
       setIsLoading,
       getUsers: requestUsers,
       followUser,
-      unfollowUser
+      unfollowUser,
+      setPortion
     }
   ),
   withAuthRedirect
