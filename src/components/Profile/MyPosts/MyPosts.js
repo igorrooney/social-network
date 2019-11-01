@@ -29,13 +29,13 @@ const MyPosts = React.memo(props => {
 
   return (
     <div className="row">
-      <div className="col-md-3"></div>
+      <div className="col-md-4"></div>
       <div className="col-md-7">
         <div className={classes.createPost}></div>
         <CreatePostForm {...props} onSubmit={onSubmit} />
         <div className={classes.posts}>{posts}</div>
       </div>
-      <div className="col-md-2 static"></div>
+      <div className="col-md-1 static"></div>
     </div>
   );
 });

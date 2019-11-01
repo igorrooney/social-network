@@ -93,4 +93,14 @@ export const setNewStatus = text => {
   };
 };
 
+export const updateProfileInfo = profile => {
+  return async (dispatch, getState) => {
+    const userId = getState().auth.userId;
+    const data = await usersAPI.updateProfile(profile);
+    if (data.resultCode === 0) {
+      dispatch(getProfile(userId));
+    }
+  };
+};
+
 export default profileReducer;

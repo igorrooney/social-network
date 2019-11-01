@@ -22,6 +22,7 @@ const ProfileStatusWithHooks = props => {
   return (
     <div>
       <div>
+        <b>Status:</b>
         {editMode ? (
           <input
             onChange={onStatusChange}

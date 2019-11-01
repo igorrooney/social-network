@@ -13,6 +13,10 @@
     top: -100px;
     z-index: 999;
 
+    div {
+      text-align: left;
+    }
+
     .profilePhoto {
       height: 200px;
       width: 200px;
@@ -77,4 +81,8 @@ li {
   vertical-align: middle;
   padding: 15px 0;
 
+}
+
+.contact {
+  padding-left: 10px;
 }

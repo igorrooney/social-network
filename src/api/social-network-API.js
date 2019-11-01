@@ -39,6 +39,10 @@ export const usersAPI = {
     return instance
       .put(`profile/status`, { status: text })
       .then(res => res.data);
+  },
+
+  updateProfile(profile) {
+    return instance.put(`profile`, profile).then(res => res.data);
   }
 };
 export const authAPI = {

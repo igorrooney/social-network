@@ -5,7 +5,8 @@ import { compose } from 'redux';
 import {
   getProfile,
   getStatus,
-  setNewStatus
+  setNewStatus,
+  updateProfileInfo
 } from '../../redux/profile-reducer';
 import Profile from './Profile';
 import { withRouter } from 'react-router-dom';
@@ -24,8 +25,21 @@ class ProfileContainer extends Component {
     this.props.getStatus(userId);
   }
 
+  isOwner = () => {
+    if (this.props.id === this.props.profile.userId) {
+      return true;
+    }
+    return false;
+  };
+
   render() {
-    return <Profile {...this.props} profile={this.props.profile} />;
+    return (
+      <Profile
+        {...this.props}
+        profile={this.props.profile}
+        isOwner={this.isOwner}
+      />
+    );
   }
 }
 const mapStateToProps = state => {
@@ -41,7 +55,7 @@ const mapStateToProps = state => {
 export default compose(
   connect(
     mapStateToProps,
-    { getProfile, getStatus, setNewStatus }
+    { getProfile, getStatus, setNewStatus, updateProfileInfo }
   ),
   withRouter
 )(ProfileContainer);
