@@ -7,10 +7,9 @@ import ProfileStatus from './ProfileStatus';
 import ProfileInfoForm from './ProfileInfoForm';
 
 const ProfileInfo = props => {
-  if (!props.profile) {
+  if (props.isLoading) {
     return <Spinner />;
   }
-
   const onSubmit = formData => {
     props.updateProfileInfo(formData);
     //setEditMode(false);

@@ -13,7 +13,7 @@ import {
 import Profile from './Profile';
 import { withRouter } from 'react-router-dom';
 // import { withAuthRedirect } from '../../hoc/withAuthRedirect';
-import { getEditMode } from '../../redux/selectors';
+import { getEditMode, getIsLoading, getIsLoadingProfile } from '../../redux/selectors';
 
 class ProfileContainer extends Component {
   refreshProfile() {
@@ -44,6 +44,7 @@ class ProfileContainer extends Component {
     }
     return false;
   };
+
   render() {
     return (
       <Profile
@@ -54,6 +55,7 @@ class ProfileContainer extends Component {
     );
   }
 }
+
 const mapStateToProps = state => {
   return {
     profile: state.profilePage.profile,
@@ -61,7 +63,8 @@ const mapStateToProps = state => {
     isAuth: state.auth.isAuth,
     status: state.profilePage.status,
     id: state.auth.userId,
-    editMode: getEditMode(state)
+    editMode: getEditMode(state),
+    isLoading: getIsLoadingProfile(state)
   };
 };
 
