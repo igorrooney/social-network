@@ -118,14 +118,27 @@ export const updateProfileInfo = profile => {
       dispatch(setEditMode());
     } else {
       const error = data.messages[0];
-      // const pattern = /(Contacts->\w+)/g; const errorArr = searchRegEx(error,
-      // pattern); if (errorArr[0] === 'Contacts') {   const errorField =
-      // errorArr[1].toLowerCase();   console.log(errorField, error);   const res =
-      // {};   res.contacts = {};   res.contacts[errorField] = error;
-      // console.log(res);
-      dispatch(stopSubmit('profileForm', { _error: error }));
+      const errorMessage = error.split('(')[0];
+      const pattern = /(Contacts->\w+)/g;
+      const errorArr = searchRegEx(error, pattern);
+      if (errorArr[0] === 'Contacts') {
+        const errorField = errorArr[1].toLowerCase();
+        console.log(errorField, error);
+        const res = {};
+        res.contacts = {};
+        res.contacts[errorField] = error;
+        console.log(res);
+        dispatch(
+          stopSubmit('profileForm', {
+            contacts: {
+              [errorField]: errorMessage
+            }
+          })
+        );
+      }
+      //dispatch(stopSubmit('profileForm', { _error: error }));
     }
-    //dispatch(stopSubmit('profileForm', { _error: error }));
+    return Promise.reject(data.messages[0]);
   };
 };
 
