@@ -29,3 +29,7 @@ export const getFollowingInProgress = state => {
 export const getPortion = state => {
   return state.usersPage.portion;
 };
+
+export const getEditMode = state => {
+  return state.profilePage.editMode;
+};

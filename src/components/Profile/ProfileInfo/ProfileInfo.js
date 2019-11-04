@@ -7,7 +7,7 @@ import ProfileStatus from './ProfileStatus';
 import ProfileInfoForm from './ProfileInfoForm';
 
 const ProfileInfo = props => {
-  const [editMode, setEditMode] = useState(false);
+  // const [editMode, setEditMode] = useState(false);
 
   if (!props.profile) {
     return <Spinner />;
@@ -15,7 +15,7 @@ const ProfileInfo = props => {
 
   const onSubmit = formData => {
     props.updateProfileInfo(formData);
-    setEditMode(false);
+    //setEditMode(false);
   };
 
   const Contact = ({ contactKey, contactValue }) => {
@@ -51,7 +51,7 @@ const ProfileInfo = props => {
             <Contact
               key={key}
               contactKey={key}
-              contactValue={props.profile.contacts.key}
+              contactValue={props.profile.contacts[key]}
             />
           );
         })}
@@ -63,7 +63,7 @@ const ProfileInfo = props => {
       />{' '}
       {props.isOwner() && (
         <div>
-          <button onClick={() => setEditMode(true)}>Edit profile</button>
+          <button onClick={props.setEditMode}>Edit profile</button>
         </div>
       )}
     </div>
@@ -79,11 +79,12 @@ const ProfileInfo = props => {
                 alt=""
                 className={'img-responsive ' + classes.profilePhoto}
               />{' '}
-              {editMode ? (
+              {props.editMode ? (
                 <div>
                   <ProfileInfoForm
                     onSubmit={onSubmit}
                     initialValues={props.profile}
+                    profile={props.profile}
                   />
                 </div>
               ) : (

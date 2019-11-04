@@ -6,11 +6,13 @@ import {
   getProfile,
   getStatus,
   setNewStatus,
-  updateProfileInfo
+  updateProfileInfo,
+  setEditMode
 } from '../../redux/profile-reducer';
 import Profile from './Profile';
 import { withRouter } from 'react-router-dom';
 // import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { getEditMode } from '../../redux/selectors';
 
 class ProfileContainer extends Component {
   componentDidMount() {
@@ -48,14 +50,15 @@ const mapStateToProps = state => {
     authUserId: state.auth.userId,
     isAuth: state.auth.isAuth,
     status: state.profilePage.status,
-    id: state.auth.userId
+    id: state.auth.userId,
+    editMode: getEditMode(state)
   };
 };
 
 export default compose(
   connect(
     mapStateToProps,
-    { getProfile, getStatus, setNewStatus, updateProfileInfo }
+    { getProfile, getStatus, setNewStatus, updateProfileInfo, setEditMode }
   ),
   withRouter
 )(ProfileContainer);
