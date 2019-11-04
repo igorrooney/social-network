@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import classes from './ProfileInfo.module.scss';
 import Spinner from '../../Spinner';
@@ -7,8 +7,6 @@ import ProfileStatus from './ProfileStatus';
 import ProfileInfoForm from './ProfileInfoForm';
 
 const ProfileInfo = props => {
-  // const [editMode, setEditMode] = useState(false);
-
   if (!props.profile) {
     return <Spinner />;
   }
@@ -16,6 +14,10 @@ const ProfileInfo = props => {
   const onSubmit = formData => {
     props.updateProfileInfo(formData);
     //setEditMode(false);
+  };
+
+  const onSetNewPhoto = e => {
+    props.uploadPhoto(e.target.files[0]);
   };
 
   const Contact = ({ contactKey, contactValue }) => {
@@ -79,6 +81,9 @@ const ProfileInfo = props => {
                 alt=""
                 className={'img-responsive ' + classes.profilePhoto}
               />{' '}
+              {props.isOwner() && (
+                <input type="file" onChange={onSetNewPhoto} />
+              )}
               {props.editMode ? (
                 <div>
                   <ProfileInfoForm

@@ -7,7 +7,8 @@ import {
   getStatus,
   setNewStatus,
   updateProfileInfo,
-  setEditMode
+  setEditMode,
+  uploadPhoto
 } from '../../redux/profile-reducer';
 import Profile from './Profile';
 import { withRouter } from 'react-router-dom';
@@ -15,7 +16,7 @@ import { withRouter } from 'react-router-dom';
 import { getEditMode } from '../../redux/selectors';
 
 class ProfileContainer extends Component {
-  componentDidMount() {
+  refreshProfile() {
     let userId = this.props.match.params.userId;
     if (!userId) {
       userId = this.props.id;
@@ -27,13 +28,22 @@ class ProfileContainer extends Component {
     this.props.getStatus(userId);
   }
 
+  componentDidMount() {
+    this.refreshProfile();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.match.params.userId !== prevProps.match.params.userId) {
+      this.refreshProfile();
+    }
+  }
+
   isOwner = () => {
     if (this.props.id === this.props.profile.userId) {
       return true;
     }
     return false;
   };
-
   render() {
     return (
       <Profile
@@ -58,7 +68,14 @@ const mapStateToProps = state => {
 export default compose(
   connect(
     mapStateToProps,
-    { getProfile, getStatus, setNewStatus, updateProfileInfo, setEditMode }
+    {
+      getProfile,
+      getStatus,
+      setNewStatus,
+      updateProfileInfo,
+      setEditMode,
+      uploadPhoto
+    }
   ),
   withRouter
 )(ProfileContainer);
