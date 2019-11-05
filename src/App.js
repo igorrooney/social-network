@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { initializing } from './redux/app-reducer';
+import { initializing, saveError } from './redux/app-reducer';
 import Spinner from './components/Spinner';
 import { withSuspense } from './hoc/withSuspend';
 
@@ -32,8 +32,20 @@ const LoginContainer = React.lazy(() =>
 );
 
 class App extends Component {
+  catchAllUnhandledErrors = promiseRejectionEvent => {
+    this.props.saveError(promiseRejectionEvent.reason.message);
+  };
+
   componentDidMount() {
     this.props.initializing();
+    window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener(
+      'unhandledrejection',
+      this.catchAllUnhandledErrors
+    );
   }
 
   render() {
@@ -45,16 +57,20 @@ class App extends Component {
         <HeaderContainer />
         <NavbarContainer />
         <div className="app-wrapper-content container-fluid">
-          <Route
-            path="/profile/:userId?"
-            render={withSuspense(ProfileContainer)}
-          />
-          <Route path="/dialogs" render={withSuspense(DialogsContainer)} />
-          <Route path="/users" render={withSuspense(UsersContainer)} />
-          <Route path="/news" render={withSuspense(News)} />
-          <Route path="/music" render={withSuspense(Music)} />
-          <Route path="/settings" render={withSuspense(Settings)} />
-          <Route path="/login" render={withSuspense(LoginContainer)} />
+          <Switch>
+            <Route exact path="/" render={() => <Redirect to="/profile" />} />
+            <Route
+              path="/profile/:userId?"
+              render={withSuspense(ProfileContainer)}
+            />
+            <Route path="/dialogs" render={withSuspense(DialogsContainer)} />
+            <Route path="/users" render={withSuspense(UsersContainer)} />
+            <Route path="/news" render={withSuspense(News)} />
+            <Route path="/music" render={withSuspense(Music)} />
+            <Route path="/settings" render={withSuspense(Settings)} />
+            <Route path="/login" render={withSuspense(LoginContainer)} />
+            <Route path="*" render={() => <div>404 NOT FOUND</div>} />
+          </Switch>
         </div>
       </div>
     );
@@ -69,6 +85,6 @@ export default compose(
   withRouter,
   connect(
     mapStateToProps,
-    { initializing }
+    { initializing, saveError }
   )
 )(App);

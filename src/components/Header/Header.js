@@ -13,6 +13,9 @@ const Header = props => {
             alt="logo"
           />
         </NavLink>
+
+        {props.error && <span className={classes.error}>{props.error}</span>}
+
         {props.isAuth ? (
           <span>
             {props.login}

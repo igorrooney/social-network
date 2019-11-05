@@ -132,6 +132,7 @@ export const followUser = id => {
     if (data.resultCode === 0) {
       dispatch(follow(id));
     }
+
     dispatch(toggleFollowingProgress(false, id));
   };
 };

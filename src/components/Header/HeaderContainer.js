@@ -10,7 +10,11 @@ class HeaderContainer extends Component {
 }
 
 const mapStateToProps = state => {
-  return { login: state.auth.login, isAuth: state.auth.isAuth };
+  return {
+    login: state.auth.login,
+    isAuth: state.auth.isAuth,
+    error: state.app.globalError
+  };
 };
 
 export default connect(

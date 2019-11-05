@@ -34,3 +34,16 @@
     // width: fit-content;
   }
 }
+
+
+span.error {
+  color: red;
+  position: fixed;
+  top: 100px;
+  right: 10px;
+  font-size: 20px;
+  border: 1px solid gray;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: lightgrey;
+}

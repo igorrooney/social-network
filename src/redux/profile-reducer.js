@@ -121,9 +121,13 @@ export const getStatus = id => {
 
 export const setNewStatus = text => {
   return async dispatch => {
-    const data = await usersAPI.updateStatus(text);
-    if (data.resultCode === 0) {
-      dispatch(setStatus(text));
+    try {
+      const data = await usersAPI.updateStatus(text);
+      if (data.resultCode === 0) {
+        dispatch(setStatus(text));
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 };
