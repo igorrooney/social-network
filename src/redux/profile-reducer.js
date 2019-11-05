@@ -7,6 +7,7 @@ const SET_STATUS = '/profile/SET_STATUS';
 const DELETE_POST = '/profile/DELETE_POST';
 const SET_EDIT_MODE = '/profile/SET_EDIT_MODE';
 const UPLOAD_PHOTO_SUCCESS = '/profile/UPLOAD_PHOTO_SUCCESS';
+const IS_LOADING = '/profile/IS_LOADING';
 
 const initialState = {
   posts: [
@@ -25,7 +26,8 @@ const initialState = {
   ],
   profile: null,
   status: null,
-  editMode: false
+  editMode: false,
+  isLoading: true
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -48,6 +50,12 @@ const profileReducer = (state = initialState, action) => {
         ...state,
         profile: action.profile
       };
+
+    case IS_LOADING:
+      return {
+        ...state,
+        isLoading: action.isLoading
+      }
 
     case SET_STATUS:
       return {
@@ -87,6 +95,8 @@ export const deletePost = postId => ({ type: DELETE_POST, postId });
 
 export const setProfile = profile => ({ type: SET_PROFILE, profile });
 
+export const setIsLoading = isLoading => ({ type: IS_LOADING, isLoading });
+
 const setStatus = status => ({ type: SET_STATUS, status });
 
 const uploadPhotoSuccess = photos => ({ type: UPLOAD_PHOTO_SUCCESS, photos });
@@ -95,8 +105,10 @@ export const setEditMode = () => ({ type: SET_EDIT_MODE });
 
 export const getProfile = id => {
   return async dispatch => {
+    dispatch(setIsLoading(true));
     const data = await usersAPI.getProfile(id);
     dispatch(setProfile(data.data));
+    dispatch(setIsLoading(false));
   };
 };
 

@@ -18,8 +18,8 @@ const MyPosts = React.memo(props => {
     );
   });
 
-  if (!props.profile) {
-    return <Spinner />;
+  if (props.isLoading) {
+    return null;
   }
 
   const onSubmit = formData => {
