@@ -2,7 +2,6 @@ import React from 'react';
 
 import classes from './MyPosts.module.scss';
 import Post from './Post';
-import Spinner from '../../Spinner';
 import avatar from '../../../assets/images/user.jpg';
 import CreatePostForm from './CreatePostForm';
 

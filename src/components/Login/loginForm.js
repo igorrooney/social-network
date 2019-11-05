@@ -6,7 +6,6 @@ import classes from './login.module.scss';
 
 let LoginForm = props => {
   const { handleSubmit } = props;
-  console.log(props.error);
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -33,7 +32,7 @@ let LoginForm = props => {
       </div>
       {props.captcha && (
         <div>
-          <img src={props.captcha} />{' '}
+          <img src={props.captcha} alt="" />{' '}
           {createField('Symbols from image', 'captcha', [required], Input)}
         </div>
       )}

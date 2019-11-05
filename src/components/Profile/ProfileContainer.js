@@ -13,7 +13,7 @@ import {
 import Profile from './Profile';
 import { withRouter } from 'react-router-dom';
 // import { withAuthRedirect } from '../../hoc/withAuthRedirect';
-import { getEditMode, getIsLoading, getIsLoadingProfile } from '../../redux/selectors';
+import { getEditMode, getIsLoadingProfile } from '../../redux/selectors';
 
 class ProfileContainer extends Component {
   refreshProfile() {

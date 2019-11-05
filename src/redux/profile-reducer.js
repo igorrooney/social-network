@@ -55,7 +55,7 @@ const profileReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: action.isLoading
-      }
+      };
 
     case SET_STATUS:
       return {
