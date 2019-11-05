@@ -29,8 +29,6 @@ export const getIsLoadingProfile = state => {
   return state.profilePage.isLoading;
 };
 
-
-
 export const getPortion = state => {
   return state.usersPage.portion;
 };
@@ -41,4 +39,8 @@ export const getEditMode = state => {
 
 export const getCaptcha = state => {
   return state.auth.captcha;
+};
+
+export const getAuthUserProfile = state => {
+  return state.profilePage.authProfile;
 };

@@ -17,7 +17,7 @@ let CreatePostForm = props => {
         <div className="col-md-7 col-sm-7">
           <div className={classes.formGroup}>
             <img
-              src={props.profile.photos.small || userPhoto}
+              src={props.authUserProfile.photos.small || userPhoto}
               alt=""
               className={classes.profilePhotoMd}
             />

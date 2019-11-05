@@ -1,5 +1,6 @@
 import { usersAPI } from '../api/social-network-API';
 import { stopSubmit } from 'redux-form';
+import store from './redux-store';
 
 const ADD_POST = '/profile/ADD-POST';
 const SET_PROFILE = '/profile/SET_PROFILE';
@@ -8,6 +9,7 @@ const DELETE_POST = '/profile/DELETE_POST';
 const SET_EDIT_MODE = '/profile/SET_EDIT_MODE';
 const UPLOAD_PHOTO_SUCCESS = '/profile/UPLOAD_PHOTO_SUCCESS';
 const IS_LOADING = '/profile/IS_LOADING';
+const SET_AUTH_PROFILE = '/profile/SET_AUTH_PROFILE';
 
 const initialState = {
   posts: [
@@ -27,14 +29,15 @@ const initialState = {
   profile: null,
   status: null,
   editMode: false,
-  isLoading: true
+  isLoading: true,
+  authProfile: null
 };
 
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_POST:
       const newPost = {
-        id: 5,
+        id: action.id,
         img: action.img,
         message: action.post,
         likeCount: 0
@@ -49,6 +52,12 @@ const profileReducer = (state = initialState, action) => {
       return {
         ...state,
         profile: action.profile
+      };
+
+    case SET_AUTH_PROFILE:
+      return {
+        ...state,
+        authProfile: action.authProfile
       };
 
     case IS_LOADING:
@@ -89,11 +98,16 @@ const profileReducer = (state = initialState, action) => {
   }
 };
 
-export const addPost = (post, img) => ({ type: ADD_POST, post, img });
+export const addPost = (post, img, id) => ({ type: ADD_POST, post, img, id });
 
 export const deletePost = postId => ({ type: DELETE_POST, postId });
 
 export const setProfile = profile => ({ type: SET_PROFILE, profile });
+
+export const setAuthProfile = authProfile => ({
+  type: SET_AUTH_PROFILE,
+  authProfile
+});
 
 export const setIsLoading = isLoading => ({ type: IS_LOADING, isLoading });
 
@@ -108,6 +122,9 @@ export const getProfile = id => {
     dispatch(setIsLoading(true));
     const data = await usersAPI.getProfile(id);
     dispatch(setProfile(data.data));
+    if (store.getState().auth.userId === id) {
+      dispatch(setAuthProfile(data.data));
+    }
     dispatch(setIsLoading(false));
   };
 };
