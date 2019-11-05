@@ -33,3 +33,7 @@ export const getPortion = state => {
 export const getEditMode = state => {
   return state.profilePage.editMode;
 };
+
+export const getCaptcha = state => {
+  return state.auth.captcha;
+};
