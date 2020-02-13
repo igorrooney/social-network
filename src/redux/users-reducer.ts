@@ -1,3 +1,4 @@
+import { PhotoType, UserType } from './../types/types';
 import { usersAPI } from '../api/social-network-API';
 
 const FOLLOW = '/users/FOLLOW';
@@ -10,16 +11,18 @@ const TOGGLE_IS_FOLLOWING_PROGRESS = '/users/TOGGLE_IS_FOLLOWING_PROGRESS';
 const SET_PORTION = '/users/SET_PORTION';
 
 const initialState = {
-  users: [],
+  users: [] as Array<UserType>,
   portion: 1,
   totalCount: 0,
   pageSize: 10,
   currentPage: 1,
   isFetching: true,
-  followingInProgress: []
+  followingInProgress: [] as Array<number> // array of users id
 };
 
-const usersReducer = (state = initialState, action) => {
+type InitialStateType = typeof initialState
+
+const usersReducer = (state = initialState, action: any): InitialStateType => {
   switch (action.type) {
     case FOLLOW:
       return {
@@ -92,29 +95,67 @@ const usersReducer = (state = initialState, action) => {
   }
 };
 
-export const follow = userId => ({ type: FOLLOW, userId });
-export const unfollow = userId => ({ type: UNFOLLOW, userId });
-export const setUsers = users => ({ type: SET_USERS, users });
-export const setTotalCountPages = pages => ({
+type FollowActionType = {
+  type: typeof FOLLOW
+  userId: number
+}
+export const follow = (userId: number): FollowActionType => ({ type: FOLLOW, userId })
+
+type UnfollowActionType = {
+  type: typeof UNFOLLOW
+  userId: number
+}
+export const unfollow = (userId: number): UnfollowActionType => ({ type: UNFOLLOW, userId })
+
+type SetUsersActionType = {
+  type: typeof SET_USERS
+  users: UserType
+}
+export const setUsers = (users: UserType): SetUsersActionType => ({ type: SET_USERS, users })
+
+type SetTotalCountPagesActionType = {
+  type: typeof SET_TOTAL_COUNT_PAGES
+  pages: number
+}
+export const setTotalCountPages = (pages: number): SetTotalCountPagesActionType => ({
   type: SET_TOTAL_COUNT_PAGES,
   pages
-});
-export const setCurrentPage = page => ({ type: SET_CURRENT_PAGE, page });
+})
 
-export const setPortion = portion => ({ type: SET_PORTION, portion });
-export const setIsLoading = isFetching => ({
+type SetCurrentPageActionType = {
+  type: typeof SET_CURRENT_PAGE
+  page: number
+}
+export const setCurrentPage = (page: number): SetCurrentPageActionType => ({ type: SET_CURRENT_PAGE, page })
+
+type SetPortionActionType = {
+  type: typeof SET_PORTION
+  portion: number
+}
+export const setPortion = (portion: number): SetPortionActionType => ({ type: SET_PORTION, portion })
+
+type SetIsLoadingActionType = {
+  type: typeof SET_IS_LOADING
+  isFetching: boolean
+}
+export const setIsLoading = (isFetching: boolean): SetIsLoadingActionType => ({
   type: SET_IS_LOADING,
   isFetching
-});
+})
 
-export const toggleFollowingProgress = (isFetching, userId) => ({
+type ToggleFollowingProgressActionType = {
+  type: typeof TOGGLE_IS_FOLLOWING_PROGRESS
+  isFetching: boolean
+  userId: number
+}
+export const toggleFollowingProgress = (isFetching: boolean, userId: number): ToggleFollowingProgressActionType => ({
   type: TOGGLE_IS_FOLLOWING_PROGRESS,
   isFetching,
   userId
 });
 
-export const requestUsers = (currentPage, pageSize) => {
-  return async dispatch => {
+export const requestUsers = (currentPage: number, pageSize: number) => {
+  return async (dispatch: any) => {
     dispatch(setIsLoading(true));
     const data = await usersAPI.getUsers(currentPage, pageSize);
     dispatch(setIsLoading(false));
@@ -125,8 +166,8 @@ export const requestUsers = (currentPage, pageSize) => {
   };
 };
 
-export const followUser = id => {
-  return async dispatch => {
+export const followUser = (id: number) => {
+  return async (dispatch: any) => {
     dispatch(toggleFollowingProgress(true, id));
     const data = await usersAPI.followUser(id);
     if (data.resultCode === 0) {
@@ -137,8 +178,8 @@ export const followUser = id => {
   };
 };
 
-export const unfollowUser = id => {
-  return async dispatch => {
+export const unfollowUser = (id: number) => {
+  return async (dispatch: any) => {
     dispatch(toggleFollowingProgress(true, id));
     const data = await usersAPI.unfollowUser(id);
     if (data.resultCode === 0) {

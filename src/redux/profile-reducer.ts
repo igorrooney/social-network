@@ -1,3 +1,4 @@
+import { PostType, ProfileType, PhotoType } from './../types/types';
 import { usersAPI } from '../api/social-network-API';
 import { stopSubmit } from 'redux-form';
 import store from './redux-store';
@@ -14,26 +15,29 @@ const SET_AUTH_PROFILE = '/profile/SET_AUTH_PROFILE';
 const initialState = {
   posts: [
     {
-      id: '1',
+      id: 1,
       img: 'https://i.ytimg.com/vi/aEvItEpMly8/maxresdefault.jpg',
       message: 'Hi, how are you?',
-      likeCount: '5'
+      likeCount: 5
     },
     {
-      id: '12',
+      id: 12,
       img: 'https://i.ytimg.com/vi/aEvItEpMly8/maxresdefault.jpg',
       message: "It's my first post",
-      likeCount: '1'
+      likeCount: 1
     }
-  ],
-  profile: null,
-  status: null,
+  ] as Array<PostType>,
+  profile: null as ProfileType | null,
+  status: '',
   editMode: false,
   isLoading: true,
-  authProfile: null
-};
+  authProfile: null as any,
+  newTextPost: ''
+}
 
-const profileReducer = (state = initialState, action) => {
+type InitialStateType = typeof initialState
+
+const profileReducer = (state = initialState, action: any): InitialStateType => {
   switch (action.type) {
     case ADD_POST:
       const newPost = {
@@ -90,7 +94,7 @@ const profileReducer = (state = initialState, action) => {
         profile: {
           ...state.profile,
           photos: action.photos
-        }
+        } as any
       };
 
     default:
@@ -98,27 +102,66 @@ const profileReducer = (state = initialState, action) => {
   }
 };
 
-export const addPost = (post, img, id) => ({ type: ADD_POST, post, img, id });
+type AddPostActionType = {
+  type: typeof ADD_POST
+  post: string
+  img: string
+  id: number
+}
+export const addPost = (post: string, img: string, id: number): AddPostActionType => ({ type: ADD_POST, post, img, id });
 
-export const deletePost = postId => ({ type: DELETE_POST, postId });
+type DeletePostActionType = {
+  type: typeof DELETE_POST
+  postId: number
+}
+export const deletePost = (postId: number): DeletePostActionType => ({ type: DELETE_POST, postId });
 
-export const setProfile = profile => ({ type: SET_PROFILE, profile });
+type SetProfileActionType = {
+  type: typeof SET_PROFILE
+  profile: ProfileType
+}
+export const setProfile = (profile: ProfileType): SetProfileActionType => ({ type: SET_PROFILE, profile });
 
-export const setAuthProfile = authProfile => ({
+type AuthProfileType = {
+  id: number,
+  email: string,
+  login: string
+}
+
+type SetAuthProfileActionType = {
+  type: typeof SET_AUTH_PROFILE
+  authProfile: AuthProfileType
+}
+export const setAuthProfile = (authProfile: AuthProfileType): SetAuthProfileActionType => ({
   type: SET_AUTH_PROFILE,
   authProfile
 });
 
-export const setIsLoading = isLoading => ({ type: IS_LOADING, isLoading });
+type SetIsLoadingActionType = {
+  type: typeof IS_LOADING
+  isLoading: boolean
+}
+export const setIsLoading = (isLoading: boolean): SetIsLoadingActionType => ({ type: IS_LOADING, isLoading });
 
-const setStatus = status => ({ type: SET_STATUS, status });
+type SetStatusActionType = {
+  type: typeof SET_STATUS
+  status: string
+}
+const setStatus = (status: string): SetStatusActionType => ({ type: SET_STATUS, status });
 
-const uploadPhotoSuccess = photos => ({ type: UPLOAD_PHOTO_SUCCESS, photos });
+type UploadPhotoSuccessActionType = {
+  type: typeof UPLOAD_PHOTO_SUCCESS
+  photos: PhotoType
+}
+const uploadPhotoSuccess = (photos: PhotoType): UploadPhotoSuccessActionType => ({ type: UPLOAD_PHOTO_SUCCESS, photos });
 
-export const setEditMode = () => ({ type: SET_EDIT_MODE });
+type SetEditModeActionType = {
+  type: typeof SET_EDIT_MODE
+}
+export const setEditMode = (): SetEditModeActionType => ({ type: SET_EDIT_MODE });
 
-export const getProfile = id => {
-  return async dispatch => {
+export const getProfile = (id: number) => {
+  return async (dispatch: any) => {
     dispatch(setIsLoading(true));
     const data = await usersAPI.getProfile(id);
     dispatch(setProfile(data.data));
@@ -129,28 +172,27 @@ export const getProfile = id => {
   };
 };
 
-export const getStatus = id => {
-  return async dispatch => {
+export const getStatus = (id: number) => {
+  return async (dispatch: any) => {
     const data = await usersAPI.getStatus(id);
     dispatch(setStatus(data));
   };
 };
 
-export const setNewStatus = text => {
-  return async dispatch => {
+export const setNewStatus = (text: string) => {
+  return async (dispatch: any) => {
     try {
       const data = await usersAPI.updateStatus(text);
       if (data.resultCode === 0) {
         dispatch(setStatus(text));
       }
     } catch (error) {
-      console.log(error);
     }
   };
 };
 
-export const uploadPhoto = photo => {
-  return async dispatch => {
+export const uploadPhoto = (photo: PhotoType) => {
+  return async (dispatch: any) => {
     const data = await usersAPI.uploadPhoto(photo);
     if (data.resultCode === 0) {
       dispatch(uploadPhotoSuccess(data.data.photos));
@@ -158,13 +200,13 @@ export const uploadPhoto = photo => {
   };
 };
 
-const searchRegEx = (text, pattern) => {
+const searchRegEx = (text: string, pattern: any) => {
   const result = pattern.exec(text)[0].split('->');
   return result;
 };
 
-export const updateProfileInfo = profile => {
-  return async (dispatch, getState) => {
+export const updateProfileInfo = (profile: ProfileType) => {
+  return async (dispatch: any, getState: any) => {
     const userId = getState().auth.userId;
     const data = await usersAPI.updateProfile(profile);
     if (data.resultCode === 0) {
@@ -177,10 +219,9 @@ export const updateProfileInfo = profile => {
       const errorArr = searchRegEx(error, pattern);
       if (errorArr[0] === 'Contacts') {
         const errorField = errorArr[1].toLowerCase();
-        const res = {};
+        const res = {} as any;
         res.contacts = {};
         res.contacts[errorField] = error;
-        console.log(res);
         dispatch(
           stopSubmit('profileForm', {
             contacts: {

@@ -20,7 +20,7 @@ const state = {
 };
 
 it('after adding post length of the posts should be increment', () => {
-  const action = addPost('test message', 'img');
+  const action = addPost('test message', 'img', 'id10');
   const newState = profileReducer(state, action);
   expect(newState.posts.length).toBe(3);
 });

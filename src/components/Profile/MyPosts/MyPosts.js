@@ -6,8 +6,6 @@ import avatar from '../../../assets/images/user.jpg';
 import CreatePostForm from './CreatePostForm';
 import nextId from 'react-id-generator';
 
-console.log(nextId());
-
 const MyPosts = React.memo(props => {
   const posts = props.postsData.map(post => {
     return (
