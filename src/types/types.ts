@@ -37,6 +37,7 @@ export type ContactType = {
   website: string
   youtube: string
   mainLink: string
+  [key: string]: string
 }
 
 export type ProfileType = {
@@ -45,7 +46,8 @@ export type ProfileType = {
   lookingForAJobDescription: string
   fullName: string
   contacts: ContactType
-  photos: PhotoType
+  photos: PhotoType,
+  aboutMe: string
 }
 
 export type UserType = {
@@ -56,3 +58,20 @@ export type UserType = {
   followed: boolean
 }
 
+export type DialogsPageType = {
+  messages: Array<MessageType>
+  dialogs: Array<DialogType>
+}
+
+export type AuthType = {
+  email: string, 
+  password: string, 
+  rememberMe: boolean, 
+  captcha?: string | null
+}
+
+export type AuthProfileType = {
+  id: number,
+  email: string,
+  login: string
+}

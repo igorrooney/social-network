@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { createField, Input } from '../../../Common/FormsControl';
-import { reduxForm } from 'redux-form';
+import { reduxForm, InjectedFormProps } from 'redux-form';
 import classes from './ProfileInfo.module.scss';
+import { ProfileType } from '../../../types/types';
 
-const ProfileInfoForm = ({ handleSubmit, profile, error }) => {
+type CustomProps = {
+  profile: ProfileType
+}
+
+const ProfileInfoForm: FC<CustomProps & InjectedFormProps<{}, CustomProps>> = 
+  ({ handleSubmit, profile, error }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -32,6 +38,7 @@ const ProfileInfoForm = ({ handleSubmit, profile, error }) => {
           </div>
         ))}
       </div>
+      
       <div className={classes.error}>{error}</div>
       <div>
         <button>Save changes</button>
@@ -39,7 +46,7 @@ const ProfileInfoForm = ({ handleSubmit, profile, error }) => {
     </form>
   );
 };
-const ProfileInfoFormRedux = reduxForm({ form: 'profileForm' })(
+const ProfileInfoFormRedux = reduxForm<{}, CustomProps>({ form: 'profileForm' })(
   ProfileInfoForm
 );
 

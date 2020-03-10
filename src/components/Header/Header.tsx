@@ -1,9 +1,10 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { FC } from 'react'
+import { NavLink } from 'react-router-dom'
 
-import classes from './Header.module.scss';
+import classes from './Header.module.scss'
+import { HeaderContainerPropsType } from './HeaderContainer'
 
-const Header = props => {
+const Header: FC<HeaderContainerPropsType> = props => {
   return (
     <header className={classes.header}>
       <div className={classes.container}>
@@ -35,7 +36,7 @@ const Header = props => {
         )}
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

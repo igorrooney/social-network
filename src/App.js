@@ -33,6 +33,7 @@ const LoginContainer = React.lazy(() =>
 
 class App extends Component {
   catchAllUnhandledErrors = promiseRejectionEvent => {
+    console.log(promiseRejectionEvent)
     this.props.saveError(promiseRejectionEvent.reason.message);
   };
 

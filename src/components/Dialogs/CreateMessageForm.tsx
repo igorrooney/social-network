@@ -1,15 +1,16 @@
 import React from 'react';
 import classes from './Dialogs.module.scss';
 
-import { Field, reduxForm, reset } from 'redux-form';
+import { Field, reduxForm, reset, InjectedFormProps } from 'redux-form';
 import { required, maxLength } from '../../utils/validators/validators';
 import { Textarea } from '../../Common/FormsControl';
+import { MessageType } from '../../types/types';
 
 const maxLength50 = maxLength(50);
 
-const afterSubmit = (result, dispatch) => dispatch(reset('createMessageForm'));
+const afterSubmit = (result: any, dispatch: any) => dispatch(reset('createMessageForm'));
 
-let CreateMessageForm = props => {
+let CreateMessageForm: React.FC<InjectedFormProps<MessageType, {}>> = (props) => {
   const { handleSubmit } = props;
   return (
     <form onSubmit={handleSubmit}>
@@ -30,8 +31,8 @@ let CreateMessageForm = props => {
   );
 };
 
-CreateMessageForm = reduxForm({
+
+export default reduxForm<MessageType, {}>({
   form: 'createMessageForm',
   onSubmitSuccess: afterSubmit
-})(CreateMessageForm);
-export default CreateMessageForm;
+})(CreateMessageForm)

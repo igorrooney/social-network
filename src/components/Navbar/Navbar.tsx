@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react'
 
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom'
 
-import classes from './Navbar.module.scss';
-import Friends from '../friends';
+import classes from './Navbar.module.scss'
+import Friends from '../friends'
+import { NavbarPropsType } from './NavbarContainer'
 
-const Navbar = props => {
+const Navbar: FC<NavbarPropsType> = (props) => {
   return (
     <nav className={classes.nav}>
       <div className={classes.item}>
@@ -45,7 +46,7 @@ const Navbar = props => {
       </div>
       <Friends friends={props.friendsBlock} />
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
