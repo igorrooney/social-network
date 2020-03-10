@@ -73,5 +73,9 @@ export type AuthType = {
 export type AuthProfileType = {
   id: number,
   email: string,
-  login: string
+  login: string,
+  photos: {
+    small: string,
+    large: string
+  }
 }

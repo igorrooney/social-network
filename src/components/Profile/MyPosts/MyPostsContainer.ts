@@ -1,8 +1,9 @@
+import { connect } from 'react-redux'
+
 import { PostType, ProfileType, AuthProfileType } from './../../../types/types'
 import { AppStateType } from './../../../redux/redux-store'
 import { addPost } from '../../../redux/profile-reducer'
 import MyPosts from './MyPosts'
-import { connect } from 'react-redux'
 import {
   getIsLoadingProfile,
   getAuthUserProfile,
@@ -11,7 +12,7 @@ import {
   getProfileUser
 } from '../../../redux/selectors'
 
-type MapStatePropsType = {
+interface MapStatePropsType {
   postsData: Array<PostType>
   newTextPost: string
   profile: ProfileType | null
@@ -19,7 +20,19 @@ type MapStatePropsType = {
   authUserProfile: AuthProfileType
 }
 
-const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+interface MapDispatchPropsType {
+  addPost: (
+    post: string,
+    img: string,
+    id: string
+  ) => void
+}
+
+interface OwnPropsType {}
+
+export type MyPostsContainerPropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType  
+ 
+const mapStateToProps = (state: AppStateType) => {
   return {
     postsData: getPostsData(state),
     newTextPost: getNewTextPost(state),
@@ -29,9 +42,11 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
   }
 }
 
-const MyPostsContainer = connect(
-  mapStateToProps,
-  { addPost }
-)(MyPosts)
+const mapDispatchToProps = {
+  addPost
+}
 
-export default MyPostsContainer
+export default connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType>(
+  mapStateToProps,
+  mapDispatchToProps
+)(MyPosts)

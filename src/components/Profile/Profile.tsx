@@ -1,19 +1,19 @@
 import React, { FC } from 'react';
 
-import MyPostsContainer from './MyPosts/MyPostsContainer';
+import MyPostsContainer from './MyPosts/MyPostsContainer'
 import ProfileInfo from './ProfileInfo';
 import { ProfileType } from '../../types/types'
 import { ProfileContainerPropsType } from './ProfileContainer'
 
-type PropsType = {
+type ProfilePropsType = {
   isOwner: boolean
 }
 
-const Profile: FC<ProfileContainerPropsType & PropsType> = (props) => {
+const Profile: FC<ProfileContainerPropsType & ProfilePropsType> = (props) => {
   return (
     <div>
       <ProfileInfo {...props} />
-      <MyPostsContainer />
+      <MyPostsContainer test='11' addPost={(()=>alert(1))}/>
     </div>
   );
 };
