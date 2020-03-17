@@ -12,7 +12,7 @@ import {
   followUser,
   unfollowUser,
   setPortion
-} from '../../redux/users-reducer';
+} from '../../redux/users-reducer'
 
 import {
   getUsers,
@@ -28,18 +28,22 @@ import {
 import Spinner from '../Spinner';
 import { compose } from 'redux';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { UserType } from '../../types/types';
+import { AppStateType } from '../../redux/redux-store';
+import { InitialStateType } from '../../redux/users-reducer'
 
-class UsersContainer extends Component {
+class UsersContainer extends Component<PropsType> {
   componentDidMount() {
-    this.props.getUsers(this.props.currentPage, this.props.pageSize);
+    this.props.requestUsers(this.props.currentPage, this.props.pageSize)
   }
 
-  onSetCurrentPage = page => {
-    this.props.getUsers(page, this.props.pageSize);
-  };
+  onSetCurrentPage = (page: number) => {
+    this.props.requestUsers(page, this.props.pageSize)
+  }
 
   render() {
     const users = (
+      // @ts-ignore
       <Users
         totalCount={this.props.totalCount}
         pageSize={this.props.pageSize}
@@ -49,7 +53,6 @@ class UsersContainer extends Component {
         currentPage={this.props.currentPage}
         onSetCurrentPage={this.onSetCurrentPage}
         isFetching={this.props.isFetching}
-        setIsFetching={this.props.setIsFetching}
         followUser={this.props.followUser}
         unfollowUser={this.props.unfollowUser}
         followingInProgress={this.props.followingInProgress}
@@ -57,13 +60,34 @@ class UsersContainer extends Component {
         setCurrentPage={this.props.setCurrentPage}
         setPortion={this.props.setPortion}
       />
-    );
+    )
 
     return this.props.isLoading ? <Spinner /> : users;
   }
 }
 
-const mapStateToProps = state => {
+type MapStatePropsType = {
+  isLoading?: boolean
+} & InitialStateType
+
+type MapDispatchPropsType = {
+  follow: () => void
+  unfollow: () => void
+  setUsers: () => void
+  setTotalCountPages: () => void
+  setCurrentPage: () => void
+  setIsLoading: () => void
+  requestUsers: (currentPage: number, pageSize: number) => void
+  followUser: () => void
+  unfollowUser: () => void
+  setPortion: () => void
+}
+
+type OwnPropsType = {}
+
+export type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
+
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
     users: getUsers(state),
     currentPage: getCurrentPage(state),
@@ -73,22 +97,11 @@ const mapStateToProps = state => {
     isFetching: getIsFetching(state),
     followingInProgress: getFollowingInProgress(state),
     portion: getPortion(state)
-  };
-};
-
-// const mapDispatchToProps = dispatch => {   return {     follow: userId =>
-// dispatch(followActionCreator(userId)),     unfollow: userId =>
-// dispatch(unFollowActionCreator(userId)),     setUsers: users =>
-// dispatch(setUsersActionCreator(users)),     setTotalCountPages: pages =>
-// dispatch(setTotalCountPagesActionCreator(pages)),     setCurrentPage: page =>
-// dispatch(setCurrentPageActionCreator(page)),     setIsLoading: isLoading =>
-// dispatch(setIsLoadingActionCreator(isLoading))   }; }; export default
-// connect(mapStateToProps, {   follow,   unfollow,   setUsers,
-// setTotalCountPages,   setCurrentPage,   setIsLoading,   setIsFetching,
-// getUsers,   followUser,   unfollowUser })(UsersContainer);
+  }
+}
 
 export default compose(
-  connect(
+  connect<MapStatePropsType, OwnPropsType, MapDispatchPropsType, AppStateType>(
     mapStateToProps,
     {
       follow,
@@ -97,11 +110,11 @@ export default compose(
       setTotalCountPages,
       setCurrentPage,
       setIsLoading,
-      getUsers: requestUsers,
+      requestUsers,
       followUser,
       unfollowUser,
       setPortion
     }
   ),
   withAuthRedirect
-)(UsersContainer);
+)(UsersContainer)

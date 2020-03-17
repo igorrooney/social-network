@@ -1,7 +1,8 @@
 import { PostType, ProfileType, PhotoType } from './../types/types';
 import { usersAPI } from '../api/social-network-API';
 import { stopSubmit } from 'redux-form';
-import store from './redux-store';
+import store, { AppStateType } from './redux-store';
+import { ThunkAction } from 'redux-thunk';
 
 const ADD_POST = '/profile/ADD-POST';
 const SET_PROFILE = '/profile/SET_PROFILE';
@@ -37,20 +38,20 @@ const initialState = {
 
 type InitialStateType = typeof initialState
 
-const profileReducer = (state = initialState, action: any): InitialStateType => {
+const profileReducer = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case ADD_POST:
       const newPost = {
-        id: action.id,
-        img: action.img,
-        message: action.post,
+        id: action.payload.id,
+        img: action.payload.img,
+        message: action.payload.post,
         likeCount: 0
-      };
+      }
       return {
         ...state,
         posts: [newPost, ...state.posts],
         newTextPost: ''
-      };
+      }
 
     case SET_PROFILE:
       return {
@@ -100,15 +101,28 @@ const profileReducer = (state = initialState, action: any): InitialStateType => 
     default:
       return state;
   }
-};
+}
+
+type ActionsType = 
+  AddPostActionType | 
+  DeletePostActionType | 
+  SetProfileActionType |  
+  SetAuthProfileActionType |
+  SetIsLoadingActionType | 
+  SetStatusActionType |
+  UploadPhotoSuccessActionType |
+  SetEditModeActionType
 
 type AddPostActionType = {
-  type: typeof ADD_POST
-  post: string
-  img: string
-  id: number
+  type: typeof ADD_POST,
+  payload: {
+    post: string
+    img: string
+    id: number
+  }
+
 }
-export const addPost = (post: string, img: string, id: number): AddPostActionType => ({ type: ADD_POST, post, img, id });
+export const addPost = (post: string, img: string, id: number): AddPostActionType => ({ type: ADD_POST, payload: {post, img, id }});
 
 type DeletePostActionType = {
   type: typeof DELETE_POST
@@ -122,7 +136,7 @@ type SetProfileActionType = {
 }
 export const setProfile = (profile: ProfileType): SetProfileActionType => ({ type: SET_PROFILE, profile });
 
-type AuthProfileType = {
+type _AuthProfileType = {
   id: number,
   email: string,
   login: string
@@ -130,24 +144,24 @@ type AuthProfileType = {
 
 type SetAuthProfileActionType = {
   type: typeof SET_AUTH_PROFILE
-  authProfile: AuthProfileType
+  authProfile: _AuthProfileType
 }
-export const setAuthProfile = (authProfile: AuthProfileType): SetAuthProfileActionType => ({
+export const setAuthProfile = (authProfile: _AuthProfileType): SetAuthProfileActionType => ({
   type: SET_AUTH_PROFILE,
   authProfile
-});
+})
 
 type SetIsLoadingActionType = {
   type: typeof IS_LOADING
   isLoading: boolean
 }
-export const setIsLoading = (isLoading: boolean): SetIsLoadingActionType => ({ type: IS_LOADING, isLoading });
+export const setIsLoading = (isLoading: boolean): SetIsLoadingActionType => ({ type: IS_LOADING, isLoading })
 
 type SetStatusActionType = {
   type: typeof SET_STATUS
   status: string
 }
-const setStatus = (status: string): SetStatusActionType => ({ type: SET_STATUS, status });
+const setStatus = (status: string): SetStatusActionType => ({ type: SET_STATUS, status })
 
 type UploadPhotoSuccessActionType = {
   type: typeof UPLOAD_PHOTO_SUCCESS
@@ -158,55 +172,57 @@ const uploadPhotoSuccess = (photos: PhotoType): UploadPhotoSuccessActionType => 
 type SetEditModeActionType = {
   type: typeof SET_EDIT_MODE
 }
-export const setEditMode = (): SetEditModeActionType => ({ type: SET_EDIT_MODE });
+export const setEditMode = (): SetEditModeActionType => ({ type: SET_EDIT_MODE })
 
-export const getProfile = (id: number) => {
-  return async (dispatch: any) => {
-    dispatch(setIsLoading(true));
-    const data = await usersAPI.getProfile(id);
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
+
+export const getProfile = (id: number | null): ThunkType => {
+  return async (dispatch) => {
+    dispatch(setIsLoading(true))
+    const data = await usersAPI.getProfile(id)
     dispatch(setProfile(data.data));
     if (store.getState().auth.userId === id) {
-      dispatch(setAuthProfile(data.data));
+      dispatch(setAuthProfile(data.data))
     }
-    dispatch(setIsLoading(false));
-  };
-};
+    dispatch(setIsLoading(false))
+  }
+}
 
-export const getStatus = (id: number) => {
-  return async (dispatch: any) => {
-    const data = await usersAPI.getStatus(id);
-    dispatch(setStatus(data));
-  };
-};
+export const getStatus = (id: number): ThunkType => {
+  return async (dispatch) => {
+    const data = await usersAPI.getStatus(id)
+    dispatch(setStatus(data))
+  }
+}
 
-export const setNewStatus = (text: string) => {
-  return async (dispatch: any) => {
+export const setNewStatus = (text: string): ThunkType => {
+  return async (dispatch) => {
     try {
-      const data = await usersAPI.updateStatus(text);
+      const data = await usersAPI.updateStatus(text)
       if (data.resultCode === 0) {
-        dispatch(setStatus(text));
+        dispatch(setStatus(text))
       }
     } catch (error) {
     }
-  };
-};
+  }
+}
 
-export const uploadPhoto = (photo: PhotoType) => {
-  return async (dispatch: any) => {
-    const data = await usersAPI.uploadPhoto(photo);
+export const uploadPhoto = (photo: PhotoType): ThunkType => {
+  return async (dispatch) => {
+    const data = await usersAPI.uploadPhoto(photo)
     if (data.resultCode === 0) {
-      dispatch(uploadPhotoSuccess(data.data.photos));
+      dispatch(uploadPhotoSuccess(data.data.photos))
     }
-  };
-};
+  }
+}
 
-const searchRegEx = (text: string, pattern: any) => {
-  const result = pattern.exec(text)[0].split('->');
-  return result;
-};
+const _searchRegEx = (text: string, pattern: any) => {
+    const result = pattern.exec(text)[0].split('->')
+    return result
+}
 
-export const updateProfileInfo = (profile: ProfileType) => {
-  return async (dispatch: any, getState: any) => {
+export const updateProfileInfo = (profile: ProfileType): ThunkType => {
+  return async (dispatch, getState: () => AppStateType) => {
     const userId = getState().auth.userId;
     const data = await usersAPI.updateProfile(profile);
     if (data.resultCode === 0) {
@@ -214,11 +230,11 @@ export const updateProfileInfo = (profile: ProfileType) => {
       dispatch(setEditMode());
     } else {
       const error = data.messages[0];
-      const errorMessage = error.split('(')[0];
+      const errorMessage = error.split('(')[0]
       const pattern = /(Contacts->\w+)/g;
-      const errorArr = searchRegEx(error, pattern);
+      const errorArr = _searchRegEx(error, pattern)
       if (errorArr[0] === 'Contacts') {
-        const errorField = errorArr[1].toLowerCase();
+        const errorField = errorArr[1].toLowerCase()
         const res = {} as any;
         res.contacts = {};
         res.contacts[errorField] = error;
@@ -228,12 +244,12 @@ export const updateProfileInfo = (profile: ProfileType) => {
               [errorField]: errorMessage
             }
           })
-        );
+        )
       }
       //dispatch(stopSubmit('profileForm', { _error: error }));
     }
     return Promise.reject(data.messages[0]);
-  };
-};
+  }
+}
 
-export default profileReducer;
+export default profileReducer

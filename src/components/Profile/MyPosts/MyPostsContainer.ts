@@ -12,7 +12,7 @@ import {
   getProfileUser
 } from '../../../redux/selectors'
 
-interface MapStatePropsType {
+type MapStatePropsType = {
   postsData: Array<PostType>
   newTextPost: string
   profile: ProfileType | null
@@ -20,7 +20,7 @@ interface MapStatePropsType {
   authUserProfile: AuthProfileType
 }
 
-interface MapDispatchPropsType {
+type MapDispatchPropsType = {
   addPost: (
     post: string,
     img: string,
@@ -28,11 +28,17 @@ interface MapDispatchPropsType {
   ) => void
 }
 
-interface OwnPropsType {}
+type OwnPropsType = {
+  addPost: (
+    post: string,
+    img: string,
+    id: string
+  ) => void 
+}
 
 export type MyPostsContainerPropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType  
  
-const mapStateToProps = (state: AppStateType) => {
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
     postsData: getPostsData(state),
     newTextPost: getNewTextPost(state),
@@ -42,11 +48,7 @@ const mapStateToProps = (state: AppStateType) => {
   }
 }
 
-const mapDispatchToProps = {
-  addPost
-}
-
-export default connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType>(
+export default connect<MapStatePropsType, {}, MapDispatchPropsType, AppStateType>(
   mapStateToProps,
-  mapDispatchToProps
+  {addPost}
 )(MyPosts)

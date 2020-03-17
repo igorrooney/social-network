@@ -1,23 +1,26 @@
 import React from 'react';
 import classes from './MyPosts.module.scss';
 import userPhoto from '../../../assets/images/user.jpg';
-import { Field, reduxForm, reset } from 'redux-form';
+import { Field, reduxForm, reset, InjectedFormProps } from 'redux-form';
 import { required, maxLength } from '../../../utils/validators/validators';
 import { Textarea } from '../../../Common/FormsControl';
 
 const maxLength15 = maxLength(15);
 
-const afterSubmit = (result, dispatch) => dispatch(reset('createPostForm'));
+const afterSubmit = (result: any, dispatch: any) => dispatch(
+    reset('createPostForm'))
 
-let CreatePostForm = props => {
-  const { handleSubmit } = props;
+type Props = {}
+
+let CreatePostForm: React.FC<Props & InjectedFormProps<{post: string, photo: string}, Props>> = (props: any) => {
+  const { handleSubmit } = props
   return (
     <form onSubmit={handleSubmit}>
       <div className="row">
         <div className="col-md-7 col-sm-7">
           <div className={classes.formGroup}>
             <img
-              src={props.authUserProfile.photos.small || userPhoto}
+              src={props.photo || userPhoto}
               alt=""
               className={classes.profilePhotoMd}
             />
@@ -42,8 +45,7 @@ let CreatePostForm = props => {
   );
 };
 
-CreatePostForm = reduxForm({
+export default reduxForm<{post: string, photo: string}, Props>({
   form: 'createPostForm',
   onSubmitSuccess: afterSubmit
-})(CreatePostForm);
-export default CreatePostForm;
+})(CreatePostForm)

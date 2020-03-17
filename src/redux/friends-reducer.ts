@@ -1,4 +1,4 @@
-import { FriendType } from "../types/types";
+import { FriendType } from "../types/types"
 
 const initialState = [
   {
@@ -24,7 +24,7 @@ const initialState = [
 type InitialStateType = typeof initialState
 
 const friendsReducer = (state = initialState, action: any): InitialStateType => {
-  return state;
-};
+  return state
+}
 
-export default friendsReducer;
+export default friendsReducer

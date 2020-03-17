@@ -49,7 +49,8 @@ const MyPosts: FC<MyPostsContainerPropsType> = React.memo(({
         <div className={classes.createPost}></div>
         <CreatePostForm
           onSubmit={onSubmit}
-          authUserProfile={authUserProfile} />
+          // @ts-ignore
+          photo={authUserProfile.photos.small} />
         <div className={classes.posts}>{posts}</div>
       </div>
       <div className="col-md-1 static"></div>

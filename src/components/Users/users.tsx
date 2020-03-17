@@ -1,9 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
-import Pagination from '../../utils/pagination';
-import User from './user';
+import React, { FC } from 'react'
+import Pagination from '../../utils/pagination'
+import User from './user'
+import { PropsType } from './usersContainer'
 
-const Users = ({
+type Props = {
+  onSetCurrentPage: (page: number) => void
+} & PropsType
+
+const Users: FC<Props> = ({
   totalCount,
   pageSize,
   onSetCurrentPage,
@@ -35,7 +40,7 @@ const Users = ({
         <div className="col-md-2"></div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Users;
+export default Users

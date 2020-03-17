@@ -1,7 +1,10 @@
-import { authMe } from './auth-reducer';
+import { authMe } from './auth-reducer'
+import { ThunkAction } from 'redux-thunk'
+import { AppStateType } from './redux-store'
+import { Dispatch } from 'redux'
 
-const INITIAL_SUCCESS = '/app/INITIAL_SUCCESS';
-const SET_ERROR = '/app/SET_ERROR';
+const INITIAL_SUCCESS = '/app/INITIAL_SUCCESS'
+const SET_ERROR = '/app/SET_ERROR'
 
 const initialState = {
   initialized: false,
@@ -10,25 +13,26 @@ const initialState = {
 
 export type InitialStateType = typeof initialState 
 
-const appReducer = (state = initialState, action: any): InitialStateType => {
+const appReducer = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case INITIAL_SUCCESS:
       return {
         ...state,
         initialized: true
-      };
+      }
 
     case SET_ERROR:
       return {
         ...state,
         globalError: action.globalError
-      };
+      }
 
     default:
-      return state;
+      return state
   }
-};
+}
 
+type ActionsType = InitialSuccessActionType | SetErrorActionType
 
 type InitialSuccessActionType = {
   type: typeof INITIAL_SUCCESS
@@ -39,22 +43,25 @@ type SetErrorActionType = {
   type: typeof SET_ERROR
   globalError: any // need to check!
 }
-const setError = (globalError: any): SetErrorActionType => ({ type: SET_ERROR, globalError });
+const setError = (globalError: any): SetErrorActionType => ({ type: SET_ERROR, globalError })
 
-export const initializing = () => {
-  return (dispatch: any) => {
-    const auth = dispatch(authMe());
+type DispatchType = Dispatch<ActionsType>
+
+export const initializing = ()
+  : ThunkAction<void, AppStateType, unknown, ActionsType> => {
+  return (dispatch) => {
+    const auth = dispatch(authMe())
     Promise.all([auth]).then(() => {
-      dispatch(initialSuccess());
-    });
-  };
-};
+      dispatch(initialSuccess())
+    })
+  }
+}
 
 export const saveError = (error: any) => {
-  return (dispatch: any) => {
-    dispatch(setError(error));
-    setTimeout(() => dispatch(setError(null)), 3000);
-  };
-};
+  return (dispatch: DispatchType) => {
+    dispatch(setError(error))
+    setTimeout(() => dispatch(setError(null)), 3000)
+  }
+}
 
-export default appReducer;
+export default appReducer

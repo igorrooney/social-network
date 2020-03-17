@@ -1,12 +1,20 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import classes from './users.module.scss';
-import userPhoto from '../../assets/images/user.jpg';
+import React, { FC } from 'react'
+import { NavLink } from 'react-router-dom'
+import classes from './users.module.scss'
+import userPhoto from '../../assets/images/user.jpg'
+import { UserType } from '../../types/types'
 
-const User = ({
+type Props = {
+  user: UserType
+  isFetching: boolean
+  unfollowUser: (id: number) => void
+  followUser: (id: number) => void
+  followingInProgress: Array<number>
+}
+
+const User: FC<Props> = ({
   user,
-  isFetching,
   unfollowUser,
   followUser,
   followingInProgress
@@ -52,7 +60,7 @@ const User = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default User;
+export default User
