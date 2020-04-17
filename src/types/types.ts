@@ -47,7 +47,7 @@ export type ProfileType = {
   fullName: string
   contacts: ContactType
   photos: PhotoType
-  aboutMe: string
+  aboutMe?: string
 }
 
 export type UserType = {
@@ -71,11 +71,7 @@ export type AuthType = {
 }
 
 export type AuthProfileType = {
-  id: number,
-  email: string,
-  login: string,
-  photos: {
-    small: string,
-    large: string
-  }
+  userId: number,
+  fullName: string,
+  photos: PhotoType
 }

@@ -42,26 +42,6 @@ type GetUsersResponseType = {
   error: string
 }
 
-export type GetProfileResponseType = {
-  userId: number
-  lookingForAJob: boolean
-  lookingForAJobDescription: string
-  fullName: string
-  contacts: {
-    github: string
-    vk: string
-    facebook: string
-    instagram: string
-    twitter: string
-    website: string
-    youtube: string
-    mainLink: string
-    [key: string]: string
-  }
-  photos: PhotoType
-  aboutMe?: string
-}
-
 export const usersAPI = {
   
   getUsers(currentPage = 1, pageSize = 10) {
@@ -75,7 +55,7 @@ export const usersAPI = {
   },
 
   getProfile(id: number) {
-    return instance.get<GetProfileResponseType>(`profile/${id}`);
+    return instance.get<ProfileType>(`profile/${id}`).then(res => res.data);
   },
 
   unfollowUser(id: number) {

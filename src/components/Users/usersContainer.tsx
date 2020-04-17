@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import Users from './users';
 import {
   followUser,
-  unfollowUser
+  unfollowUser,
+  requestUsers,
+  actions
 } from '../../redux/users-reducer'
 
 import {
@@ -19,7 +21,7 @@ import {
 
 import Spinner from '../Spinner';
 import { compose } from 'redux';
-import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 import { AppStateType } from '../../redux/redux-store';
 import { InitialStateType } from '../../redux/users-reducer'
 
@@ -34,26 +36,24 @@ class UsersContainer extends Component<PropsType> {
 
   render() {
     const users = (
-      // @ts-ignore
       <Users
+        followUser={this.props.followUser}
+        unfollowUser={this.props.unfollowUser}
         totalCount={this.props.totalCount}
         pageSize={this.props.pageSize}
         users={this.props.users}
-        unfollow={this.props.unfollow}
-        follow={this.props.follow}
         currentPage={this.props.currentPage}
         onSetCurrentPage={this.onSetCurrentPage}
         isFetching={this.props.isFetching}
-        followUser={this.props.followUser}
-        unfollowUser={this.props.unfollowUser}
         followingInProgress={this.props.followingInProgress}
         portion={this.props.portion}
         setCurrentPage={this.props.setCurrentPage}
         setPortion={this.props.setPortion}
+        requestUsers={this.props.requestUsers}
       />
     )
 
-    return this.props.isLoading ? <Spinner /> : users;
+    return this.props.isLoading ? <Spinner /> : users
   }
 }
 
@@ -62,16 +62,11 @@ type MapStatePropsType = {
 } & InitialStateType
 
 type MapDispatchPropsType = {
-  follow: () => void
-  unfollow: () => void
-  setUsers: () => void
-  setTotalCountPages: () => void
-  setCurrentPage: () => void
-  setIsLoading: () => void
   requestUsers: (currentPage: number, pageSize: number) => void
-  followUser: () => void
-  unfollowUser: () => void
-  setPortion: () => void
+  followUser: (id: number) => void
+  unfollowUser: (id: number) => void
+  setPortion: (portion: number) => void
+  setCurrentPage: (page: number) => void
 }
 
 type OwnPropsType = {}
@@ -91,13 +86,18 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
   }
 }
 
+  const mapDispatchToProps = {
+    followUser,
+    unfollowUser,
+    requestUsers,
+    setCurrentPage: actions.setCurrentPage,
+    setPortion: actions.setPortion
+  }
+
 export default compose(
   connect<MapStatePropsType, OwnPropsType, MapDispatchPropsType, AppStateType>(
     mapStateToProps,
-    {
-      followUser,
-      unfollowUser,
-    }
+    mapDispatchToProps
   ),
   withAuthRedirect
 )(UsersContainer)

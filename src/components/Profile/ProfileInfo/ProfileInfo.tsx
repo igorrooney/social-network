@@ -6,7 +6,6 @@ import userPhoto from '../../../assets/images/user.jpg';
 import ProfileStatus from './ProfileStatus';
 import ProfileInfoForm from './ProfileInfoForm';
 import { ProfileContainerPropsType } from '../ProfileContainer';
-import { ProfileType } from '../../../types/types';
 
 type Props = {
   isOwner: boolean

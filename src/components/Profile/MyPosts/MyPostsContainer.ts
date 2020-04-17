@@ -1,8 +1,12 @@
 import { connect } from 'react-redux'
 
-import { PostType, ProfileType, AuthProfileType } from './../../../types/types'
+import { 
+  PostType, 
+  ProfileType, 
+  AuthProfileType 
+} from './../../../types/types'
 import { AppStateType } from './../../../redux/redux-store'
-import { addPost } from '../../../redux/profile-reducer'
+import { actions } from '../../../redux/profile-reducer'
 import MyPosts from './MyPosts'
 import {
   getIsLoadingProfile,
@@ -48,7 +52,11 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
   }
 }
 
+const mapDispatchToProps = {
+  addPost: actions.addPost
+}
+
 export default connect<MapStatePropsType, {}, MapDispatchPropsType, AppStateType>(
   mapStateToProps,
-  {addPost}
+  mapDispatchToProps
 )(MyPosts)

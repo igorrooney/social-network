@@ -2,7 +2,7 @@ import { getIsAuth } from './../../redux/selectors';
 import { AppStateType } from './../../redux/redux-store';
 import { compose } from 'redux';
 import Login from './login';
-import { connect, MapStateToProps } from 'react-redux';
+import { connect } from 'react-redux';
 import { login } from '../../redux/auth-reducer';
 import { getCaptcha } from '../../redux/selectors';
 
