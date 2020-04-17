@@ -7,7 +7,7 @@ import { AuthType } from '../../types/types';
 
 type CustomProps = {
   captcha: string | null
-  error?: string
+
 }
 
 let LoginForm: FC<CustomProps & InjectedFormProps<AuthType, CustomProps>> = props => {

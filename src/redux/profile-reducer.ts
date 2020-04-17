@@ -143,11 +143,12 @@ type _AuthProfileType = {
 }
 
 type SetAuthProfileActionType = {
-  type: typeof SET_AUTH_PROFILE
+  type: typeof SET_AUTH_PROFILE,
   authProfile: _AuthProfileType
 }
-export const setAuthProfile = (authProfile: _AuthProfileType): SetAuthProfileActionType => ({
+export const setAuthProfile = (authProfile: SetAuthProfileActionType): SetAuthProfileActionType => ({
   type: SET_AUTH_PROFILE,
+  // @ts-ignore
   authProfile
 })
 
@@ -176,7 +177,7 @@ export const setEditMode = (): SetEditModeActionType => ({ type: SET_EDIT_MODE }
 
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 
-export const getProfile = (id: number | null): ThunkType => {
+export const getProfile = (id: number): ThunkType => {
   return async (dispatch) => {
     dispatch(setIsLoading(true))
     const data = await usersAPI.getProfile(id)
@@ -225,29 +226,32 @@ export const updateProfileInfo = (profile: ProfileType): ThunkType => {
   return async (dispatch, getState: () => AppStateType) => {
     const userId = getState().auth.userId;
     const data = await usersAPI.updateProfile(profile);
-    if (data.resultCode === 0) {
-      dispatch(getProfile(userId));
-      dispatch(setEditMode());
-    } else {
-      const error = data.messages[0];
-      const errorMessage = error.split('(')[0]
-      const pattern = /(Contacts->\w+)/g;
-      const errorArr = _searchRegEx(error, pattern)
-      if (errorArr[0] === 'Contacts') {
-        const errorField = errorArr[1].toLowerCase()
-        const res = {} as any;
-        res.contacts = {};
-        res.contacts[errorField] = error;
-        dispatch(
-          stopSubmit('profileForm', {
-            contacts: {
-              [errorField]: errorMessage
-            }
-          })
-        )
+    if (userId) {
+      if (data.resultCode === 0) {
+        dispatch(getProfile(userId));
+        dispatch(setEditMode());
+      } else {
+        const error = data.messages[0];
+        const errorMessage = error.split('(')[0]
+        const pattern = /(Contacts->\w+)/g;
+        const errorArr = _searchRegEx(error, pattern)
+        if (errorArr[0] === 'Contacts') {
+          const errorField = errorArr[1].toLowerCase()
+          const res = {} as any;
+          res.contacts = {};
+          res.contacts[errorField] = error;
+          dispatch(
+            stopSubmit('profileForm', {
+              contacts: {
+                [errorField]: errorMessage
+              }
+            })
+          )
+        }
+        //dispatch(stopSubmit('profileForm', { _error: error }));
       }
-      //dispatch(stopSubmit('profileForm', { _error: error }));
     }
+
     return Promise.reject(data.messages[0]);
   }
 }

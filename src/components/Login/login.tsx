@@ -6,10 +6,9 @@ import { AuthType } from '../../types/types';
 
 const Login: FC<LoginPropsType> = ({login, isAuth, captcha}) => {
   const onSubmit = ({ email, password, rememberMe, captcha }: AuthType) => {
-    console.log('login')
     login(email, password, rememberMe, captcha)
   }
-  console.log(isAuth, '<< isAuth')
+
   if (isAuth) return <Redirect to={'/profile'} />
   return (
     <div>

@@ -16,6 +16,7 @@ import {
 import { withRouter } from 'react-router-dom';
 import { getEditMode, getIsLoadingProfile } from '../../redux/selectors'
 import Profile from './Profile'
+import { GetProfileResponseType } from '../../api/social-network-API'
 
 
 

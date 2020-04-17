@@ -51,7 +51,7 @@ const ProfileInfo: FC<ProfileContainerPropsType & Props> = (props) => {
         <h3>{props.profile.fullName}</h3>
         <div>
           <b>About me:</b>
-          {props.profile.aboutMe}
+          {/* props.profile.aboutMe */}
         </div>
         <div>
           <b>Looking for a job:</b>

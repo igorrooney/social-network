@@ -1,3 +1,4 @@
+import { ResultCodeEnum, ResultCodeWithCaptchaEnum } from './../api/social-network-API';
 import { usersAPI, authAPI, securityAPI } from '../api/social-network-API'
 import { stopSubmit } from 'redux-form'
 import { Dispatch } from 'redux'
@@ -79,7 +80,7 @@ type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 export const authMe = (): ThunkType => {
   return async (dispatch) => {
     const data = await usersAPI.authMe()
-    if (data.resultCode === 0) {
+    if (data.resultCode === ResultCodeEnum.Success) {
       const { id, email, login } = data.data
       dispatch(setAuthMeData(id, email, login, true))
     }
@@ -96,10 +97,10 @@ export const getCaptcha = (): ThunkType => {
 export const login = (email: string, password: string, rememberMe: boolean, captcha: string): ThunkType => {
   return async (dispatch) => {
     const data = await authAPI.login(email, password, rememberMe, captcha)
-    if (data.resultCode === 0) {
+    if (data.resultCode === ResultCodeEnum.Success) {
       dispatch(authMe())
     } else {
-      if (data.resultCode === 10) {
+      if (data.resultCode === ResultCodeWithCaptchaEnum.CaptchaIsRequired) {
         dispatch(getCaptcha())
       }
       const message =
