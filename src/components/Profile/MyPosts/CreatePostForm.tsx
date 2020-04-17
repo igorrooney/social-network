@@ -8,11 +8,19 @@ import { Textarea } from '../../../Common/FormsControl';
 const maxLength15 = maxLength(15);
 
 const afterSubmit = (result: any, dispatch: any) => dispatch(
-    reset('createPostForm'))
+  reset('createPostForm'))
 
-type Props = {}
+type IUser = {
+  post: string
+  photo: string
+}
 
-let CreatePostForm: React.FC<Props & InjectedFormProps<{post: string, photo: string}, Props>> = (props: any) => {
+type IProps = {
+  photo: string,
+  onSubmit: (data: IUser) => void
+}
+
+let CreatePostForm: React.FC<IProps & InjectedFormProps<IUser, IProps>> = (props: any) => {
   const { handleSubmit } = props
   return (
     <form onSubmit={handleSubmit}>
@@ -42,10 +50,10 @@ let CreatePostForm: React.FC<Props & InjectedFormProps<{post: string, photo: str
         </div>
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default reduxForm<{post: string, photo: string}, Props>({
+export default reduxForm<IUser, IProps>({
   form: 'createPostForm',
   onSubmitSuccess: afterSubmit
 })(CreatePostForm)

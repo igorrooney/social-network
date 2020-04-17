@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC } from 'react'
 
 import classes from './MyPosts.module.scss'
 import Post from './Post'
@@ -6,6 +6,10 @@ import avatar from '../../../assets/images/user.jpg'
 import CreatePostForm from './CreatePostForm'
 import nextId from 'react-id-generator'
 import { MyPostsContainerPropsType } from './MyPostsContainer'
+
+type FormDataProps = {
+  post: string
+}
 
 const MyPosts: FC<MyPostsContainerPropsType> = React.memo(({ 
   postsData, 
@@ -29,17 +33,12 @@ const MyPosts: FC<MyPostsContainerPropsType> = React.memo(({
     return null
   }
 
-  type FormDataProps = {
-    post: string
-  }
-
-  const onSubmit = ( formData: FormDataProps ) => {
+  const onSubmitHandler = ( formData: FormDataProps ) => {
     if (authUserProfile) {
       const img = authUserProfile.photos.small || avatar
       const id = nextId()
       addPost(formData.post, img, id)
     }
-
   }
 
   return (
@@ -48,8 +47,7 @@ const MyPosts: FC<MyPostsContainerPropsType> = React.memo(({
       <div className="col-md-7">
         <div className={classes.createPost}></div>
         <CreatePostForm
-          onSubmit={onSubmit}
-          // @ts-ignore
+          onSubmit={onSubmitHandler}
           photo={authUserProfile.photos.small} />
         <div className={classes.posts}>{posts}</div>
       </div>
