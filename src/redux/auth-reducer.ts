@@ -1,10 +1,10 @@
 import { stopSubmit } from 'redux-form'
-import { Dispatch } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 
 import { ResultCodeEnum, ResultCodeWithCaptchaEnum } from './../api/social-network-API'
 import { usersAPI, authAPI, securityAPI } from '../api/social-network-API'
 import { AppStateType, InfernActionsTypes } from './redux-store'
+
 
 const initialState = {
   userId: null as number | null,

@@ -95,7 +95,6 @@ const ProfileInfo: FC<ProfileContainerPropsType & Props> = (props) => {
             <div className="col-md-4">
               <div className={classes.profileInfo}>
                 <img
-                // @ts-ignore
                   src={props.profile.photos.large || userPhoto}
                   alt=""
                   className={'img-responsive ' + classes.profilePhoto}
