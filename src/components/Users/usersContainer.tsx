@@ -2,16 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Users from './users';
 import {
-  follow,
-  unfollow,
-  setUsers,
-  setTotalCountPages,
-  setCurrentPage,
-  setIsLoading,
-  requestUsers,
   followUser,
-  unfollowUser,
-  setPortion
+  unfollowUser
 } from '../../redux/users-reducer'
 
 import {
@@ -28,7 +20,6 @@ import {
 import Spinner from '../Spinner';
 import { compose } from 'redux';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
-import { UserType } from '../../types/types';
 import { AppStateType } from '../../redux/redux-store';
 import { InitialStateType } from '../../redux/users-reducer'
 
@@ -104,16 +95,8 @@ export default compose(
   connect<MapStatePropsType, OwnPropsType, MapDispatchPropsType, AppStateType>(
     mapStateToProps,
     {
-      follow,
-      unfollow,
-      setUsers,
-      setTotalCountPages,
-      setCurrentPage,
-      setIsLoading,
-      requestUsers,
       followUser,
       unfollowUser,
-      setPortion
     }
   ),
   withAuthRedirect
