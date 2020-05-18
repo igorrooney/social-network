@@ -5,8 +5,8 @@ import {
   AppStateType, 
   InfernActionsTypes 
 } from './redux-store'
-import { UserType } from './../types/types'
-import { usersAPI } from '../api/social-network-API'
+import { UserType } from 'types/types'
+import { usersAPI } from 'api/users-api'
 
 const initialState = {
   users: [] as Array<UserType>,

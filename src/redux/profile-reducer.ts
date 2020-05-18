@@ -6,8 +6,8 @@ import {
   PhotoType,
   AuthProfileType, 
   ProfileType 
-} from './../types/types'
-import { usersAPI } from '../api/social-network-API'
+} from 'types/types'
+import { profileAPI } from 'api/profile-api'
 import store, { AppStateType, InfernActionsTypes } from './redux-store'
 
 const ADD_POST = '/profile/ADD-POST'
@@ -127,7 +127,7 @@ type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 export const getProfile = (id: number): ThunkType => {
   return async (dispatch) => {
     dispatch(actions.setIsLoading(true))
-    const data = await usersAPI.getProfile(id)
+    const data = await profileAPI.getProfile(id)
     dispatch(actions.setProfile(data))
     if (store.getState().auth.userId === id) {
       dispatch(actions.setAuthProfile(data))
@@ -138,7 +138,7 @@ export const getProfile = (id: number): ThunkType => {
 
 export const getStatus = (id: number): ThunkType => {
   return async (dispatch) => {
-    const data = await usersAPI.getStatus(id)
+    const data = await profileAPI.getStatus(id)
     dispatch(actions.setStatus(data))
   }
 }
@@ -146,7 +146,7 @@ export const getStatus = (id: number): ThunkType => {
 export const setNewStatus = (text: string): ThunkType => {
   return async (dispatch) => {
     try {
-      const data = await usersAPI.updateStatus(text)
+      const data = await profileAPI.updateStatus(text)
       if (data.resultCode === 0) {
         dispatch(actions.setStatus(text))
       }
@@ -157,7 +157,7 @@ export const setNewStatus = (text: string): ThunkType => {
 
 export const uploadPhoto = (photo: PhotoType): ThunkType => {
   return async (dispatch) => {
-    const data = await usersAPI.uploadPhoto(photo)
+    const data = await profileAPI.uploadPhoto(photo)
     if (data.resultCode === 0) {
       dispatch(actions.uploadPhotoSuccess(data.data.photos))
     }
@@ -172,7 +172,7 @@ const _searchRegEx = (text: string, pattern: any) => {
 export const updateProfileInfo = (profile: ProfileType): ThunkType => {
   return async (dispatch, getState: () => AppStateType) => {
     const userId = getState().auth.userId
-    const data = await usersAPI.updateProfile(profile)
+    const data = await profileAPI.updateProfile(profile)
     if (userId) {
       if (data.resultCode === 0) {
         dispatch(getProfile(userId))

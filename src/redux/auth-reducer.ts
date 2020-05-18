@@ -1,10 +1,11 @@
 import { stopSubmit } from 'redux-form'
 import { ThunkAction } from 'redux-thunk'
 
-import { ResultCodeEnum, ResultCodeWithCaptchaEnum } from './../api/social-network-API'
-import { usersAPI, authAPI, securityAPI } from '../api/social-network-API'
+import { ResultCodeEnum, ResultCodeWithCaptchaEnum } from 'api/social-network-API'
+import { usersAPI } from 'api/users-api'
+import { authAPI } from 'api/auth-api'
+import { securityAPI } from 'api/security-api'
 import { AppStateType, InfernActionsTypes } from './redux-store'
-
 
 const initialState = {
   userId: null as number | null,
@@ -53,7 +54,7 @@ type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 
 export const authMe = (): ThunkType => {
   return async (dispatch) => {
-    const data = await usersAPI.authMe()
+    const data = await authAPI.authMe()
     if (data.resultCode === ResultCodeEnum.Success) {
       const { id, email, login } = data.data
       dispatch(actions.setAuthMeData(id, email, login, true))
