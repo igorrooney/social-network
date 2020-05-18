@@ -3,14 +3,12 @@ import { connect } from 'react-redux'
 import { 
   PostType, 
   ProfileType, 
-  AuthProfileType 
 } from './../../../types/types'
 import { AppStateType } from './../../../redux/redux-store'
 import { actions } from '../../../redux/profile-reducer'
 import MyPosts from './MyPosts'
 import {
   getIsLoadingProfile,
-  getAuthUserProfile,
   getNewTextPost,
   getPostsData,
   getProfileUser
@@ -19,9 +17,8 @@ import {
 type MapStatePropsType = {
   postsData: Array<PostType>
   newTextPost: string
-  profile: ProfileType | null
+  profile: ProfileType
   isLoading: boolean
-  authUserProfile: AuthProfileType
 }
 
 type MapDispatchPropsType = {
@@ -41,14 +38,13 @@ type OwnPropsType = {
 }
 
 export type MyPostsContainerPropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType  
- 
+
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
     postsData: getPostsData(state),
     newTextPost: getNewTextPost(state),
     profile: getProfileUser(state),
     isLoading: getIsLoadingProfile(state),
-    authUserProfile: getAuthUserProfile(state)
   }
 }
 

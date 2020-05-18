@@ -1,18 +1,15 @@
-import { ThunkAction } from 'redux-thunk'
 import { stopSubmit, FormAction } from 'redux-form'
-import store, { InfernActionsTypes, BaseThunkType } from './redux-store'
+import { InfernActionsTypes, BaseThunkType } from './redux-store'
 // Types
 import { 
   PostType, 
   PhotoType,
-  AuthProfileType, 
   ProfileType 
 } from 'types/types'
 // Constants
 import { 
   ADD_POST, 
   SET_PROFILE, 
-  SET_AUTH_PROFILE, 
   IS_LOADING, 
   SET_STATUS, 
   DELETE_POST, 
@@ -21,7 +18,6 @@ import {
 } from './actionTypes'
 // API
 import { profileAPI } from 'api/profile-api'
-
 
 const initialState = {
   posts: [
@@ -38,13 +34,11 @@ const initialState = {
       likeCount: 1
     }
   ] as Array<PostType>,
-  profile: null as ProfileType | null,
+  profile: {} as ProfileType,
   status: '',
   editMode: false,
   isLoading: true,
   newTextPost: '',
-  authProfile: {
-    userId: 0, fullName: '', photos: {small: '', large: ''} }
 }
 
 const profileReducer = (state = initialState, action: ActionsType): InitialStateType => {
@@ -66,12 +60,6 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
       return {
         ...state,
         profile: action.profile
-      }
-    }
-    case SET_AUTH_PROFILE: {
-      return {
-        ...state,
-        authProfile: action.authProfile
       }
     }
     case IS_LOADING: {
@@ -116,7 +104,6 @@ export const actions = {
   addPost: (post: string, img: string, id: number) => ({ type: ADD_POST, payload: {post, img, id }} as const),
   deletePost: (postId: number) => ({ type: DELETE_POST, postId } as const ),
   setProfile: (profile: ProfileType) => ({ type: SET_PROFILE, profile } as const),
-  setAuthProfile: (authProfile: AuthProfileType) => ({ type: SET_AUTH_PROFILE, authProfile } as const ),
   setIsLoading: (isLoading: boolean) => ({ type: IS_LOADING, isLoading } as const ),
   setStatus: (status: string) => ({ type: SET_STATUS, status } as const ),
   uploadPhotoSuccess: (photos: PhotoType) => ({ type: UPLOAD_PHOTO_SUCCESS, photos } as const ),
@@ -128,9 +115,6 @@ export const getProfile = (id: number): ThunkType => {
     dispatch(actions.setIsLoading(true))
     const data = await profileAPI.getProfile(id)
     dispatch(actions.setProfile(data))
-    if (store.getState().auth.userId === id) {
-      dispatch(actions.setAuthProfile(data))
-    }
     dispatch(actions.setIsLoading(false))
   }
 }

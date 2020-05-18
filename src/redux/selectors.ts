@@ -55,10 +55,6 @@ export const getAuthUserId = (state: AppStateType) => {
   return state.auth.userId
 }
 
-export const getAuthUserProfile = (state: AppStateType) => {
-  return state.profilePage.authProfile
-}
-
 export const getProfileUser = (state: AppStateType) => {
   return state.profilePage.profile
 }

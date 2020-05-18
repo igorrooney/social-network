@@ -14,7 +14,7 @@ type FormDataProps = {
 const MyPosts: FC<MyPostsContainerPropsType> = React.memo(({ 
   postsData, 
   isLoading, 
-  authUserProfile, 
+  profile, 
   addPost
 }) => {
 
@@ -34,8 +34,8 @@ const MyPosts: FC<MyPostsContainerPropsType> = React.memo(({
   }
 
   const onSubmitHandler = ( formData: FormDataProps ) => {
-    if (authUserProfile) {
-      const img = authUserProfile.photos.small || avatar
+    if (profile) {
+      const img = profile.photos.small || avatar
       const id = nextId()
       addPost(formData.post, img, id)
     }
@@ -48,7 +48,7 @@ const MyPosts: FC<MyPostsContainerPropsType> = React.memo(({
         <div className={classes.createPost}></div>
         <CreatePostForm
           onSubmit={onSubmitHandler}
-          photo={authUserProfile.photos.small} />
+          photo={profile.photos.small} />
         <div className={classes.posts}>{posts}</div>
       </div>
       <div className="col-md-1 static"></div>

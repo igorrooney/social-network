@@ -19,9 +19,6 @@ const state = {
   status: '',
   editMode: false,
   isLoading: true,
-  authProfile: {
-    userId: 0, fullName: '', photos: {small: '', large: ''} 
-  },
   newTextPost: '',
 };
 

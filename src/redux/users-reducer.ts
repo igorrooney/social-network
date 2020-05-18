@@ -6,6 +6,16 @@ import {
 } from './redux-store'
 import { UserType } from 'types/types'
 import { usersAPI } from 'api/users-api'
+import { 
+  FOLLOW,
+  UNFOLLOW,
+  SET_USERS,
+  SET_TOTAL_COUNT_PAGES,
+  SET_CURRENT_PAGE,
+  SET_PORTION,
+  SET_IS_LOADING,
+  TOGGLE_IS_FOLLOWING_PROGRESS,
+} from './actionTypes'
 
 const initialState = {
   users: [] as Array<UserType>,
@@ -17,11 +27,9 @@ const initialState = {
   followingInProgress: [] as Array<number> // array of users id
 }
 
-export type InitialStateType = typeof initialState
-
 const usersReducer = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
-    case "FOLLOW":
+    case FOLLOW:
       return {
         ...state,
         users: state.users.map(user => {
@@ -35,7 +43,7 @@ const usersReducer = (state = initialState, action: ActionsType): InitialStateTy
         })
       }
 
-    case "UNFOLLOW":
+    case UNFOLLOW:
       return {
         ...state,
         users: state.users.map(user => {
@@ -49,37 +57,37 @@ const usersReducer = (state = initialState, action: ActionsType): InitialStateTy
         })
       }
 
-    case "SET_USERS":
+    case SET_USERS:
       return {
         ...state,
         users: action.users
       }
 
-    case "SET_TOTAL_COUNT_PAGES":
+    case SET_TOTAL_COUNT_PAGES:
       return {
         ...state,
         totalCount: action.pages
       }
 
-    case "SET_CURRENT_PAGE":
+    case SET_CURRENT_PAGE:
       return {
         ...state,
         currentPage: action.page
       }
 
-    case "SET_PORTION":
+    case SET_PORTION:
       return {
         ...state,
         portion: action.portion
       }
 
-    case "SET_IS_LOADING":
+    case SET_IS_LOADING:
       return {
         ...state,
         isFetching: action.isFetching
       }
 
-    case "TOGGLE_IS_FOLLOWING_PROGRESS":
+    case TOGGLE_IS_FOLLOWING_PROGRESS:
       return {
         ...state,
         followingInProgress: action.isFetching ? 
@@ -92,21 +100,16 @@ const usersReducer = (state = initialState, action: ActionsType): InitialStateTy
   }
 }
 
-type ActionsType = InfernActionsTypes<typeof actions>  
-
 export const actions = {
-  follow: (userId: number) => ({ type: 'FOLLOW', userId } as const),
-  unfollow: (userId: number) => ({ type: 'UNFOLLOW', userId } as const),
-  setUsers: (users: Array<UserType>) => ({ type: 'SET_USERS', users } as const),
-  setTotalCountPages: (pages: number) => ({ type: 'SET_TOTAL_COUNT_PAGES', pages } as const),
-  setCurrentPage: (page: number) => ({ type: 'SET_CURRENT_PAGE', page } as const),
-  setPortion: (portion: number) => ({ type: 'SET_PORTION', portion } as const),
-  setIsLoading: (isFetching: boolean) => ({ type: 'SET_IS_LOADING', isFetching } as const),
-  toggleFollowingProgress: (isFetching: boolean, userId: number) => ({ type: 'TOGGLE_IS_FOLLOWING_PROGRESS', isFetching, userId } as const)
+  follow: (userId: number) => ({ type: FOLLOW, userId } as const),
+  unfollow: (userId: number) => ({ type: UNFOLLOW, userId } as const),
+  setUsers: (users: Array<UserType>) => ({ type: SET_USERS, users } as const),
+  setTotalCountPages: (pages: number) => ({ type: SET_TOTAL_COUNT_PAGES, pages } as const),
+  setCurrentPage: (page: number) => ({ type: SET_CURRENT_PAGE, page } as const),
+  setPortion: (portion: number) => ({ type: SET_PORTION, portion } as const),
+  setIsLoading: (isFetching: boolean) => ({ type: SET_IS_LOADING, isFetching } as const),
+  toggleFollowingProgress: (isFetching: boolean, userId: number) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId } as const)
 }
-
-type DispatchType = Dispatch<ActionsType>
-type ThunkType = BaseThunkType<ActionsType>
 
 export const requestUsers = (
   currentPage: number, 
@@ -157,3 +160,8 @@ export const unfollowUser = (id: number): ThunkType => {
 }
 
 export default usersReducer
+
+export type InitialStateType = typeof initialState
+type ActionsType = InfernActionsTypes<typeof actions>  
+type DispatchType = Dispatch<ActionsType>
+type ThunkType = BaseThunkType<ActionsType>

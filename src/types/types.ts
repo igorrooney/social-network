@@ -69,9 +69,3 @@ export type AuthType = {
   rememberMe: boolean, 
   captcha?: string | null
 }
-
-export type AuthProfileType = {
-  userId: number,
-  fullName: string,
-  photos: PhotoType
-}
