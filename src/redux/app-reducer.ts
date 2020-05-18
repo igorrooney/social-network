@@ -2,6 +2,7 @@ import { Dispatch } from 'redux'
 import { authMe } from './auth-reducer'
 import { ThunkAction } from 'redux-thunk'
 import { AppStateType, InfernActionsTypes } from './redux-store'
+import { INITIAL_SUCCESS, SET_ERROR } from './actionTypes'
 
 const initialState = {
   initialized: false,
@@ -12,13 +13,13 @@ export type InitialStateType = typeof initialState
 
 const appReducer = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
-    case "INITIAL_SUCCESS":
+    case INITIAL_SUCCESS:
       return {
         ...state,
         initialized: true
       }
 
-    case "SET_ERROR":
+    case SET_ERROR:
       return {
         ...state,
         globalError: action.globalError
@@ -32,8 +33,8 @@ const appReducer = (state = initialState, action: ActionsType): InitialStateType
 type ActionsType = InfernActionsTypes<typeof actions>
 
 export const actions = {
-  initialSuccess: () => ({ type: 'INITIAL_SUCCESS' } as const),
-  setError: (globalError: any) => ({ type: 'SET_ERROR', globalError } as const)
+  initialSuccess: () => ({ type: INITIAL_SUCCESS } as const),
+  setError: (globalError: any) => ({ type: SET_ERROR, globalError } as const)
 }
 
 type DispatchType = Dispatch<ActionsType>
