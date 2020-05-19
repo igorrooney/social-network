@@ -119,4 +119,4 @@ export default compose(
     mapDispatchToProps
   ),
   withRouter
-)(ProfileContainer)
+)(ProfileContainer) as React.ComponentType

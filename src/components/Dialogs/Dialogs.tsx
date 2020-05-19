@@ -1,9 +1,8 @@
 import React, { FC } from 'react'
-
 import { NavLink } from 'react-router-dom'
 import classes from './Dialogs.module.scss'
 import CreateMessageForm from './CreateMessageForm'
-import { DialogType, MessageType } from '../../types/types'
+import { DialogType, MessageType } from 'types/types'
 import { PropsType } from './DialogsContainer'
 
 const DialogItem: FC<DialogType> = ({ name, id, photo }): JSX.Element => {
@@ -21,10 +20,8 @@ const Message: React.FC<MessageType> = ({ message }): JSX.Element => {
   return <div className={classes.message}>{message}</div>
 }
 
-
-
 const Dialogs: FC<PropsType> = ({ dialogsPage, addMessage }): JSX.Element => {
-  const dialogItems = dialogsPage.dialogs.map((item) => {
+  const dialogItems = dialogsPage.dialogs.map(item => {
     return (
       <DialogItem
         key={item.id}
@@ -35,11 +32,11 @@ const Dialogs: FC<PropsType> = ({ dialogsPage, addMessage }): JSX.Element => {
     )
   })
 
-  const messageItems = dialogsPage.messages.map((item) => {
+  const messageItems = dialogsPage.messages.map(item => {
     return <Message key={item.id} message={item.message} id={item.id} />
   })
 
-  const onSubmit = (formData: MessageType) => {
+  const addNewMessage = (formData: NewMessageFormType) => {
     addMessage(formData.message)
   }
 
@@ -48,10 +45,14 @@ const Dialogs: FC<PropsType> = ({ dialogsPage, addMessage }): JSX.Element => {
       <div className={classes.dialogsItems}>{dialogItems}</div>
       <div className={classes.messages}>
         {messageItems}
-        <CreateMessageForm onSubmit={onSubmit} />
+        <CreateMessageForm onSubmit={addNewMessage} />
       </div>
     </div>
   )
 }
 
 export default Dialogs
+
+export type NewMessageFormType = {
+  message: string
+} 

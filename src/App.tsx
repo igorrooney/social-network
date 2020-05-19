@@ -1,45 +1,40 @@
 import React, { Component } from 'react'
 import { Route, withRouter, Switch, Redirect } from 'react-router-dom'
 import './App.css'
-import HeaderContainer from './components/Header/HeaderContainer'
-import NavbarContainer from './components/Navbar/NavbarContainer'
+import HeaderContainer from 'components/Header/HeaderContainer'
+import NavbarContainer from 'components/Navbar/NavbarContainer'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { initializing, saveError } from './redux/app-reducer'
-import Spinner from './components/Spinner'
-import { withSuspense } from './hoc/withSuspend'
+import { initializing, saveError } from 'redux/app-reducer'
+import Spinner from 'components/Spinner'
+import { withSuspense } from 'hoc/withSuspend'
+import { AppStateType } from 'redux/redux-store'
 
-const DialogsContainer = React.lazy(() =>
-  import('./components/Dialogs/DialogsContainer')
+const DialogsContainer = React.lazy(() => 
+  import('components/Dialogs/DialogsContainer')
 )
-
 const ProfileContainer = React.lazy(() =>
-  import('./components/Profile/ProfileContainer')
+  import('components/Profile/ProfileContainer')
 )
-
 const UsersContainer = React.lazy(() =>
-  import('./components/Users/usersContainer')
+  import('components/Users/usersContainer')
 )
-
-const News = React.lazy(() => import('./components/News'));
-
-const Music = React.lazy(() => import('./components/Music'));
-
-const Settings = React.lazy(() => import('./components/Settings'));
-
+const News = React.lazy(() => import('components/News'))
+const Music = React.lazy(() => import('components/Music'))
+const Settings = React.lazy(() => import('components/Settings'))
 const LoginContainer = React.lazy(() =>
   import('./components/Login/LoginContainer')
 )
 
-class App extends Component {
-  catchAllUnhandledErrors = promiseRejectionEvent => {
+class App extends Component<MapPropsType & DispatchPropsType> {
+  catchAllUnhandledErrors = (promiseRejectionEvent: PromiseRejectionEvent) => {
     console.log(promiseRejectionEvent)
     this.props.saveError(promiseRejectionEvent.reason.message);
   }
 
   componentDidMount() {
-    this.props.initializing();
-    window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors);
+    this.props.initializing()
+    window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
   }
 
   componentWillUnmount() {
@@ -51,7 +46,7 @@ class App extends Component {
 
   render() {
     if (!this.props.initialized) {
-      return <Spinner />;
+      return <Spinner />
     }
     return (
       <div className="app-wrapper container">
@@ -78,9 +73,11 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { initialized: state.app.initialized };
-};
+const mapStateToProps = (state: AppStateType) => {
+  return { 
+    initialized: state.app.initialized 
+  }
+}
 
 export default compose(
   withRouter,
@@ -89,3 +86,9 @@ export default compose(
     { initializing, saveError }
   )
 )(App)
+
+type MapPropsType = ReturnType<typeof mapStateToProps>
+type DispatchPropsType = {
+  saveError: (message: string) => void
+  initializing: () => void
+}

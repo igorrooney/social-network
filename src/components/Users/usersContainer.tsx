@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ComponentType } from 'react';
 import { connect } from 'react-redux';
 import Users from './users';
 import {
@@ -100,4 +100,4 @@ export default compose(
     mapDispatchToProps
   ),
   withAuthRedirect
-)(UsersContainer)
+)(UsersContainer) as ComponentType
