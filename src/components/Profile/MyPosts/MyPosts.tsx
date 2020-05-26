@@ -36,7 +36,7 @@ const MyPosts: FC<MyPostsContainerPropsType> = React.memo(({
   const onSubmitHandler = ( formData: FormDataProps ) => {
     if (profile) {
       const img = profile.photos.small || avatar
-      const id = nextId()
+      const id = +nextId()
       addPost(formData.post, img, id)
     }
   }

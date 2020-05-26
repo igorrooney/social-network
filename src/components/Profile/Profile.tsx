@@ -12,7 +12,7 @@ const Profile: FC<ProfileContainerPropsType & ProfilePropsType> = (props) => {
   return (
     <div>
       <ProfileInfo {...props} />
-      <MyPostsContainer addPost={() => console.log()} />
+      <MyPostsContainer />
     </div>
   )
 }

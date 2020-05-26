@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import { ProfileType } from '../../types/types'
 import { AppStateType } from '../../redux/redux-store'
@@ -24,14 +24,13 @@ import {
 
 import Profile from './Profile'
 
-type Props = {
-  match: any
-  history: any
+type PathParamsType = {
+  userId: string
 }
 
-class ProfileContainer extends Component<ProfileContainerPropsType & Props> {
+class ProfileContainer extends Component<ProfileContainerPropsType> {
   refreshProfile() {
-    let userId = this.props.match.params.userId
+    let userId: number | null = +this.props.match.params.userId
     if (!userId) {
       userId = this.props.authUserId
       if (!userId) {
@@ -46,7 +45,7 @@ class ProfileContainer extends Component<ProfileContainerPropsType & Props> {
     this.refreshProfile()
   }
 
-  componentDidUpdate(prevProps: ProfileContainerPropsType & Props, prevState: ProfileContainerPropsType & Props) {
+  componentDidUpdate(prevProps: ProfileContainerPropsType, prevState: ProfileContainerPropsType) {
     if (this.props.match.params.userId !== prevProps.match.params.userId) {
       this.refreshProfile()
     }
@@ -84,14 +83,12 @@ type MapDispatchPropsType = {
   getProfile: (id: number) => void
   getStatus: (id: number) => void
   setNewStatus: (newStatus: string) => void
-  updateProfileInfo: (data: any) => void
-  setEditMode: () => void
+  updateProfileInfo: (data: ProfileType) => void
+  setEditMode: (mode: boolean) => void
   uploadPhoto: (photo: File) => void
 }
 
-type OwnPropsType = {}
-
-export type ProfileContainerPropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
+export type ProfileContainerPropsType = MapStatePropsType & MapDispatchPropsType & RouteComponentProps<PathParamsType>
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
@@ -114,7 +111,7 @@ const mapDispatchToProps = {
 }
 
 export default compose(
-  connect<MapStatePropsType, {}, MapDispatchPropsType, AppStateType>(
+  connect(
     mapStateToProps,
     mapDispatchToProps
   ),

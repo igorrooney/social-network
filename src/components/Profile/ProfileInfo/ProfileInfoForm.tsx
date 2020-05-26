@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
-import { createField, Input } from '../../../Common/FormsControl';
-import { reduxForm, InjectedFormProps } from 'redux-form';
-import classes from './ProfileInfo.module.scss';
-import { ProfileType } from '../../../types/types';
+import React, { FC } from 'react'
+import { createField, Input } from 'Common/FormsControl'
+import { reduxForm, InjectedFormProps } from 'redux-form'
+import classes from './ProfileInfo.module.scss'
+import { ProfileType } from 'types/types'
 
 type CustomProps = {
   profile: ProfileType
@@ -44,10 +44,10 @@ const ProfileInfoForm: FC<CustomProps & InjectedFormProps<{}, CustomProps>> =
         <button>Save changes</button>
       </div>
     </form>
-  );
-};
+  )
+}
 const ProfileInfoFormRedux = reduxForm<{}, CustomProps>({ form: 'profileForm' })(
   ProfileInfoForm
-);
+)
 
-export default ProfileInfoFormRedux;
+export default ProfileInfoFormRedux

@@ -1,3 +1,4 @@
+import { ComponentType } from 'react'
 import { getIsAuth } from './../../redux/selectors';
 import { AppStateType } from './../../redux/redux-store';
 import { compose } from 'redux';
@@ -16,22 +17,23 @@ type MapDispatchToPropsType = {
     email: string, 
     password: string, 
     rememberMe: boolean, 
-    captcha?: string | null
+    captcha?: any
     ) => void
 }
 
 export type LoginPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+const mapStateToProps = (state: AppStateType) => {
   return { 
     isAuth: getIsAuth(state), 
     captcha: getCaptcha(state) 
   }
 }
 
+
 export default compose(
-  connect<MapStateToPropsType, {}, MapDispatchToPropsType, AppStateType>(
+  connect(
     mapStateToProps,
-    { login }
+    {login}
   )
-)(Login);
+)(Login) as ComponentType

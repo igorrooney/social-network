@@ -6,18 +6,19 @@ import userPhoto from '../../../assets/images/user.jpg';
 import ProfileStatus from './ProfileStatus';
 import ProfileInfoForm from './ProfileInfoForm';
 import { ProfileContainerPropsType } from '../ProfileContainer';
+import { ProfileType } from 'types/types';
 
 type Props = {
   isOwner: boolean
 }
 
-const ProfileInfo: FC<ProfileContainerPropsType & Props> = (props) => {
+const ProfileInfo: FC<ProfileContainerPropsType & Props> = props => {
   if (props.isLoading) {
     return <Spinner />
   }
-  const onSubmit = (formData: any) => {
-    props.updateProfileInfo(formData);
-    //setEditMode(false);
+  const onSubmit = async(formData: ProfileType) => {
+    await props.updateProfileInfo(formData)
+    props.setEditMode(false)
   }
 
   const onSetNewPhoto = (e: ChangeEvent<HTMLInputElement>) => {
@@ -80,14 +81,18 @@ const ProfileInfo: FC<ProfileContainerPropsType & Props> = (props) => {
         <ProfileStatus
           status={props.status}
           setNewStatus={props.setNewStatus}
-        />{' '}
+        />
+
         {props.isOwner && (
           <div>
-            <button onClick={props.setEditMode}>Edit profile</button>
+            <button onClick={() => props.setEditMode}>Edit profile</button>
           </div>
         )}
       </div>
-    );
+    )
+
+
+
     return (
       <div className={classes.timelineCover}>
         <div className={classes.timelineNavBar + ' hidden-sm hidden-xs'}>
@@ -105,7 +110,7 @@ const ProfileInfo: FC<ProfileContainerPropsType & Props> = (props) => {
                 {props.editMode ? (
                   <div>
                     <ProfileInfoForm
-                      onSubmit={onSubmit}
+                      onSubmit={() => onSubmit}
                       initialValues={props.profile}
                       profile={props.profile}
                     />
@@ -141,9 +146,9 @@ const ProfileInfo: FC<ProfileContainerPropsType & Props> = (props) => {
           </div>
         </div>
       </div>
-    );
+    )
   }
   return null
-};
+}
 
-export default ProfileInfo;
+export default ProfileInfo
