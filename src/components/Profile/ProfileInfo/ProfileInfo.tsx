@@ -73,14 +73,15 @@ const ProfileInfo: FC<ProfileContainerPropsType & Props> = props => {
                   contactKey={key}
                   contactValue={props.profile.contacts[key]}
                 />
-              );
+              )
             }
-
+            return null
           })}
         </div>
         <ProfileStatus
           status={props.status}
           setNewStatus={props.setNewStatus}
+          isOwner={props.isOwner}
         />
 
         {props.isOwner && (

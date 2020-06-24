@@ -4,7 +4,12 @@ import { NavLink } from 'react-router-dom'
 import classes from './Header.module.scss'
 import { HeaderContainerPropsType } from './HeaderContainer'
 
-const Header: FC<HeaderContainerPropsType> = props => {
+const Header: FC<HeaderContainerPropsType> = ({
+  error,
+  isAuth,
+  login,
+  logOut,
+}) => {
   return (
     <header className={classes.header}>
       <div className={classes.container}>
@@ -15,13 +20,13 @@ const Header: FC<HeaderContainerPropsType> = props => {
           />
         </NavLink>
 
-        {props.error && <span className={classes.error}>{props.error}</span>}
+        {error && <span className={classes.error}>{error}</span>}
 
-        {props.isAuth ? (
+        {isAuth ? (
           <span>
-            {props.login}
+            {login}
             <span
-              onClick={props.logOut}
+              onClick={logOut}
               style={{
                 marginLeft: '10px',
                 color: 'white',

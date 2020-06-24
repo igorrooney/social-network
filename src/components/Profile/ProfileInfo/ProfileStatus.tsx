@@ -1,28 +1,33 @@
 import React, { useState, useEffect, FC, ChangeEvent } from 'react'
 
-
 type PropsType = {
   status: string
+  isOwner: boolean
   setNewStatus: (newStatus: string) => void
 }
 
-const ProfileStatusWithHooks: FC<PropsType> = props => {
-  let [editMode, setEditMode] = useState(false)
-  let [status, setStatus] = useState(props.status)
-
+const ProfileStatusWithHooks: FC<PropsType> = ({ status, isOwner, setNewStatus }) => {
+  const [editMode, setEditMode] = useState(false)
+  const [currentStatus, setCurrentStatus] = useState(status)
+  const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
-    setStatus(props.status)
-  }, [props.status])
+    setCurrentStatus(status)
+  }, [status])
 
-  const changeEditMode = () => {
-    setEditMode(!editMode);
-    if (editMode) {
-      props.setNewStatus(status)
-      setStatus(props.status)
+  const changeEditMode = async () => {
+    if (isOwner) {
+      setEditMode(prev => !prev)
+      if (editMode) {
+        setIsLoading(true)
+        await setNewStatus(currentStatus)
+        setCurrentStatus(status)
+        setIsLoading(false)
+      }
     }
+
   }
   const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setStatus(e.target.value)
+    setCurrentStatus(e.target.value)
   }
 
   return (
@@ -35,10 +40,10 @@ const ProfileStatusWithHooks: FC<PropsType> = props => {
             onBlur={changeEditMode}
             autoFocus
             type="text"
-            value={status}
+            value={currentStatus}
           />
         ) : (
-          <span onDoubleClick={changeEditMode}>{status || '-----'}</span>
+           isLoading ? <span>Loading...</span> : <span onDoubleClick={changeEditMode}>{currentStatus}</span>
         )}
       </div>
     </div>

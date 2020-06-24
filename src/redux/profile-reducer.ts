@@ -122,7 +122,7 @@ export const getProfile = (id: number): ThunkType => {
 export const getStatus = (id: number): ThunkType => {
   return async dispatch => {
     const data = await profileAPI.getStatus(id)
-    dispatch(actions.setStatus(data))
+    dispatch(actions.setStatus((data && data.length) ? data : 'no status'))
   }
 }
 

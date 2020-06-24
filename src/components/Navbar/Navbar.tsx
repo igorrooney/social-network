@@ -6,7 +6,9 @@ import classes from './Navbar.module.scss'
 import Friends from '../friends'
 import { NavbarPropsType } from './NavbarContainer'
 
-const Navbar: FC<NavbarPropsType> = (props) => {
+const Navbar: FC<NavbarPropsType> = ({
+  friendsBlock,
+}) => {
   return (
     <nav className={classes.nav}>
       <div className={classes.item}>
@@ -44,7 +46,7 @@ const Navbar: FC<NavbarPropsType> = (props) => {
           Login
         </NavLink>
       </div>
-      <Friends friends={props.friendsBlock} />
+      <Friends friends={friendsBlock} />
     </nav>
   )
 }
