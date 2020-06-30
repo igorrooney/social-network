@@ -8,7 +8,6 @@ type PropsType = {
   friend: FriendType
 }
 
-
 const Friend: FC<PropsType> = ({ friend }) => {
   let status = [classes.onlineDot];
 

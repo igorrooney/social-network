@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import Friend from './friend';
+import Friend from './Friend';
 import classes from './friends.module.scss';
 import { FriendType } from '../../types/types';
 
