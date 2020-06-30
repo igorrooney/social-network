@@ -11,5 +11,10 @@ export const usersAPI = {
   },
   followUser(id: number) {
     return instance.post<ResponseType>(`follow/${id}`).then(res => res.data)
+  },
+  getFriends(currentPage = 1, pageSize = 10) {
+    return instance
+      .get<GetItemsType>(`users?page=${currentPage}&count=${pageSize}&friend=true`)
+      .then(res => res.data)
   }
 }

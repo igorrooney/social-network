@@ -75,10 +75,6 @@ export const getDialogsPage = (state: AppStateType) => {
   return state.dialogsPage
 }
 
-export const getError = (state: AppStateType) => {
-  return state.app.globalError
-}
-
 export const getFriendsBlock = (state: AppStateType) => {
   return state.friendsBlock
 }

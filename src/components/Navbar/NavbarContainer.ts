@@ -1,7 +1,7 @@
-import { AppStateType } from './../../redux/redux-store'
+import { AppStateType } from '../../modules/redux-store'
 import Navbar from './Navbar'
 import { connect } from 'react-redux'
-import { getFriendsBlock } from '../../redux/selectors'
+import { getFriendsBlock } from '../../modules/selectors'
 import { FriendType } from '../../types/types'
 
 

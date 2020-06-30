@@ -3,15 +3,15 @@ import {
   PostType, 
   ProfileType, 
 } from 'types/types'
-import { AppStateType } from 'redux/redux-store'
-import { actions } from 'redux/profile-reducer'
+import { AppStateType } from 'modules/redux-store'
+import { actions } from 'modules/profile-reducer'
 import MyPosts from './MyPosts'
 import {
   getIsLoadingProfile,
   getNewTextPost,
   getPostsData,
   getProfileUser
-} from 'redux/selectors'
+} from 'modules/selectors'
 
 const mapStateToProps = (state: AppStateType) => {
   return {

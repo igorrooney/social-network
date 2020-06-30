@@ -2,11 +2,11 @@ import { ComponentType } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 
-import { actions } from 'redux/dialogs-reducer'
+import { actions } from 'modules/dialogs-reducer'
 import Dialogs from './Dialogs'
 import { withAuthRedirect } from 'hoc/withAuthRedirect'
-import { AppStateType } from 'redux/redux-store'
-import { getDialogsPage } from 'redux/selectors'
+import { AppStateType } from 'modules/redux-store'
+import { getDialogsPage } from 'modules/selectors'
 import { DialogsPageType } from 'types/types'
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {

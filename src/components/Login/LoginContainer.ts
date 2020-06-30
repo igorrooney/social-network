@@ -1,11 +1,11 @@
 import { ComponentType } from 'react'
-import { getIsAuth } from './../../redux/selectors';
-import { AppStateType } from './../../redux/redux-store';
+import { getIsAuth } from '../../modules/selectors';
+import { AppStateType } from '../../modules/redux-store';
 import { compose } from 'redux';
 import Login from './login';
 import { connect } from 'react-redux';
-import { login } from '../../redux/auth-reducer';
-import { getCaptcha } from '../../redux/selectors';
+import { getLogin } from 'modules/auth/auth.actions'
+import { getCaptcha } from '../../modules/selectors';
 
 type MapStateToPropsType = {
   isAuth: boolean
@@ -13,7 +13,7 @@ type MapStateToPropsType = {
 }
 
 type MapDispatchToPropsType = {
-  login: (
+  getLogin: (
     email: string, 
     password: string, 
     rememberMe: boolean, 
@@ -34,6 +34,6 @@ const mapStateToProps = (state: AppStateType) => {
 export default compose(
   connect(
     mapStateToProps,
-    {login}
+    {getLogin}
   )
 )(Login) as ComponentType

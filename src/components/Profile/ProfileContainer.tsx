@@ -4,7 +4,7 @@ import { compose } from 'redux'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import { ProfileType } from '../../types/types'
-import { AppStateType } from '../../redux/redux-store'
+import { AppStateType } from '../../modules/redux-store'
 import { 
   getProfileUser, 
   getAuthUserId, 
@@ -12,7 +12,7 @@ import {
   getStatusUser,
   getEditMode,
   getIsLoadingProfile,
-} from '../../redux/selectors'
+} from '../../modules/selectors'
 import {
   getProfile,
   getStatus,
@@ -20,7 +20,7 @@ import {
   updateProfileInfo,
   actions,
   uploadPhoto,
-} from '../../redux/profile-reducer'
+} from '../../modules/profile-reducer'
 
 import Profile from './Profile'
 

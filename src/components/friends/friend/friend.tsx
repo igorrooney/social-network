@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import {NavLink} from 'react-router-dom';
 
 import classes from './friend.module.scss';
-import { FriendType } from '../../../types/types';
+import { FriendType } from 'types/types';
 
 type PropsType = {
   friend: FriendType

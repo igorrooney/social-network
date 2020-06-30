@@ -6,7 +6,7 @@ import {
   unfollowUser,
   requestUsers,
   actions
-} from '../../redux/users-reducer'
+} from '../../modules/users-reducer'
 
 import {
   getUsers,
@@ -17,13 +17,13 @@ import {
   getIsFetching,
   getFollowingInProgress,
   getPortion
-} from '../../redux/selectors';
+} from '../../modules/selectors';
 
 import Spinner from '../Spinner';
 import { compose } from 'redux';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
-import { AppStateType } from '../../redux/redux-store';
-import { InitialStateType } from '../../redux/users-reducer'
+import { AppStateType } from '../../modules/redux-store';
+import { InitialStateType } from '../../modules/users-reducer'
 
 class UsersContainer extends Component<PropsType> {
   componentDidMount() {

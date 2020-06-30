@@ -1,4 +1,4 @@
-import { MessageType, DialogType } from './../types/types'
+import { MessageType, DialogType } from '../types/types'
 import { InfernActionsTypes } from './redux-store'
 import { ADD_MESSAGE } from './actionTypes'
 

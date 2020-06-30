@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC } from 'react'
 
-import Friend from './friend';
-import classes from './friends.module.scss';
-import { FriendType } from '../../types/types';
+import Friend from './Friend'
+import classes from './friends.module.scss'
+import { FriendType } from 'types/types'
 
 
 type PropTypes = {

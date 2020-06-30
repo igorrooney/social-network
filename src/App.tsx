@@ -1,14 +1,13 @@
-import React, { Component } from 'react'
-import { Route, withRouter, Switch, Redirect } from 'react-router-dom'
+import React, { useEffect, useCallback } from 'react'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import './App.css'
 import HeaderContainer from 'components/Header/HeaderContainer'
 import NavbarContainer from 'components/Navbar/NavbarContainer'
-import { compose } from 'redux'
-import { connect } from 'react-redux'
-import { initializing, saveError } from 'redux/app-reducer'
+
 import Spinner from 'components/Spinner'
 import { withSuspense } from 'hoc/withSuspend'
-import { AppStateType } from 'redux/redux-store'
+// Connect
+import { useAppConnect } from 'modules/app/app.connect'
 
 const DialogsContainer = React.lazy(() => 
   import('components/Dialogs/DialogsContainer')
@@ -34,70 +33,56 @@ const SuspendedMusic = withSuspense(Music)
 const SuspendedSettings = withSuspense(Settings)
 const SuspendedLogin = withSuspense(LoginContainer)
 
-class App extends Component<MapPropsType & DispatchPropsType> {
-  catchAllUnhandledErrors = (promiseRejectionEvent: PromiseRejectionEvent) => {
+const App = () => {
+  const {
+    // Selectors
+    initialized,
+    // Actions
+    initializing,
+    saveError,
+  } = useAppConnect()
+
+  const catchAllUnhandledErrors = useCallback((promiseRejectionEvent: PromiseRejectionEvent) => {
     console.log(promiseRejectionEvent)
-    this.props.saveError(promiseRejectionEvent.reason.message);
-  }
+    saveError(promiseRejectionEvent.reason.message);
+  }, [saveError])
 
-  componentDidMount() {
-    this.props.initializing()
-    window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener(
-      'unhandledrejection',
-      this.catchAllUnhandledErrors
-    )
-  }
-
-
-  render() {
-    if (!this.props.initialized) {
-      return <Spinner />
+  useEffect(() => {
+    initializing()
+    window.addEventListener('unhandledrejection', catchAllUnhandledErrors)
+    return () => {
+      window.removeEventListener(
+        'unhandledrejection',
+        catchAllUnhandledErrors
+      )
     }
-    return (
-      <div className="app-wrapper container">
-        <HeaderContainer />
-        <NavbarContainer />
-        <div className="app-wrapper-content container-fluid">
-          <Switch>
-            <Route exact path="/" render={() => <Redirect to="/profile" />} />
-            <Route
-              path="/profile/:userId?"
-              render={() => <SuspendedProfile />}
-            />
-            <Route path="/dialogs" render={() => <SuspendedDialogs />} />
-            <Route path="/users" render={() => <SuspendedUsers />} />
-            <Route path="/news" render={() => <SuspendedNews />} />
-            <Route path="/music" render={() => <SuspendedMusic />} />
-            <Route path="/settings" render={() => <SuspendedSettings />} />
-            <Route path="/login" render={() => <SuspendedLogin />} />
-            <Route path="*" render={() => <div>404 NOT FOUND</div>} />
-          </Switch>
-        </div>
+  }, [initializing, catchAllUnhandledErrors])
+  if (!initialized) {
+    return <Spinner />
+  }
+
+  return (
+    <div className="app-wrapper container">
+      <HeaderContainer />
+      <NavbarContainer />
+      <div className="app-wrapper-content container-fluid">
+        <Switch>
+          <Route exact path="/" render={() => <Redirect to="/profile" />} />
+          <Route
+            path="/profile/:userId?"
+            render={() => <SuspendedProfile />}
+          />
+          <Route path="/dialogs" render={() => <SuspendedDialogs />} />
+          <Route path="/users" render={() => <SuspendedUsers />} />
+          <Route path="/news" render={() => <SuspendedNews />} />
+          <Route path="/music" render={() => <SuspendedMusic />} />
+          <Route path="/settings" render={() => <SuspendedSettings />} />
+          <Route path="/login" render={() => <SuspendedLogin />} />
+          <Route path="*" render={() => <div>404 NOT FOUND</div>} />
+        </Switch>
       </div>
-    )
-  }
-}
-
-const mapStateToProps = (state: AppStateType) => {
-  return { 
-    initialized: state.app.initialized 
-  }
-}
-
-export default compose(
-  withRouter,
-  connect(
-    mapStateToProps,
-    { initializing, saveError }
+    </div>    
   )
-)(App)
-
-type MapPropsType = ReturnType<typeof mapStateToProps>
-type DispatchPropsType = {
-  saveError: (message: string) => void
-  initializing: () => void
 }
+
+export default App

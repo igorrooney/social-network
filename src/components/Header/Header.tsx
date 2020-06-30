@@ -1,15 +1,19 @@
 import React, { FC } from 'react'
 import { NavLink } from 'react-router-dom'
-
+// Connect
+import { useAppConnect } from 'modules/app/app.connect'
 import classes from './Header.module.scss'
 import { HeaderContainerPropsType } from './HeaderContainer'
 
 const Header: FC<HeaderContainerPropsType> = ({
-  error,
   isAuth,
   login,
   logOut,
 }) => {
+  const {
+    globalError: error,
+  } = useAppConnect()
+
   return (
     <header className={classes.header}>
       <div className={classes.container}>

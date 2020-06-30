@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import classes from './Navbar.module.scss'
-import Friends from '../friends'
+import Friends from '../Friends'
 import { NavbarPropsType } from './NavbarContainer'
 
 const Navbar: FC<NavbarPropsType> = ({

@@ -1,7 +1,9 @@
 export const INITIAL_SUCCESS = 'APP/INITIAL_SUCCESS'
 export const SET_ERROR = 'APP/SET_ERROR'
+
 export const SET_AUTH_DATA = 'AUTH/SET_AUTH_DATA'
 export const SET_CAPTCHA = 'AUTH/SET_CAPTCHA'
+
 export const ADD_MESSAGE = 'DIALOGS/ADD_MESSAGE'
 
 export const ADD_POST = 'PROFILE/ADD-POST'
