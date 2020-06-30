@@ -1,16 +1,17 @@
 import { createStore, combineReducers, applyMiddleware, Action } from 'redux'
-import {createPromise} from 'redux-promise-middleware'
-import {composeWithDevTools} from 'redux-devtools-extension'
+import { createPromise } from 'redux-promise-middleware'
+import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk, { ThunkAction } from 'redux-thunk'
+import {createLogger} from 'redux-logger'
 // Utils
 import { actionTypeSuffix } from 'constants/actionTypes'
-import dialogsReducer from './dialogs-reducer';
-import profileReducer from './profile-reducer';
-import friendsReducer from './friends-reducer';
-import usersReducer from './users-reducer';
 import authReducer from './auth/auth.reducer'
 import appReducer from './app/app.reducer'
-import { reducer as formReducer } from 'redux-form';
+import dialogsReducer from './dialogs-reducer'
+import profileReducer from './profile-reducer'
+import friendsReducer from './friends-reducer'
+import usersReducer from './users-reducer'
+import { reducer as formReducer } from 'redux-form'
 
 export const reducers = combineReducers({
   dialogsPage: dialogsReducer,
@@ -35,9 +36,13 @@ const promiseMiddleware = createPromise({
   ]
 })
 
+const logger = createLogger({
+  diff: true,
+  collapsed: true,
+})
 
 const store = createStore(reducers, composeWithDevTools(
-  applyMiddleware(thunk, promiseMiddleware)
+  applyMiddleware(thunk, promiseMiddleware, logger)
 ))
 
 // @ts-ignore
