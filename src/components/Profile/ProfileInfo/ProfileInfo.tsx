@@ -86,7 +86,7 @@ const ProfileInfo: FC<ProfileContainerPropsType & Props> = props => {
 
         {props.isOwner && (
           <div>
-            <button onClick={() => props.setEditMode}>Edit profile</button>
+            <button onClick={() => props.setEditMode(true)}>Edit profile</button>
           </div>
         )}
       </div>
