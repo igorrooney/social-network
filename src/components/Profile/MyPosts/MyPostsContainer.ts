@@ -4,7 +4,7 @@ import {
   ProfileType, 
 } from 'types/types'
 import { AppStateType } from 'modules/redux-store'
-import { actions } from 'modules/profile-reducer'
+import { actions } from 'modules/profile/profile.actions'
 import MyPosts from './MyPosts'
 import {
   getIsLoadingProfile,

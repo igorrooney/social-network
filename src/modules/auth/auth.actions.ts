@@ -6,9 +6,10 @@ import { authAPI } from 'api/auth-api'
 import {
   fetchAuthMe,
   fetchCaptcha,
+  fetchLogin,
 } from './auth.fetch'
 
-export const actions = {
+const actions = {
   setAuthMeData: (
     userId: number | null, 
     email: string | null, 
@@ -26,32 +27,38 @@ export const actions = {
 }
 
 export const authMe = (): ThunkType => {
-  return async dispatch => {
-    const { payload } = await fetchAuthMe()
-    if ((await payload).resultCode === ResultCodeEnum.Success) {
-      const { id, email, login } = (await payload).data
-      dispatch(actions.setAuthMeData(id, email, login, true))
+  return async (dispatch: any) => {
+    const { 
+      value: { resultCode, data } 
+    } = await dispatch(fetchAuthMe())
+    if (resultCode === ResultCodeEnum.Success) {
+      const { id, email, login } = data
+      return dispatch(actions.setAuthMeData(id, email, login, true))
     }
   }
 }
 
 export const getCaptcha = (): ThunkType => {
-  return async dispatch => {
-    const { payload } = await fetchCaptcha()
-    dispatch(actions.setCaptcha((await payload).url))
+  return async (dispatch: any) => {
+    const { 
+      value: { url } 
+    } = await dispatch(fetchCaptcha())
+    return dispatch(actions.setCaptcha(url))
   }
 }
 
 export const getLogin = (email: string, password: string, rememberMe: boolean, captcha: string): ThunkType => {
-  return async dispatch => {
-    const data = await authAPI.login(email, password, rememberMe, captcha)
-    if (data.resultCode === ResultCodeEnum.Success) {
+  return async (dispatch: any) => {
+    const {
+      value: { resultCode, messages }
+    }: any = await fetchLogin(email, password, rememberMe, captcha)
+    if (resultCode === ResultCodeEnum.Success) {
       dispatch(authMe())
     } else {
-      if (data.resultCode === ResultCodeWithCaptchaEnum.CaptchaIsRequired) {
+      if (resultCode === ResultCodeWithCaptchaEnum.CaptchaIsRequired) {
         dispatch(getCaptcha())
       }
-      const message = data.messages.length > 0 ? data.messages[0] : 'Unknown error'
+      const message = messages.length > 0 ? messages[0] : 'Unknown error'
       dispatch(stopSubmit('loginForm', { _error: message }))
     }
   }

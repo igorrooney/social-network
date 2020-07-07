@@ -1,5 +1,6 @@
 import { appTypes } from './app'
 import { authTypes } from './auth'
+import { profileTypes } from './profile'
 
 export const actionTypeSuffix = {
   request: 'REQUEST',
@@ -10,4 +11,5 @@ export const actionTypeSuffix = {
 export const types = {
   ...appTypes,
   ...authTypes,
+  ...profileTypes,
 }

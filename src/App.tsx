@@ -43,7 +43,7 @@ const App = () => {
   } = useAppConnect()
 
   const catchAllUnhandledErrors = useCallback((promiseRejectionEvent: PromiseRejectionEvent) => {
-    console.log(promiseRejectionEvent)
+    console.log('promiseRejectionEvent :>> ', promiseRejectionEvent);
     saveError(promiseRejectionEvent.reason.message);
   }, [saveError])
 

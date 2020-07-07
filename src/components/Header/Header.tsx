@@ -13,7 +13,7 @@ const Header: FC<HeaderContainerPropsType> = ({
   const {
     globalError: error,
   } = useAppConnect()
-
+  
   return (
     <header className={classes.header}>
       <div className={classes.container}>

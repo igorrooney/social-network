@@ -4,11 +4,12 @@ import { reduxForm, InjectedFormProps } from 'redux-form'
 import classes from './ProfileInfo.module.scss'
 import { ProfileType } from 'types/types'
 
-type CustomProps = {
-  profile: ProfileType
+type PropsType = {
+  profile: ProfileType,
 }
 
-const ProfileInfoForm: FC<CustomProps & InjectedFormProps<{}, CustomProps>> = 
+
+const ProfileInfoForm: FC<InjectedFormProps<ProfileType, PropsType> & PropsType> = 
   ({ handleSubmit, profile, error }) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -41,12 +42,12 @@ const ProfileInfoForm: FC<CustomProps & InjectedFormProps<{}, CustomProps>> =
       
       <div className={classes.error}>{error}</div>
       <div>
-        <button>Save changes</button>
+        <button type="submit">Save changes</button>
       </div>
     </form>
   )
 }
-const ProfileInfoFormRedux = reduxForm<{}, CustomProps>({ form: 'profileForm' })(
+const ProfileInfoFormRedux = reduxForm<ProfileType, PropsType>({ form: 'profileForm' })(
   ProfileInfoForm
 )
 

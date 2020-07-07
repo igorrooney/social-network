@@ -3,12 +3,14 @@ import { createPromise } from 'redux-promise-middleware'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk, { ThunkAction } from 'redux-thunk'
 import {createLogger} from 'redux-logger'
+import freeze from 'redux-freeze'
+import promise from 'redux-promise-middleware'
 // Utils
 import { actionTypeSuffix } from 'constants/actionTypes'
 import authReducer from './auth/auth.reducer'
 import appReducer from './app/app.reducer'
 import dialogsReducer from './dialogs-reducer'
-import profileReducer from './profile-reducer'
+import profileReducer from './profile/profile.reducer'
 import friendsReducer from './friends-reducer'
 import usersReducer from './users-reducer'
 import { reducer as formReducer } from 'redux-form'
@@ -42,7 +44,7 @@ const logger = createLogger({
 })
 
 const store = createStore(reducers, composeWithDevTools(
-  applyMiddleware(thunk, promiseMiddleware, logger)
+  applyMiddleware(thunk, promiseMiddleware, logger, freeze, promise)
 ))
 
 // @ts-ignore

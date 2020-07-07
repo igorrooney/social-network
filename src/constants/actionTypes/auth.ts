@@ -6,4 +6,5 @@ const createTypes = createRequestTypes(PREFIX)
 export const authTypes = {
   AUTH_SET_DATA: createTypes('SET_DATA'),
   AUTH_SET_CAPTCHA: createTypes('SET_CAPTCHA'),
+  AUTH_FETCH_LOGIN: createTypes('FETCH_LOGIN'),
 }
