@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux'
+import { ResponseType } from 'api/social-network-API'
 
 import { 
   InfernActionsTypes, 
@@ -128,7 +129,7 @@ export const requestUsers = (
 const _followUnfollowFlow = async (
   dispatch: DispatchType,
   userId: number,
-  apiMethod: any,
+  apiMethod: (id: number) => Promise<ResponseType>,
   actionCreator: (userId: number) => ActionsType
 ) => {
   dispatch(actions.toggleFollowingProgress(true, userId))
@@ -139,7 +140,7 @@ const _followUnfollowFlow = async (
 
 export const followUser = (id: number): ThunkType => {
   return async (dispatch) => {
-    _followUnfollowFlow(
+    await _followUnfollowFlow(
       dispatch, 
       id, 
       usersAPI.followUser.bind(usersAPI), 
@@ -150,7 +151,7 @@ export const followUser = (id: number): ThunkType => {
 
 export const unfollowUser = (id: number): ThunkType => {
   return async (dispatch) => {
-    _followUnfollowFlow(
+    await _followUnfollowFlow(
       dispatch,
       id,
       usersAPI.unfollowUser.bind(usersAPI),
