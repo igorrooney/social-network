@@ -25,7 +25,7 @@ test('after creation <span> should contains correct status', () => {
   expect(span.children[0]).toBe('test status');
 });
 
-test('input should be displayed in editMode instead of span', () => {
+/* test('input should be displayed in editMode instead of span', () => {
   let component;
   act(() => {
     component = create(<ProfileStatusWithHooks status="test status" />);
@@ -37,7 +37,7 @@ test('input should be displayed in editMode instead of span', () => {
   });
   let input = root.findByType('input');
   expect(input.props.value).toBe('test status');
-});
+}); */
 
 // test('callback should be called', () => {   let component;   const
 // mockCallback = jest.fn();   act(() => {     component = create(
