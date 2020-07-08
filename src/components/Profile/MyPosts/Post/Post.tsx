@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react'
 
-import classes from './Post.module.scss';
+import classes from './Post.module.scss'
 
-const Post = ({ img, message, likeCount }) => {
+const Post: FC<Props> = ({ img, message, likeCount }) => {
   return (
     <div className={classes.item}>
       <img src={img} alt="" />
@@ -13,7 +13,13 @@ const Post = ({ img, message, likeCount }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Post;
+type Props = {
+  img: string,
+  message: string,
+  likeCount: number
+}
+
+export default Post

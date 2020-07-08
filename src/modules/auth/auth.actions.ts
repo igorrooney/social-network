@@ -2,7 +2,6 @@ import { types } from 'constants/actionTypes'
 import {  InfernActionsTypes, BaseThunkType } from '../redux-store'
 import { stopSubmit, FormAction } from 'redux-form'
 import { ResultCodeEnum, ResultCodeWithCaptchaEnum } from 'api/social-network-API'
-import { authAPI } from 'api/auth-api'
 import {
   fetchAuthMe,
   fetchCaptcha,
