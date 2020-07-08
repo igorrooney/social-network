@@ -20,8 +20,8 @@ const Message: React.FC<MessageType> = ({ message }): JSX.Element => {
   return <div className={classes.message}>{message}</div>
 }
 
-const Dialogs: FC<PropsType> = ({ dialogsPage, addMessage }): JSX.Element => {
-  const dialogItems = dialogsPage.dialogs.map(item => {
+const Dialogs: FC<PropsType> = ({ dialogs, messages, addMessage }): JSX.Element => {
+  const dialogItems = dialogs.map(item => {
     return (
       <DialogItem
         key={item.id}
@@ -32,7 +32,7 @@ const Dialogs: FC<PropsType> = ({ dialogsPage, addMessage }): JSX.Element => {
     )
   })
 
-  const messageItems = dialogsPage.messages.map(item => {
+  const messageItems = messages.map(item => {
     return <Message key={item.id} message={item.message} id={item.id} />
   })
 

@@ -4,15 +4,7 @@ import { compose } from 'redux'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import { ProfileType } from '../../types/types'
-import { AppStateType } from '../../redux/redux-store'
-import { 
-  getProfileUser, 
-  getAuthUserId, 
-  getIsAuth, 
-  getStatusUser,
-  getEditMode,
-  getIsLoadingProfile,
-} from '../../redux/selectors'
+import { AppStateType } from '../../modules/redux-store'
 import {
   getProfile,
   getStatus,
@@ -20,15 +12,26 @@ import {
   updateProfileInfo,
   actions,
   uploadPhoto,
-} from '../../redux/profile-reducer'
+} from 'modules/profile/profile.actions'
 
 import Profile from './Profile'
+import { 
+  selectIsAuth, 
+  selectUserId 
+} from 'modules/auth/auth.selectors'
+import { 
+  selectProfile, 
+  selectStatus, 
+  selectEditMode, 
+  selectIsLoading 
+} from 'modules/profile/profile.selectors'
 
 type PathParamsType = {
   userId: string
 }
 
 class ProfileContainer extends Component<ProfileContainerPropsType> {
+
   refreshProfile() {
     let userId: number | null = +this.props.match.params.userId
     if (!userId) {
@@ -82,9 +85,9 @@ type MapStatePropsType = {
 type MapDispatchPropsType = {
   getProfile: (id: number) => void
   getStatus: (id: number) => void
-  setNewStatus: (newStatus: string) => void
-  updateProfileInfo: (data: ProfileType) => void
-  setEditMode: (mode: boolean) => void
+  setNewStatus: (newStatus: string) => any
+  updateProfileInfo: (data: ProfileType) => Promise<any>
+  setEditMode: () => void
   uploadPhoto: (photo: File) => void
 }
 
@@ -92,12 +95,12 @@ export type ProfileContainerPropsType = MapStatePropsType & MapDispatchPropsType
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
-    profile: getProfileUser(state),
-    authUserId: getAuthUserId(state),
-    isAuth: getIsAuth(state),
-    status: getStatusUser(state),
-    editMode: getEditMode(state),
-    isLoading: getIsLoadingProfile(state)
+    profile: selectProfile(state),
+    authUserId: selectUserId(state),
+    isAuth: selectIsAuth(state),
+    status: selectStatus(state),
+    editMode: selectEditMode(state),
+    isLoading: selectIsLoading(state)
   }
 }
 

@@ -1,29 +1,27 @@
 import React, { Component, ComponentType } from 'react';
 import { connect } from 'react-redux';
 import Users from './users';
+import Spinner from '../Spinner';
+import { compose } from 'redux';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect'
+import { AppStateType } from '../../modules/redux-store';
+import { UsersInitialStateType } from 'modules/users/users.reducer'
 import {
   followUser,
   unfollowUser,
   requestUsers,
   actions
-} from '../../redux/users-reducer'
-
-import {
-  getUsers,
-  getCurrentPage,
-  getTotalCount,
-  getPageSize,
-  getIsLoading,
-  getIsFetching,
-  getFollowingInProgress,
-  getPortion
-} from '../../redux/selectors';
-
-import Spinner from '../Spinner';
-import { compose } from 'redux';
-import { withAuthRedirect } from '../../hoc/withAuthRedirect'
-import { AppStateType } from '../../redux/redux-store';
-import { InitialStateType } from '../../redux/users-reducer'
+} from 'modules/users/users.actions'
+// Selectors
+import { 
+  selectUsers,
+  selectCurrentPage,
+  selectTotalCount,
+  selectPageSize,
+  selectIsFetching,
+  selectFollowingInProgress,
+  selectPortion,
+} from 'modules/users/users.selectors'
 
 class UsersContainer extends Component<PropsType> {
   componentDidMount() {
@@ -59,7 +57,7 @@ class UsersContainer extends Component<PropsType> {
 
 type MapStatePropsType = {
   isLoading?: boolean
-} & InitialStateType
+} & UsersInitialStateType
 
 type MapDispatchPropsType = {
   requestUsers: (currentPage: number, pageSize: number) => void
@@ -75,14 +73,13 @@ export type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
-    users: getUsers(state),
-    currentPage: getCurrentPage(state),
-    totalCount: getTotalCount(state),
-    pageSize: getPageSize(state),
-    isLoading: getIsLoading(state),
-    isFetching: getIsFetching(state),
-    followingInProgress: getFollowingInProgress(state),
-    portion: getPortion(state)
+    users: selectUsers(state),
+    currentPage: selectCurrentPage(state),
+    totalCount: selectTotalCount(state),
+    pageSize: selectPageSize(state),
+    isFetching: selectIsFetching(state),
+    followingInProgress: selectFollowingInProgress(state),
+    portion: selectPortion(state),
   }
 }
 

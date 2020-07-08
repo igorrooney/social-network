@@ -1,4 +1,9 @@
-import { instance, ResponseType, ResultCodeWithCaptchaEnum, ResultCodeEnum } from "./social-network-API"
+import { 
+  instance, 
+  ResponseType, 
+  ResultCodeWithCaptchaEnum, 
+  ResultCodeEnum 
+} from "./social-network-API"
 
 
 type MeResponseDataType = {

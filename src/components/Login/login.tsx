@@ -4,9 +4,9 @@ import { Redirect } from 'react-router-dom';
 import { LoginPropsType } from './LoginContainer';
 import { AuthType } from '../../types/types';
 
-const Login: FC<LoginPropsType> = ({login, isAuth, captcha}) => {
+const Login: FC<LoginPropsType> = ({getLogin, isAuth, captcha}) => {
   const onSubmit = ({ email, password, rememberMe, captcha }: AuthType) => {
-    login(email, password, rememberMe, captcha)
+    getLogin(email, password, rememberMe, captcha)
   }
 
   if (isAuth) return <Redirect to={'/profile'} />

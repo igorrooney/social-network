@@ -1,4 +1,5 @@
-import profileReducer, { actions } from './profile-reducer'
+import profileReducer from './profile/profile.reducer'
+import { actions } from './profile/profile.actions'
 
 const state = {
   posts: [
@@ -52,8 +53,3 @@ it('after adding post likesCount should be correct', () => {
   expect(newState.profile).toBe('profile');
 }); */
 
-it('after deleting post length of the posts should be decrement', () => {
-  const action = actions.deletePost(1);
-  const newState = profileReducer(state, action);
-  expect(newState.posts.length).toBe(1);
-});

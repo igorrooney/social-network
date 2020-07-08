@@ -17,8 +17,9 @@ const ProfileInfo: FC<ProfileContainerPropsType & Props> = props => {
     return <Spinner />
   }
   const onSubmit = async(formData: ProfileType) => {
+    console.log('formData :>> ', formData);
     await props.updateProfileInfo(formData)
-    props.setEditMode(false)
+    props.setEditMode()
   }
 
   const onSetNewPhoto = (e: ChangeEvent<HTMLInputElement>) => {
@@ -86,7 +87,7 @@ const ProfileInfo: FC<ProfileContainerPropsType & Props> = props => {
 
         {props.isOwner && (
           <div>
-            <button onClick={() => props.setEditMode(true)}>Edit profile</button>
+            <button onClick={() => props.setEditMode()}>Edit profile</button>
           </div>
         )}
       </div>
@@ -111,7 +112,7 @@ const ProfileInfo: FC<ProfileContainerPropsType & Props> = props => {
                 {props.editMode ? (
                   <div>
                     <ProfileInfoForm
-                      onSubmit={() => onSubmit}
+                      onSubmit={onSubmit}
                       initialValues={props.profile}
                       profile={props.profile}
                     />

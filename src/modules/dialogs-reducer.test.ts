@@ -1,4 +1,5 @@
-import dialogsReducer, { actions } from './dialogs-reducer'
+import dialogsReducer from 'modules/dialogs/dialogs.reducer'
+import { actions } from 'modules/dialogs/dialogs.actions'
 
 const state = {
   messages: [
