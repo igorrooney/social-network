@@ -26,6 +26,14 @@ const _searchRegEx = (text: string, pattern: any) => {
   return result
 }
 
+export const addPost = (post: string, img: string, id: number) => {
+  return (dispatch: any) => dispatch(actions.addPost(post, img, id))
+}
+
+export const setEditMode = () => {
+  return (dispatch: any) => dispatch(actions.setEditMode())
+}
+
 export const getProfile = (id: number): ThunkType => {
   return (dispatch: any) => dispatch(fetchProfile(id))
 }

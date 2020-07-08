@@ -1,6 +1,4 @@
 import { types } from 'constants/actionTypes'
-import { authAPI } from 'api/auth-api'
-import { securityAPI } from 'api/security-api'
 import { profileAPI } from 'api/profile-api'
 // Types
 import { 

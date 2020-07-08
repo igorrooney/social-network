@@ -9,11 +9,12 @@ type PropTypes = {
   friends: Array<FriendType>
 }
 
-const Friends: FC<PropTypes> = ({friends}) => {
+const Friends: FC<PropTypes> = () => {
+  const friends: any[] = []
   return (
     <ul className={classes.friends}>
       {friends.map((friend) => <Friend friend={friend} key={friend.id}/>)}
     </ul>
   );
 }
-export default Friends;
+export default Friends

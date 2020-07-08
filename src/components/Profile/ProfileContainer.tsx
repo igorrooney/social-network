@@ -31,6 +31,7 @@ type PathParamsType = {
 }
 
 class ProfileContainer extends Component<ProfileContainerPropsType> {
+
   refreshProfile() {
     let userId: number | null = +this.props.match.params.userId
     if (!userId) {

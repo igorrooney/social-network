@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import './App.css'
 import HeaderContainer from 'components/Header/HeaderContainer'
-import NavbarContainer from 'components/Navbar/NavbarContainer'
+import Navbar from 'components/Navbar'
 
 import Spinner from 'components/Spinner'
 import { withSuspense } from 'hoc/withSuspend'
@@ -64,7 +64,7 @@ const App = () => {
   return (
     <div className="app-wrapper container">
       <HeaderContainer />
-      <NavbarContainer />
+      <Navbar />
       <div className="app-wrapper-content container-fluid">
         <Switch>
           <Route exact path="/" render={() => <Redirect to="/profile" />} />

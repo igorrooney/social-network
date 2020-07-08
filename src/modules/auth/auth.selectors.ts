@@ -10,17 +10,17 @@ export const selectData = createSelector(
 
 export const selectUserId = createSelector(
   authSlice,
-  authState => authState.data.userId
+  authState => authState.data.userId || null
 )
 
 export const selectEmail = createSelector(
   authSlice,
-  authState => authState.data.email
+  authState => authState.data.email || null
 )
 
 export const selectLogin = createSelector(
   authSlice,
-  authState => authState.data.login
+  authState => authState.data.login || null
 )
 
 export const selectIsAuth = createSelector(

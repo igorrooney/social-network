@@ -1,7 +1,9 @@
 import { ProfileInitialStateType } from './profile.reducer'
 import { createSelector } from 'reselect'
 
-const profileSlice = (state: { profilePage: ProfileInitialStateType}) => state.profilePage
+const profileSlice = (
+  state: { profilePage: ProfileInitialStateType}
+) => state.profilePage
 
 export const selectPosts = createSelector(
   profileSlice,

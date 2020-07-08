@@ -7,6 +7,7 @@ import {
   fetchAuthMe,
   fetchCaptcha,
   fetchLogin,
+  fetchLogOut,
 } from './auth.fetch'
 
 const actions = {
@@ -27,15 +28,9 @@ const actions = {
 }
 
 export const authMe = (): ThunkType => {
-  return async (dispatch: any) => {
-    const { 
-      value: { resultCode, data } 
-    } = await dispatch(fetchAuthMe())
-    if (resultCode === ResultCodeEnum.Success) {
-      const { id, email, login } = data
-      return dispatch(actions.setAuthMeData(id, email, login, true))
-    }
-  }
+  return async (dispatch: any) => (
+    await dispatch(fetchAuthMe())
+  )
 }
 
 export const getCaptcha = (): ThunkType => {
@@ -50,8 +45,8 @@ export const getCaptcha = (): ThunkType => {
 export const getLogin = (email: string, password: string, rememberMe: boolean, captcha: string): ThunkType => {
   return async (dispatch: any) => {
     const {
-      value: { resultCode, messages }
-    }: any = await fetchLogin(email, password, rememberMe, captcha)
+      value: { messages, resultCode }
+    } = await dispatch(fetchLogin(email, password, rememberMe, captcha))
     if (resultCode === ResultCodeEnum.Success) {
       dispatch(authMe())
     } else {
@@ -65,11 +60,8 @@ export const getLogin = (email: string, password: string, rememberMe: boolean, c
 }
 
 export const logOut = (): ThunkType => {
-  return async dispatch => {
-    const data = await authAPI.logOut()
-    if (data.resultCode === 0) {
-      dispatch(actions.setAuthMeData(null, null, null, false))
-    }
+  return async (dispatch: any) => {
+    return dispatch(fetchLogOut())
   }
 }
 

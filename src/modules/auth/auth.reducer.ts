@@ -15,14 +15,49 @@ const initialState = {
 }
 
 const data = typeToReducer({
-  [types.AUTH_SET_DATA]: (draft, action) => {
-    return action.payload
+  [types.AUTH_FETCH_DATA.BASE]: {
+    SUCCESS: (draft, action) => {
+      const {
+        data: {
+          email,
+          id,
+          login,
+        },
+        resultCode,
+      } = action.payload
+      if (resultCode === 1) {
+        return draft
+      }
+      return {
+        userId: id,
+        login,
+        email,
+        isAuth: true,
+      }
+    }
+  },
+  [types.AUTH_FETCH_LOGOUT.BASE]: {
+    SUCCESS: (draft, action) => {
+      const { resultCode } = action.payload
+      if (resultCode === 1) {
+        return draft
+      }
+      const nextDraft = {
+        userId: null,
+        login: null,
+        email: null,
+        isAuth: false
+      }
+      return nextDraft
+    }
   }
 }, initialState.data)
 
 const captcha = typeToReducer({
-  [types.AUTH_SET_CAPTCHA]: (draft, action) => {
-    return action.payload
+  [types.AUTH_SET_CAPTCHA.BASE]: {
+    SUCCESS: (draft, action) => {
+      return action.payload
+    }
   }
 }, initialState.captcha)
 

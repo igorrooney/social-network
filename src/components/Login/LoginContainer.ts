@@ -1,11 +1,12 @@
 import { ComponentType } from 'react'
-import { getIsAuth } from '../../modules/selectors';
 import { AppStateType } from '../../modules/redux-store';
 import { compose } from 'redux';
 import Login from './login';
 import { connect } from 'react-redux';
 import { getLogin } from 'modules/auth/auth.actions'
-import { getCaptcha } from '../../modules/selectors';
+// Selectors
+import { selectIsAuth, selectCaptcha } from 'modules/auth/auth.selectors'
+
 
 type MapStateToPropsType = {
   isAuth: boolean
@@ -25,8 +26,8 @@ export type LoginPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 const mapStateToProps = (state: AppStateType) => {
   return { 
-    isAuth: getIsAuth(state), 
-    captcha: getCaptcha(state) 
+    isAuth: selectIsAuth(state), 
+    captcha: selectCaptcha(state) 
   }
 }
 

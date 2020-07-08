@@ -6,11 +6,10 @@ import * as profileSelectors from './profile.selectors'
 // Actions
 import * as profileActions from './profile.actions'
 // Types
-import { ProfileInitialStateType } from './profile.reducer'
 import { ProfileType } from 'types/types'
 
 const selectors = createSelector(
-  (state: {profile: ProfileInitialStateType} | any) => state,
+  (state: any) => state,
   state => ({
     posts: profileSelectors.selectPosts(state),
     profile: profileSelectors.selectProfile(state),
@@ -31,6 +30,18 @@ export const useProfileConnect = () => {
     isLoading,
     newTextPost,
   } = useSelector(state => selectors(state))
+
+  const addPost = useCallback(
+    (post: string, img: string, id: number) => (
+      dispatch(profileActions.addPost(post, img, id)
+    )),
+    [dispatch]
+  )
+
+  const setEditMode = useCallback(
+    () => dispatch(profileActions.setEditMode()),
+    [dispatch]
+  )
 
   const getProfile = useCallback(
     (id: number) => dispatch(profileActions.getProfile(id)),
@@ -71,5 +82,7 @@ export const useProfileConnect = () => {
     setNewStatus,
     uploadPhoto,
     updateProfileInfo,
+    setEditMode,
+    addPost,
   }
 }

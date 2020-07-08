@@ -4,26 +4,27 @@ import {
   ProfileType, 
 } from 'types/types'
 import { AppStateType } from 'modules/redux-store'
-import { actions } from 'modules/profile/profile.actions'
 import MyPosts from './MyPosts'
-import {
-  getIsLoadingProfile,
-  getNewTextPost,
-  getPostsData,
-  getProfileUser
-} from 'modules/selectors'
+import { addPost } from 'modules/profile/profile.actions'
+// Selectors
+import { 
+  selectPosts, 
+  selectNewTextPost,
+  selectProfile,
+  selectIsLoading,
+} from 'modules/profile/profile.selectors'
 
 const mapStateToProps = (state: AppStateType) => {
   return {
-    postsData: getPostsData(state),
-    newTextPost: getNewTextPost(state),
-    profile: getProfileUser(state),
-    isLoading: getIsLoadingProfile(state),
+    postsData: selectPosts(state),
+    newTextPost: selectNewTextPost(state),
+    profile: selectProfile(state),
+    isLoading: selectIsLoading(state),
   }
 }
 
 const mapDispatchToProps = {
-  addPost: actions.addPost
+  addPost
 }
 
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(

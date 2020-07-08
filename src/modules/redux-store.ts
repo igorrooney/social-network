@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware, Action } from 'redux'
+import { createStore, applyMiddleware, Action } from 'redux'
 import { createPromise } from 'redux-promise-middleware'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk, { ThunkAction } from 'redux-thunk'
@@ -7,23 +7,8 @@ import freeze from 'redux-freeze'
 import promise from 'redux-promise-middleware'
 // Utils
 import { actionTypeSuffix } from 'constants/actionTypes'
-import authReducer from './auth/auth.reducer'
-import appReducer from './app/app.reducer'
-import dialogsReducer from './dialogs-reducer'
-import profileReducer from './profile/profile.reducer'
-import friendsReducer from './friends-reducer'
-import usersReducer from './users-reducer'
-import { reducer as formReducer } from 'redux-form'
-
-export const reducers = combineReducers({
-  dialogsPage: dialogsReducer,
-  profilePage: profileReducer,
-  friendsBlock: friendsReducer,
-  usersPage: usersReducer,
-  auth: authReducer,
-  form: formReducer,
-  app: appReducer,
-})
+// Reducers
+import reducers from 'modules'
 
 export type AppStateType = ReturnType<typeof reducers>
 
@@ -46,8 +31,5 @@ const logger = createLogger({
 const store = createStore(reducers, composeWithDevTools(
   applyMiddleware(thunk, promiseMiddleware, logger, freeze, promise)
 ))
-
-// @ts-ignore
-window.__store__ = store
 
 export default store
