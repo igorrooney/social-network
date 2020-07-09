@@ -1,37 +1,36 @@
 import React, { useEffect, useCallback } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import './App.css'
-import HeaderContainer from 'components/Header/HeaderContainer'
+import Header from 'components/Header'
 import Navbar from 'components/Navbar'
-
 import Spinner from 'components/Spinner'
 import { withSuspense } from 'hoc/withSuspend'
 // Connect
 import { useAppConnect } from 'modules/app/app.connect'
 
-const DialogsContainer = React.lazy(() => 
-  import('components/Dialogs/DialogsContainer')
+const Dialogs = React.lazy(() => 
+  import('components/Dialogs')
 )
-const ProfileContainer = React.lazy(() =>
-  import('components/Profile/ProfileContainer')
+const Profile = React.lazy(() =>
+  import('components/Profile')
 )
-const UsersContainer = React.lazy(() =>
-  import('components/Users/usersContainer')
+const Users = React.lazy(() =>
+  import('components/Users')
 )
 const News = React.lazy(() => import('components/News'))
 const Music = React.lazy(() => import('components/Music'))
 const Settings = React.lazy(() => import('components/Settings'))
-const LoginContainer = React.lazy(() =>
-  import('./components/Login/LoginContainer')
+const Login = React.lazy(() =>
+  import('./components/Login')
 )
 
-const SuspendedProfile = withSuspense(ProfileContainer)
-const SuspendedDialogs = withSuspense(DialogsContainer)
-const SuspendedUsers = withSuspense(UsersContainer)
+const SuspendedProfile = withSuspense(Profile)
+const SuspendedDialogs = withSuspense(Dialogs)
+const SuspendedUsers = withSuspense(Users)
 const SuspendedNews = withSuspense(News)
 const SuspendedMusic = withSuspense(Music)
 const SuspendedSettings = withSuspense(Settings)
-const SuspendedLogin = withSuspense(LoginContainer)
+const SuspendedLogin = withSuspense(Login)
 
 const App = () => {
   const {
@@ -63,7 +62,7 @@ const App = () => {
 
   return (
     <div className="app-wrapper container">
-      <HeaderContainer />
+      <Header />
       <Navbar />
       <div className="app-wrapper-content container-fluid">
         <Switch>

@@ -37,6 +37,28 @@ export const useUsersConnect = () => {
     [dispatch]
   )
 
+  const setPortion = useCallback(
+    (portion: number) => dispatch(usersActions.setPortion(portion)),
+    [dispatch]
+  )
+
+  const requestUsers = useCallback(
+    (currentPage: number, pageSize: number) => (
+      dispatch(usersActions.requestUsers(currentPage, pageSize)
+    )),
+    [dispatch]
+  )
+
+  const followUser = useCallback(
+    (id: number) => dispatch(usersActions.followUser(id)),
+    [dispatch]
+  )
+
+  const unfollowUser = useCallback(
+    (id: number) => dispatch(usersActions.unfollowUser(id)),
+    [dispatch]
+  )
+
   return {
     //Selectors
     users,
@@ -48,6 +70,9 @@ export const useUsersConnect = () => {
     followingInProgress,
     // Actions
     setCurrentPage,
-    
+    setPortion,
+    requestUsers,
+    followUser,
+    unfollowUser,
   }
 }

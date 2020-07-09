@@ -1,24 +1,29 @@
 import React, { FC } from 'react'
-
-import classes from './MyPosts.module.scss'
-import Post from './Post'
-import avatar from '../../../assets/images/user.jpg'
-import CreatePostForm from './CreatePostForm'
 import nextId from 'react-id-generator'
-import { MyPostsContainerPropsType } from './MyPostsContainer'
+// Connect
+import { useProfileConnect } from 'modules/profile/profile.connect'
+// Components
+import Post from './Post'
+import CreatePostForm from './CreatePostForm'
+// Styles
+import classes from './MyPosts.module.scss'
+import avatar from 'assets/images/user.jpg'
 
-type FormDataProps = {
-  post: string
-}
+const MyPosts: FC = React.memo(() => {
+  const {
+    // Selectors
+    posts: postsData,
+    profile,
+    isLoading,
+    // Actions
+    addPost,
+  } = useProfileConnect()
 
-const MyPosts: FC<MyPostsContainerPropsType> = React.memo(({ 
-  postsData, 
-  isLoading, 
-  profile, 
-  addPost
-}) => {
+  if (isLoading) {
+    return null
+  }
 
-  const posts = postsData.map((post) => {
+  const posts = postsData.map(post => {
     return (
       <Post
         key={post.id}
@@ -29,12 +34,8 @@ const MyPosts: FC<MyPostsContainerPropsType> = React.memo(({
     )
   })
 
-  if (isLoading) {
-    return null
-  }
-
   const onSubmitHandler = ( formData: FormDataProps ) => {
-    if (profile) {
+    if (!!profile) {
       const img = profile.photos.small || avatar
       const id = +nextId()
       addPost(formData.post, img, id)
@@ -48,12 +49,19 @@ const MyPosts: FC<MyPostsContainerPropsType> = React.memo(({
         <div className={classes.createPost}></div>
         <CreatePostForm
           onSubmit={onSubmitHandler}
-          photo={profile.photos.small} />
-        <div className={classes.posts}>{posts}</div>
+          photo={profile.photos.small} 
+        />
+        <div className={classes.posts}>
+          {posts}
+        </div>
       </div>
       <div className="col-md-1 static"></div>
     </div>
   )
 })
+
+type FormDataProps = {
+  post: string
+}
 
 export default MyPosts

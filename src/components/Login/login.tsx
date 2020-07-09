@@ -1,10 +1,21 @@
-import React, { FC } from 'react';
-import LoginForm from './loginForm';
-import { Redirect } from 'react-router-dom';
-import { LoginPropsType } from './LoginContainer';
-import { AuthType } from '../../types/types';
+import React, { FC } from 'react'
+import { Redirect } from 'react-router-dom'
+// Connect
+import { useAuthConnect } from 'modules/auth/auth.connect'
+// Components
+import LoginForm from './loginForm'
+// Types
+import { AuthType } from 'types/types'
 
-const Login: FC<LoginPropsType> = ({getLogin, isAuth, captcha}) => {
+const Login: FC = () => {
+  const {
+    // Selectors
+    isAuth,
+    captcha,
+    // Actions
+    getLogin
+  } = useAuthConnect()
+
   const onSubmit = ({ email, password, rememberMe, captcha }: AuthType) => {
     getLogin(email, password, rememberMe, captcha)
   }

@@ -1,40 +1,50 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { FC } from 'react'
-import Pagination from '../../utils/pagination'
+import React, { FC, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
+// Connect
+import { useUsersConnect } from 'modules/users/users.connect'
+import { useAuthConnect } from 'modules/auth/auth.connect'
+// Components
+import Pagination from 'utils/Pagination'
 import User from './user'
-import { PropsType } from './usersContainer'
+import Spinner from 'components/Spinner'
 
-type Props = {
-  onSetCurrentPage: (page: number) => void
-} & PropsType
 
-const Users: FC<Props> = ({
-  totalCount,
-  pageSize,
-  onSetCurrentPage,
-  currentPage,
-  users,
-  portion,
-  setCurrentPage,
-  setPortion,
-  ...props
-}) => {
+const Users: FC = () => {
+  const {
+    // Selectors
+    users,
+    currentPage,
+    pageSize,
+    isFetching,
+    // Actions
+    requestUsers,
+  } = useUsersConnect()
+  const { isAuth } = useAuthConnect()  
+  const history = useHistory()
+
+  useEffect(() => {
+    requestUsers(currentPage, pageSize)
+  }, [requestUsers, currentPage, pageSize])
+
+  useEffect(() => {
+    if (!isAuth) {
+      return history.push('/login')
+    }
+  }, [isAuth, history])
+
   return (
     <div className="container">
-      <Pagination
-        totalCount={totalCount}
-        pageSize={pageSize}
-        onSetCurrentPage={onSetCurrentPage}
-        currentPage={currentPage}
-        portion={portion}
-        setCurrentPage={setCurrentPage}
-        setPortion={setPortion}
-      />
+      <Pagination />
       <div className="row">
         <div className="col-md-2"></div>
         <div className="col-md-8">
-          {users.map(u => (
-            <User key={u.id} user={u} {...props} />
+          {isFetching ? <Spinner /> : 
+            users.map(user => (
+              <User 
+                key={user.id} 
+                user={user} 
+              />
           ))}
         </div>
         <div className="col-md-2"></div>

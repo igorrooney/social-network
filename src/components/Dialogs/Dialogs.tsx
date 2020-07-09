@@ -1,26 +1,31 @@
-import React, { FC } from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { FC, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import classes from './Dialogs.module.scss'
 import CreateMessageForm from './CreateMessageForm'
-import { DialogType, MessageType } from 'types/types'
-import { PropsType } from './DialogsContainer'
+// Components
+import DialogItem from './DialogItem'
+import Message from './Message'
+// Connect
+import { useDialogsConnect } from 'modules/dialogs/dialogs.connect'
+import { useAuthConnect } from 'modules/auth/auth.connect'
 
-const DialogItem: FC<DialogType> = ({ name, id, photo }): JSX.Element => {
-  return (
-    <div className={classes.dialog}>
-      <NavLink to={'/dialogs/' + id} className={classes.user}>
-        <img src={String(photo)} alt="avatar" />
-        <div className={classes.name}>{name}</div>
-      </NavLink>
-    </div>
-  )
-}
+const Dialogs: FC = (): JSX.Element => {
+  const {
+    // Selectors
+    dialogs,
+    messages,
+    // Actions
+    addMessage,
+  } = useDialogsConnect()
+  const { isAuth } = useAuthConnect()  
+  const history = useHistory()
 
-const Message: React.FC<MessageType> = ({ message }): JSX.Element => {
-  return <div className={classes.message}>{message}</div>
-}
+  useEffect(() => {
+    if (!isAuth) {
+      return history.push('/login')
+    }
+  }, [isAuth, history])
 
-const Dialogs: FC<PropsType> = ({ dialogs, messages, addMessage }): JSX.Element => {
   const dialogItems = dialogs.map(item => {
     return (
       <DialogItem

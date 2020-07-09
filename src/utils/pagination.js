@@ -1,54 +1,58 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import classes from './pagination.module.scss';
+// Connect
+import { useUsersConnect } from 'modules/users/users.connect'
 
-const Pagination = ({
-  totalCount,
-  pageSize,
-  onSetCurrentPage,
-  currentPage,
-  setCurrentPage,
-  portionSize = 10,
-  portion,
-  setPortion,
-  ...props
-}) => {
-  const pages = Math.ceil(totalCount / pageSize);
-  let pagesCount = [];
+const Pagination = () => {
+  const {
+    totalCount,
+    pageSize,
+    currentPage,
+    portionSize = 10,
+    portion,
+    // Actions
+    setPortion,
+    requestUsers,
+  } = useUsersConnect()
+
+  const [portionNumber, setPortionNumber] = useState(portion)
+
+  const pages = Math.ceil(totalCount / pageSize)
+  let pagesCount = []
   for (let i = 1; i <= pages; i++) {
-    pagesCount.push(i);
+    pagesCount.push(i)
   }
   const portionCount = Math.ceil(pages / portionSize);
-  const [portionNumber, setPortionNumber] = useState(portion);
-  const leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
-  const rightPortionPageNumber = portionNumber * portionSize;
+  const leftPortionPageNumber = (portionNumber - 1) * portionSize + 1
+  const rightPortionPageNumber = portionNumber * portionSize
 
   return (
     <nav aria-label="Page navigation">
       <ul className={classes.pagination}>
-        <li className={'page-item ' + (portionNumber <= 1 && 'disabled')}>
+        <li 
+          className={'page-item ' + (portionNumber <= 1 && 'disabled')}
+        >
           <button
             className="page-link"
             href="#"
             tabIndex="-1"
             onClick={() => {
-              setPortion(portionNumber - 1);
-              setPortionNumber(portionNumber - 1);
+              setPortion(portionNumber - 1)
+              setPortionNumber(portionNumber - 1)
             }}
           >
             Previous
           </button>
         </li>
-        {pagesCount
-          .filter(
-            p => p >= leftPortionPageNumber && p <= rightPortionPageNumber
-          )
-          .map(page => {
+        {pagesCount.filter(page => (
+          page >= leftPortionPageNumber && page <= rightPortionPageNumber
+        )).map(page => {
             return (
               <li
                 key={page}
                 className="page-item"
-                onClick={() => onSetCurrentPage(page)}
+                onClick={() => requestUsers(page, pageSize)}
               >
                 <a
                   href="#"
@@ -58,7 +62,7 @@ const Pagination = ({
                   {page}
                 </a>
               </li>
-            );
+            )
           })}
         <li
           className={
@@ -69,8 +73,8 @@ const Pagination = ({
             className="page-link"
             href="#"
             onClick={() => {
-              setPortion(portionNumber + 1);
-              setPortionNumber(portionNumber + 1);
+              setPortion(portionNumber + 1)
+              setPortionNumber(portionNumber + 1)
             }}
           >
             Next
@@ -78,7 +82,7 @@ const Pagination = ({
         </li>
       </ul>
     </nav>
-  );
-};
+  )
+}
 
-export default Pagination;
+export default Pagination

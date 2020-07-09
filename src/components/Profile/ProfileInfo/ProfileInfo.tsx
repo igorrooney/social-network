@@ -1,36 +1,42 @@
 import React, { FC, ChangeEvent } from 'react'
+// Connect
+import { useProfileConnect } from 'modules/profile/profile.connect'
+// Components
+import Spinner from 'components/Spinner'
+import ProfileStatus from './ProfileStatus'
+import ProfileInfoForm from './ProfileInfoForm'
+// Styles
+import classes from './ProfileInfo.module.scss'
+import userPhoto from 'assets/images/user.jpg'
+// Types
+import { ProfileType } from 'types/types'
 
-import classes from './ProfileInfo.module.scss';
-import Spinner from '../../Spinner';
-import userPhoto from '../../../assets/images/user.jpg';
-import ProfileStatus from './ProfileStatus';
-import ProfileInfoForm from './ProfileInfoForm';
-import { ProfileContainerPropsType } from '../ProfileContainer';
-import { ProfileType } from 'types/types';
-
-type Props = {
-  isOwner: boolean
-}
-
-const ProfileInfo: FC<ProfileContainerPropsType & Props> = props => {
-  if (props.isLoading) {
+const ProfileInfo: FC<Props> = ({ isOwner }) => {
+  const {
+    // Selectors
+    isLoading,
+    profile,
+    status,
+    editMode,
+    // Actions
+    updateProfileInfo,
+    setEditMode,
+    uploadPhoto,
+    setNewStatus,
+  } = useProfileConnect()
+  
+  if (isLoading) {
     return <Spinner />
   }
   const onSubmit = async(formData: ProfileType) => {
-    console.log('formData :>> ', formData);
-    await props.updateProfileInfo(formData)
-    props.setEditMode()
+    await updateProfileInfo(formData)
+    setEditMode()
   }
 
   const onSetNewPhoto = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement
     const file: File = (target.files as FileList)[0]
-    props.uploadPhoto(file)
-  }
-
-  type ContactType = {
-    contactKey: string
-    contactValue: string
+    uploadPhoto(file)
   }
 
   const Contact: FC<ContactType> = ({ contactKey, contactValue }) => {
@@ -44,35 +50,35 @@ const ProfileInfo: FC<ProfileContainerPropsType & Props> = props => {
 
 
   let profileInfo = {}
-  if (props.profile !== null) {
-    const contactsKeys = Object.keys(props.profile.contacts)
+  if (profile !== null) {
+    const contactsKeys = Object.keys(profile.contacts)
 
     profileInfo = (
       <div>
-        <h3>{props.profile.fullName}</h3>
+        <h3>{profile.fullName}</h3>
         <div>
           <b>About me:</b>
           {/* props.profile.aboutMe */}
         </div>
         <div>
           <b>Looking for a job:</b>
-          {props.profile.lookingForAJob ? ' yes' : ' no'}
+          {profile.lookingForAJob ? ' yes' : ' no'}
         </div>
-        {props.profile.lookingForAJob && (
+        {profile.lookingForAJob && (
           <div>
             <b>Looking for a job description:</b>
-            {props.profile.lookingForAJobDescription}
+            {profile.lookingForAJobDescription}
           </div>
         )}
         <div>
           <b>Contacts:</b>
           {contactsKeys.map(key => {
-            if (props.profile !== null) {
+            if (profile !== null) {
               return (
                 <Contact
                   key={key}
                   contactKey={key}
-                  contactValue={props.profile.contacts[key]}
+                  contactValue={profile.contacts[key]}
                 />
               )
             }
@@ -80,20 +86,18 @@ const ProfileInfo: FC<ProfileContainerPropsType & Props> = props => {
           })}
         </div>
         <ProfileStatus
-          status={props.status}
-          setNewStatus={props.setNewStatus}
-          isOwner={props.isOwner}
+          status={status}
+          setNewStatus={setNewStatus}
+          isOwner={isOwner}
         />
 
-        {props.isOwner && (
+        {isOwner && (
           <div>
-            <button onClick={() => props.setEditMode()}>Edit profile</button>
+            <button onClick={setEditMode}>Edit profile</button>
           </div>
         )}
       </div>
     )
-
-
 
     return (
       <div className={classes.timelineCover}>
@@ -102,19 +106,19 @@ const ProfileInfo: FC<ProfileContainerPropsType & Props> = props => {
             <div className="col-md-4">
               <div className={classes.profileInfo}>
                 <img
-                  src={props.profile.photos.large || userPhoto}
+                  src={profile.photos.large || userPhoto}
                   alt=""
                   className={'img-responsive ' + classes.profilePhoto}
                 />{' '}
-                {props.isOwner && (
+                {isOwner && (
                   <input type="file" onChange={onSetNewPhoto} />
                 )}
-                {props.editMode ? (
+                {editMode ? (
                   <div>
                     <ProfileInfoForm
                       onSubmit={onSubmit}
-                      initialValues={props.profile}
-                      profile={props.profile}
+                      initialValues={profile}
+                      profile={profile}
                     />
                   </div>
                 ) : (
@@ -151,6 +155,15 @@ const ProfileInfo: FC<ProfileContainerPropsType & Props> = props => {
     )
   }
   return null
+}
+
+
+type ContactType = {
+  contactKey: string
+  contactValue: string
+}
+type Props = {
+  isOwner: boolean
 }
 
 export default ProfileInfo

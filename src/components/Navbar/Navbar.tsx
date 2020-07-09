@@ -1,13 +1,9 @@
 import React, { FC } from 'react'
-
 import { NavLink } from 'react-router-dom'
-
 import classes from './Navbar.module.scss'
 import Friends from '../Friends'
 
-const Navbar: FC<any> = ({
-  friendsBlock,
-}) => {
+const Navbar: FC = () => {
   return (
     <nav className={classes.nav}>
       <div className={classes.item}>
@@ -45,7 +41,7 @@ const Navbar: FC<any> = ({
           Login
         </NavLink>
       </div>
-      <Friends friends={friendsBlock} />
+      <Friends />
     </nav>
   )
 }

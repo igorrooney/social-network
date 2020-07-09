@@ -2,22 +2,24 @@ import React, { FC } from 'react'
 import { NavLink } from 'react-router-dom'
 import classes from './users.module.scss'
 import userPhoto from '../../assets/images/user.jpg'
-import { UserType } from '../../types/types'
+// Connect
+import { useUsersConnect } from 'modules/users/users.connect'
+// Types
+import { UserType } from 'types/types'
 
 type Props = {
   user: UserType
-  isFetching: boolean
-  unfollowUser: (id: number) => void
-  followUser: (id: number) => void
-  followingInProgress: Array<number>
 }
 
 const User: FC<Props> = ({
   user,
-  unfollowUser,
-  followUser,
-  followingInProgress
 }) => {
+  const {
+    unfollowUser,
+    followUser,
+    followingInProgress
+  } = useUsersConnect()
+
   return (
     <div className={classes.user}>
       <div className="row">
