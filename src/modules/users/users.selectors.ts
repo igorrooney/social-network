@@ -39,3 +39,8 @@ export const selectFollowingInProgress = createSelector(
   usersSlice,
   usersState => usersState.followingInProgress
 )
+
+export const selectSearchTerm = createSelector(
+  usersSlice,
+  usersState => usersState.searchTerm
+)

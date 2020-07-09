@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from 'react';
+import React from 'react'
 import classes from './pagination.module.scss';
 // Connect
 import { useUsersConnect } from 'modules/users/users.connect'
+import usePagination from './usePagination';
 
 const Pagination = () => {
   const {
@@ -16,16 +17,14 @@ const Pagination = () => {
     requestUsers,
   } = useUsersConnect()
 
-  const [portionNumber, setPortionNumber] = useState(portion)
-
-  const pages = Math.ceil(totalCount / pageSize)
-  let pagesCount = []
-  for (let i = 1; i <= pages; i++) {
-    pagesCount.push(i)
-  }
-  const portionCount = Math.ceil(pages / portionSize);
-  const leftPortionPageNumber = (portionNumber - 1) * portionSize + 1
-  const rightPortionPageNumber = portionNumber * portionSize
+  const [
+    leftPortionPageNumber, 
+    rightPortionPageNumber, 
+    pagesCount, 
+    portionCount, 
+    portionNumber, 
+    setPortionNumber
+  ] = usePagination(totalCount, pageSize, portionSize, portion)
 
   return (
     <nav aria-label="Page navigation">
@@ -35,7 +34,6 @@ const Pagination = () => {
         >
           <button
             className="page-link"
-            href="#"
             tabIndex="-1"
             onClick={() => {
               setPortion(portionNumber - 1)
@@ -71,7 +69,6 @@ const Pagination = () => {
         >
           <button
             className="page-link"
-            href="#"
             onClick={() => {
               setPortion(portionNumber + 1)
               setPortionNumber(portionNumber + 1)

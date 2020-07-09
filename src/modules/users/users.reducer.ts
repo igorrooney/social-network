@@ -13,7 +13,8 @@ const initialState = {
   pageSize: 10,
   currentPage: 1,
   isFetching: false,
-  followingInProgress: [] as Array<number> // array of users id
+  followingInProgress: [] as Array<number>, // array of users id
+  searchTerm: ''
 }
 
 const users = typeToReducer({
@@ -47,7 +48,18 @@ const users = typeToReducer({
       return items
     }
   },
+  [types.GET_SEARCH_USERS.BASE]: {
+    SUCCESS: (draft, action) => {
+
+    }
+  }
 }, initialState.users)
+
+const searchTerm = typeToReducer({
+  [types.USERS_SET_SEARCH_TERM]: (draft, action) => {
+    return action.payload
+  }
+}, initialState.searchTerm)
 
 const totalCount = typeToReducer({
   [types.GET_USERS.BASE]: {
@@ -119,4 +131,5 @@ export default combineReducers(produce, {
   isFetching,
   followingInProgress,
   pageSize,
+  searchTerm,
 })

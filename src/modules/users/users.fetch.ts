@@ -3,10 +3,11 @@ import { usersAPI } from 'api/users-api'
 
 export const fetchUsers = (
   currentPage: number,
-  pageSize: number
+  pageSize: number,
+  term: string | number
 ) => ({
   type: types.GET_USERS.BASE,
-  payload: usersAPI.getUsers(currentPage, pageSize)
+  payload: usersAPI.getUsers(currentPage, pageSize, term)
 })
 
 export const fetchFollowUser = (

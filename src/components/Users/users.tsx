@@ -8,6 +8,7 @@ import { useAuthConnect } from 'modules/auth/auth.connect'
 import Pagination from 'utils/Pagination'
 import User from './user'
 import Spinner from 'components/Spinner'
+import Search from 'components/Search'
 
 
 const Users: FC = () => {
@@ -36,6 +37,7 @@ const Users: FC = () => {
   return (
     <div className="container">
       <Pagination />
+      <Search />
       <div className="row">
         <div className="col-md-2"></div>
         <div className="col-md-8">

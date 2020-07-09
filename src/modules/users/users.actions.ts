@@ -16,11 +16,20 @@ export const actions = {
     type: types.USERS_SET_PORTION, 
     payload: portion 
   } as const),
+  setSearchTerm: (term: string) => ({
+    type: types.USERS_SET_SEARCH_TERM,
+    payload: term
+  })
 }
 
 export const setCurrentPage = (page: number) => {
   return (dispatch: any) => (
     dispatch(actions.setCurrentPage(page))
+  )
+}
+export const setSearchTerm = (term: string) => {
+  return (dispatch: any) => (
+    dispatch(actions.setSearchTerm(term))
   )
 }
 
@@ -32,11 +41,12 @@ export const setPortion = (portion: number) => {
 
 export const requestUsers = (
   currentPage: number, 
-  pageSize: number 
+  pageSize: number,
+  term: string | number
 ): ThunkType => {
   return async (dispatch: any) => {
     dispatch(actions.setCurrentPage(currentPage))
-    return await dispatch(fetchUsers(currentPage, pageSize))
+    return await dispatch(fetchUsers(currentPage, pageSize, term))
   }
 }
 

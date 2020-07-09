@@ -17,6 +17,7 @@ const selectors = createSelector(
     currentPage: usersSelectors.selectCurrentPage(state),
     isFetching: usersSelectors.selectIsFetching(state),
     followingInProgress: usersSelectors.selectFollowingInProgress(state),
+    searchTerm: usersSelectors.selectSearchTerm(state),
   })
 )
 
@@ -30,6 +31,7 @@ export const useUsersConnect = () => {
     currentPage,
     isFetching,
     followingInProgress,
+    searchTerm,
   } = useSelector(state => selectors(state))
 
   const setCurrentPage = useCallback(
@@ -43,10 +45,10 @@ export const useUsersConnect = () => {
   )
 
   const requestUsers = useCallback(
-    (currentPage: number, pageSize: number) => (
-      dispatch(usersActions.requestUsers(currentPage, pageSize)
+    (currentPage: number, pageSize: number, term=searchTerm) => (
+      dispatch(usersActions.requestUsers(currentPage, pageSize, term)
     )),
-    [dispatch]
+    [dispatch, searchTerm]
   )
 
   const followUser = useCallback(
@@ -59,6 +61,11 @@ export const useUsersConnect = () => {
     [dispatch]
   )
 
+  const setSearchTerm = useCallback(
+    (term: string) => dispatch(usersActions.setSearchTerm(term)),
+    [dispatch]
+  )
+
   return {
     //Selectors
     users,
@@ -68,11 +75,13 @@ export const useUsersConnect = () => {
     currentPage,
     isFetching,
     followingInProgress,
+    searchTerm,
     // Actions
     setCurrentPage,
     setPortion,
     requestUsers,
     followUser,
     unfollowUser,
+    setSearchTerm,
   }
 }
