@@ -10,13 +10,10 @@ import User from './user'
 import Spinner from 'components/Spinner'
 import Search from 'components/Search'
 
-
 const Users: FC = () => {
   const {
     // Selectors
     users,
-    currentPage,
-    pageSize,
     isFetching,
     // Actions
     requestUsers,
@@ -25,8 +22,8 @@ const Users: FC = () => {
   const history = useHistory()
 
   useEffect(() => {
-    requestUsers(currentPage, pageSize)
-  }, [requestUsers, currentPage, pageSize])
+    requestUsers()
+  }, [requestUsers])
 
   useEffect(() => {
     if (!isAuth) {

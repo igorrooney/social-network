@@ -17,6 +17,7 @@ const Profile = React.lazy(() =>
 const Users = React.lazy(() =>
   import('components/Users')
 )
+
 const News = React.lazy(() => import('components/News'))
 const Music = React.lazy(() => import('components/Music'))
 const Settings = React.lazy(() => import('components/Settings'))

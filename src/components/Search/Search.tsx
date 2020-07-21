@@ -5,22 +5,22 @@ import { useUsersConnect } from 'modules/users/users.connect'
 
 const Search = () => {
   const { 
-    // Selectors
-    currentPage,
-    pageSize,
     // Actions
     requestUsers,
-    setCurrentPage,
-    setSearchTerm,
+    changeQuery,
+    resetQuery,
   } = useUsersConnect()
   const mountedRef = useRef(false)
   const [val, setVal] = useState('')
 
   const [,] = useDebounce(() => {  
     if (mountedRef.current) {
-      setCurrentPage(1)
-      requestUsers(currentPage, pageSize, val)
-      setSearchTerm(val)
+      const nextQuery = {
+        page: 1,
+        term: val,
+      }
+      changeQuery(nextQuery)
+      requestUsers()
     }
     mountedRef.current = true
   }, 1000,
@@ -28,17 +28,14 @@ const Search = () => {
 
   useEffect(() => {
     return () => {
-      setSearchTerm('')
-      setCurrentPage(1)
+      resetQuery()
     }
-  }, [setSearchTerm, setCurrentPage])
+  }, [resetQuery])
 
   return (
     <input 
       type="text"
-      onChange={e => {
-        setVal(e.target.value)
-      }}
+      onChange={e => setVal(e.target.value)}
     />
   )
 }

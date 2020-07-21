@@ -20,16 +20,6 @@ export const selectTotalCount = createSelector(
   usersState => usersState.totalCount
 )
 
-export const selectPageSize = createSelector(
-  usersSlice,
-  usersState => usersState.pageSize
-)
-
-export const selectCurrentPage = createSelector(
-  usersSlice,
-  usersState => usersState.currentPage
-)
-
 export const selectIsFetching = createSelector(
   usersSlice,
   usersState => usersState.isFetching
@@ -40,7 +30,17 @@ export const selectFollowingInProgress = createSelector(
   usersState => usersState.followingInProgress
 )
 
-export const selectSearchTerm = createSelector(
+export const selectQuery = createSelector(
   usersSlice,
-  usersState => usersState.searchTerm
+  usersState => usersState.query
+)
+
+export const selectPage = createSelector(
+  selectQuery,
+  query => query.page
+)
+
+export const selectCount = createSelector(
+  selectQuery,
+  query => query.count
 )

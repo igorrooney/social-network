@@ -69,3 +69,8 @@ export type AuthType = {
   rememberMe: boolean, 
   captcha?: string | null
 }
+
+export type FilterType = {
+  term: string,
+  friend: null | boolean
+}

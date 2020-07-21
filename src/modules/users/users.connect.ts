@@ -1,3 +1,4 @@
+import { QueryType } from './users.reducer';
 import { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { createSelector } from 'reselect'
@@ -5,7 +6,6 @@ import { createSelector } from 'reselect'
 import * as usersSelectors from './users.selectors'
 // Actions
 import * as usersActions from './users.actions'
-// Types
 
 const selectors = createSelector(
   (state: any) => state,
@@ -13,11 +13,11 @@ const selectors = createSelector(
     users: usersSelectors.selectUsers(state),
     portion: usersSelectors.selectPortion(state),
     totalCount: usersSelectors.selectTotalCount(state),
-    pageSize: usersSelectors.selectPageSize(state),
-    currentPage: usersSelectors.selectCurrentPage(state),
+    count: usersSelectors.selectCount(state),
+    page: usersSelectors.selectPage(state),
     isFetching: usersSelectors.selectIsFetching(state),
     followingInProgress: usersSelectors.selectFollowingInProgress(state),
-    searchTerm: usersSelectors.selectSearchTerm(state),
+    query: usersSelectors.selectQuery(state),
   })
 )
 
@@ -27,17 +27,12 @@ export const useUsersConnect = () => {
     users,
     portion,
     totalCount,
-    pageSize,
-    currentPage,
+    count,
+    page,
     isFetching,
     followingInProgress,
-    searchTerm,
+    query,
   } = useSelector(state => selectors(state))
-
-  const setCurrentPage = useCallback(
-    (page: number) => dispatch(usersActions.setCurrentPage(page)),
-    [dispatch]
-  )
 
   const setPortion = useCallback(
     (portion: number) => dispatch(usersActions.setPortion(portion)),
@@ -45,10 +40,10 @@ export const useUsersConnect = () => {
   )
 
   const requestUsers = useCallback(
-    (currentPage: number, pageSize: number, term=searchTerm) => (
-      dispatch(usersActions.requestUsers(currentPage, pageSize, term)
+    () => (
+      dispatch(usersActions.requestUsers()
     )),
-    [dispatch, searchTerm]
+    [dispatch]
   )
 
   const followUser = useCallback(
@@ -61,8 +56,13 @@ export const useUsersConnect = () => {
     [dispatch]
   )
 
-  const setSearchTerm = useCallback(
-    (term: string) => dispatch(usersActions.setSearchTerm(term)),
+  const changeQuery = useCallback(
+    (nextQuery: QueryType) => dispatch(usersActions.changeQuery(nextQuery)),
+    [dispatch]
+  )
+
+  const resetQuery = useCallback(
+    () => dispatch(usersActions.resetQuery()),
     [dispatch]
   )
 
@@ -71,17 +71,17 @@ export const useUsersConnect = () => {
     users,
     portion,
     totalCount,
-    pageSize,
-    currentPage,
+    count,
+    page,
     isFetching,
     followingInProgress,
-    searchTerm,
+    query,
     // Actions
-    setCurrentPage,
     setPortion,
     requestUsers,
     followUser,
     unfollowUser,
-    setSearchTerm,
+    changeQuery,
+    resetQuery,
   }
 }

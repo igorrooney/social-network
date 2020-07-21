@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
+import React, { useCallback } from 'react'
 import classes from './pagination.module.scss';
 // Connect
 import { useUsersConnect } from 'modules/users/users.connect'
@@ -8,13 +8,14 @@ import usePagination from './usePagination';
 const Pagination = () => {
   const {
     totalCount,
-    pageSize,
-    currentPage,
+    count: pageSize,
+    page: currentPage,
     portionSize = 10,
     portion,
     // Actions
     setPortion,
     requestUsers,
+    changeQuery,
   } = useUsersConnect()
 
   const [
@@ -25,6 +26,13 @@ const Pagination = () => {
     portionNumber, 
     setPortionNumber
   ] = usePagination(totalCount, pageSize, portionSize, portion)
+
+  const onClickHandler = useCallback((currentPage) => {
+    changeQuery({ 
+      page: currentPage, 
+    })
+    requestUsers()
+  }, [changeQuery, requestUsers])
 
   return (
     <nav aria-label="Page navigation">
@@ -50,7 +58,7 @@ const Pagination = () => {
               <li
                 key={page}
                 className="page-item"
-                onClick={() => requestUsers(page, pageSize)}
+                onClick={() => onClickHandler(page)}
               >
                 <a
                   href="#"

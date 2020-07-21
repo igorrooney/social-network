@@ -1,13 +1,9 @@
 import { types } from 'constants/actionTypes'
 import { usersAPI } from 'api/users-api'
 
-export const fetchUsers = (
-  currentPage: number,
-  pageSize: number,
-  term: string | number
-) => ({
+export const fetchUsers = (params: any) => ({
   type: types.GET_USERS.BASE,
-  payload: usersAPI.getUsers(currentPage, pageSize, term)
+  payload: usersAPI.getUsers(params)
 })
 
 export const fetchFollowUser = (

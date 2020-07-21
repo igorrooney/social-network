@@ -6,30 +6,33 @@ import {
   fetchFollowUser,
   fetchUnfollowUser,
 } from './users.fetch'
+// Types
+import { QueryType } from './users.reducer'
+import { selectQuery } from './users.selectors'
 
 export const actions = {
-  setCurrentPage: (page: number) => ({ 
-    type: types.USERS_SET_CURRENT_PAGE, 
-    payload: page 
+  changeQuery:(nextQuery: QueryType) => ({
+    type: types.CHANGE_USERS_QUERY,
+    payload: nextQuery
   } as const),
+  resetQuery: () => ({
+    type: types.RESET_USERS_QUERY
+  }),
   setPortion: (portion: number) => ({ 
     type: types.USERS_SET_PORTION, 
     payload: portion 
   } as const),
-  setSearchTerm: (term: string) => ({
-    type: types.USERS_SET_SEARCH_TERM,
-    payload: term
-  })
 }
 
-export const setCurrentPage = (page: number) => {
+export const changeQuery = (nextQuery: QueryType) => {
   return (dispatch: any) => (
-    dispatch(actions.setCurrentPage(page))
+    dispatch(actions.changeQuery(nextQuery))
   )
 }
-export const setSearchTerm = (term: string) => {
+
+export const resetQuery = () => {
   return (dispatch: any) => (
-    dispatch(actions.setSearchTerm(term))
+    dispatch(actions.resetQuery())
   )
 }
 
@@ -39,14 +42,10 @@ export const setPortion = (portion: number) => {
   )
 }
 
-export const requestUsers = (
-  currentPage: number, 
-  pageSize: number,
-  term: string | number
-): ThunkType => {
-  return async (dispatch: any) => {
-    dispatch(actions.setCurrentPage(currentPage))
-    return await dispatch(fetchUsers(currentPage, pageSize, term))
+export const requestUsers = (): ThunkType => {
+  return async (dispatch: any, getState ) => {
+    const query = selectQuery(getState())
+    return await dispatch(fetchUsers(query))
   }
 }
 

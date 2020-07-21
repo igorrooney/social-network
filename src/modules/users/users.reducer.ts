@@ -6,15 +6,20 @@ import { types } from 'constants/actionTypes'
 // Types
 import { UserType } from 'types/types'
 
+const initQuery = {
+  term: '',
+  friend: null as null | boolean,
+  page: 1,
+  count: 10,
+}
+
 const initialState = {
   users: [] as Array<UserType>,
   portion: 1,
   totalCount: 0,
-  pageSize: 10,
-  currentPage: 1,
+  query: initQuery,
   isFetching: false,
   followingInProgress: [] as Array<number>, // array of users id
-  searchTerm: ''
 }
 
 const users = typeToReducer({
@@ -48,18 +53,17 @@ const users = typeToReducer({
       return items
     }
   },
-  [types.GET_SEARCH_USERS.BASE]: {
-    SUCCESS: (draft, action) => {
-
-    }
-  }
 }, initialState.users)
 
-const searchTerm = typeToReducer({
-  [types.USERS_SET_SEARCH_TERM]: (draft, action) => {
-    return action.payload
+const query = typeToReducer({
+  [types.CHANGE_USERS_QUERY]: (draft, action) => {
+    const nextQuery = action.payload
+    return { ...draft, ...nextQuery}
+  },
+  [types.RESET_USERS_QUERY]: (draft, action) => {
+    return initialState.query
   }
-}, initialState.searchTerm)
+}, initialState.query)
 
 const totalCount = typeToReducer({
   [types.GET_USERS.BASE]: {
@@ -67,15 +71,15 @@ const totalCount = typeToReducer({
       const { totalCount } = action.payload
       return totalCount
     }
-  },
+  }
 }, initialState.totalCount)
 
-const currentPage = typeToReducer({
+/* const currentPage = typeToReducer({
   [types.USERS_SET_CURRENT_PAGE]: (draft, action) => {
     const page = action.payload
     return page
   }
-}, initialState.currentPage)
+}, initialState.currentPage) */
 
 const portion = typeToReducer({
   [types.USERS_SET_PORTION]: (draft, action) => {
@@ -89,7 +93,7 @@ const isFetching = typeToReducer({
     REQUEST: () => true,
     SUCCESS: () => false,
     FAILURE: () => false,
-  }
+  },
 }, initialState.isFetching)
 
 const followingInProgress = typeToReducer({
@@ -117,19 +121,21 @@ const followingInProgress = typeToReducer({
   },
 }, initialState.followingInProgress)
 
-const pageSize = typeToReducer({
-
-}, initialState.pageSize)
-
 export type UsersInitialStateType = typeof initialState
+export type QueryType = {
+  term?: string,
+  friend?: null | boolean,
+  currentPage?: number,
+  pageSize?: number
+}
 
 export default combineReducers(produce, {
   users,
   totalCount,
-  currentPage,
   portion,
   isFetching,
   followingInProgress,
-  pageSize,
-  searchTerm,
+  query,
 })
+
+
