@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useCallback } from 'react'
-import classes from './pagination.module.scss';
+import classes from './pagination.module.scss'
 // Connect
 import { useUsersConnect } from 'modules/users/users.connect'
-import usePagination from './usePagination';
+import usePagination from './usePagination'
 
 const Pagination = () => {
   const {

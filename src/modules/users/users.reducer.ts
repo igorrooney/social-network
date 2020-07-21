@@ -8,7 +8,7 @@ import { UserType } from 'types/types'
 
 const initQuery = {
   term: '',
-  friend: null as null | boolean,
+  friend: '' as string | boolean,
   page: 1,
   count: 10,
 }
@@ -124,9 +124,9 @@ const followingInProgress = typeToReducer({
 export type UsersInitialStateType = typeof initialState
 export type QueryType = {
   term?: string,
-  friend?: null | boolean,
-  currentPage?: number,
-  pageSize?: number
+  friend?: string | boolean,
+  page?: number,
+  count?: number
 }
 
 export default combineReducers(produce, {
